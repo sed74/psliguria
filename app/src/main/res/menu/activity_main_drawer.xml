@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/accsso_ps">
+        <menu>
+            <item
+                android:id="@+id/nav_san_martino"
+                android:icon="@drawable/ic_hospital_building_white_24dp"
+                android:title="@string/san_martino" />
+            <item
+                android:id="@+id/nav_galliera"
+                android:icon="@drawable/ic_hospital_building_white_24dp"
+                android:title="@string/galliera" />
+            <item
+                android:id="@+id/nav_villa_scassi"
+                android:icon="@drawable/ic_hospital_building_white_24dp"
+                android:title="@string/villa_scassi" />
+            <item
+                android:id="@+id/nav_micone_asl3"
+                android:icon="@drawable/ic_hospital_building_white_24dp"
+                android:title="@string/micone_asl3" />
+            <item
+                android:id="@+id/nav_gallino_asl3"
+                android:icon="@drawable/ic_hospital_building_white_24dp"
+                android:title="@string/gallino_asl3" />
+            <item
+                android:id="@+id/nav_evangelico_voltri"
+                android:icon="@drawable/ic_hospital_building_white_24dp"
+                android:title="@string/evangelico_voltri" />
+            <item
+                android:id="@+id/nav_gaslini"
+                android:icon="@drawable/ic_hospital_building_white_24dp"
+                android:title="@string/gaslini" />
+            <item
+                android:id="@+id/nav_lavagna_asl4"
+                android:icon="@drawable/ic_hospital_building_white_24dp"
+                android:title="@string/lavagna_asl4" />
+        </menu>
+    </item>
+
+    <item android:title="@string/ospedalizzazioni">
+        <menu>
+            <item
+                android:id="@+id/nav_genova"
+                android:icon="@drawable/ic_ambulance_white_24dp"
+                android:title="@string/genova" />
+            <item
+                android:id="@+id/nav_imperia"
+                android:icon="@drawable/ic_ambulance_white_24dp"
+                android:title="@string/imperia" />
+            <item
+                android:id="@+id/nav_la_spezia"
+                android:icon="@drawable/ic_ambulance_white_24dp"
+                android:title="@string/la_spezia" />
+            <item
+                android:id="@+id/nav_lavagna"
+                android:icon="@drawable/ic_ambulance_white_24dp"
+                android:title="@string/lavagna" />
+            <item
+                android:id="@+id/nav_savona"
+                android:icon="@drawable/ic_ambulance_white_24dp"
+                android:title="@string/savona" />
+        </menu>
+    </item>
+
+</menu>

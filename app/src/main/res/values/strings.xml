@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Pronto Soccorso Ligura</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="genova">Genova</string>
+    <string name="imperia">Imperia</string>
+    <string name="la_spezia">La Spezia</string>
+    <string name="lavagna">Lavagna</string>
+    <string name="savona">Savona</string>
+    <string name="ospedalizzazioni">Ospedalizzazioni</string>
+    <string name="san_martino">San Martino</string>
+    <string name="galliera">Galliera</string>
+    <string name="villa_scassi">Villa Scassi</string>
+    <string name="micone_asl3">Micone ASL3</string>
+    <string name="gallino_asl3">Gallino ASL3</string>
+    <string name="evangelico_voltri">Evangelico Voltri</string>
+    <string name="gaslini">Gaslini</string>
+    <string name="lavagna_asl4">Lavagna ASL4</string>
+    <string name="home">Home</string>
+    <string name="accsso_ps">Accessi ai PS</string>
+</resources>
