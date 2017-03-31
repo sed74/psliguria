@@ -1,5 +1,6 @@
 package com.sed.federico.prontosoccorsoligura;
 
+import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -7,9 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,23 +16,29 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, LoaderCallbacks<List<Hospital>> {
+        implements NavigationView.OnNavigationItemSelectedListener, LoaderCallbacks<HospitalListCustom> {
 
-    private static final String USGS_REQUEST_URL =
+    private static final String DATI_PS_REQUEST_URL =
             "http://datipsge.azurewebsites.net/api/hospital/";
+    private static final String DATI_PS_FORCE_REQUEST_URL =
+            "http://datipsge.azurewebsites.net/api/hospital/cache/reload";
 
     /**
      * Constant value for the earthquake loader ID. We can choose any integer.
      * This really only comes into play if you're using multiple loaders.
      */
     private static final int HOSPITAL_LOADER_ID = 1;
+    private static final int HOSPITAL_FORCE_LOADER_ID = 2;
 
+    /**
+     * Adapter for the list of earthquakes
+     */
+    private HospitalAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,16 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // Find a reference to the {@link ListView} in the layout
+        ListView hospitalListView = (ListView) findViewById(R.id.list);
+
+        // Create a new adapter that takes an empty list of earthquakes as input
+        mAdapter = new HospitalAdapter(this, new HospitalListCustom());
+
+        // Set the adapter on the {@link ListView}
+        // so the list can be populated in the user interface
+        hospitalListView.setAdapter(mAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +99,7 @@ public class MainActivity extends AppCompatActivity
             // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
             // because this activity implements the LoaderCallbacks interface).
             loaderManager.initLoader(HOSPITAL_LOADER_ID, null, this);
+            loaderManager.initLoader(HOSPITAL_FORCE_LOADER_ID, null, this);
         } else {
             // Otherwise, display error
             // First, hide loading indicator so error message will be visible
@@ -93,10 +108,8 @@ public class MainActivity extends AppCompatActivity
 
             // Update empty state with no connection error message
             Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
-//            mEmptyStateTextView.setText(R.string.no_internet_connection);
+
         }
-
-
 
     }
 
@@ -127,11 +140,25 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_refresh) {
+            refreshView();
+        } else if (id == R.id.action_force_refresh){
+
+            QueryUtils.callWebAPI(DATI_PS_FORCE_REQUEST_URL);
+            refreshView();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    private void refreshView(){
+        View loadingIndicator = findViewById(R.id.loading_indicator);
+        loadingIndicator.setVisibility(View.VISIBLE);
+
+        // Restart the loader to requery the USGS as the query settings have been updated
+        getLoaderManager().restartLoader(HOSPITAL_LOADER_ID, null, MainActivity.this);
+
+    }
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -158,9 +185,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public android.content.Loader<List<Hospital>> onCreateLoader(int i, Bundle bundle) {
+    public android.content.Loader<HospitalListCustom> onCreateLoader(int i, Bundle bundle) {
 
-        Uri baseUri = Uri.parse(USGS_REQUEST_URL);
+        String url = DATI_PS_REQUEST_URL;
+        Uri baseUri = Uri.parse(url);
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
 
@@ -169,48 +197,33 @@ public class MainActivity extends AppCompatActivity
 
 
     @Override
-    public void onLoadFinished(android.content.Loader<List<Hospital>> loader, List<Hospital> hospitals) {
+    public void onLoadFinished(android.content.Loader<HospitalListCustom> loader, HospitalListCustom hospitals) {
         // Hide loading indicator because the data has been loaded
         View loadingIndicator = findViewById(R.id.loading_indicator);
         loadingIndicator.setVisibility(View.GONE);
 
         TextView text = (TextView) findViewById(R.id.text);
-        Hospital hospital = hospitals.get(0);
-        String message="";
-        for (Hospital item :
-                hospitals) {
-            message += item.getName() + "- " + item.getLastUpdated() + "\r\n";
-            message += "ATTESA" + "\r\n";
-            message += "Bianchi:" + item.getWhiteWaiting() + " - ";
-            message += "Verdi:" + item.getGreenWaiting() + " - ";
-            message += "Gialli:" + item.getYellowWaiting() + " - ";
-            message += "Rossi:" + item.getRedWaiting()+ "\r\n";
-
-            message += "VISITA" + "\r\n";
-            message += "Bianchi:" + item.getWhiteRunning() + " - ";
-            message += "Verdi:" + item.getGreenRunning() + " - ";
-            message += "Gialli:" + item.getYellowRunning() + " - ";
-            message += "Rossi:" + item.getRedRunning()+ "\r\n";
-
-        }
-//        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-        text.setText(message);
-
-        // Set empty state text to display "No earthquakes found."
-//        mEmptyStateTextView.setText(R.string.no_earthquakes);
 
         // Clear the adapter of previous earthquake data
-//        mAdapter.clear();
+        mAdapter.clear();
 
         // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
-//        if (earthquakes != null && !earthquakes.isEmpty()) {
-//            mAdapter.addAll(earthquakes);
-//        }
+        if (hospitals != null && !hospitals.isEmpty()) {
+            mAdapter.addAll(hospitals);
+            text.setVisibility(View.GONE);
+        } else {
+            text.setText("No data to display");
+            text.setVisibility(View.VISIBLE);
+        }
+
+//        text.setText(Integer.toString(hospitals.getMaxGlobalValue()));
+//        text.setVisibility(View.VISIBLE);
+//        mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onLoaderReset(android.content.Loader<List<Hospital>> loader) {
+    public void onLoaderReset(android.content.Loader<HospitalListCustom> loader) {
         // Loader reset, so we can clear out our existing data.
 //        mAdapter.clear();
     }

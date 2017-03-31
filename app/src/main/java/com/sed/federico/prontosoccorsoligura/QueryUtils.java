@@ -17,7 +17,6 @@ package com.sed.federico.prontosoccorsoligura;
 
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,14 +30,22 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Helper methods related to requesting and receiving earthquake data from USGS.
  */
 public final class QueryUtils {
-
+    public static final String HOSPITAL_NAME = "name";
+    public static final String WHITE_WAITING = "whiteWaiting";
+    public static final String GREEN_WAITING = "greenWaiting";
+    public static final String YELLOW_WAITING = "yellowWaiting";
+    public static final String RED_WAITING = "redWaiting";
+    public static final String WHITE_RUNNING = "whiteRunning";
+    public static final String GREEN_RUNNING = "greenRunning";
+    public static final String YELLOW_RUNNING = "yellowRunning";
+    public static final String RED_RUNNING = "redRunning";
+    public static final String OBI = "obi";
+    public static final String LASTUPDATED = "lastUpdate";
     /**
      * Tag for the log messages
      */
@@ -55,7 +62,7 @@ public final class QueryUtils {
     /**
      * Query the USGS dataset and return a list of {@link Hospital} objects.
      */
-    public static List<Hospital> fetchHospitalData(String requestUrl) {
+    public static HospitalListCustom fetchHospitalData(String requestUrl) {
         // Create URL object
         URL url = createUrl(requestUrl);
 
@@ -68,7 +75,7 @@ public final class QueryUtils {
         }
 
         // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
-        List<Hospital> earthquakes = extractFeatureFromJson(jsonResponse);
+        HospitalListCustom earthquakes = extractFeatureFromJson(jsonResponse);
 
         // Return the list of {@link Earthquake}s
         return earthquakes;
@@ -104,6 +111,7 @@ public final class QueryUtils {
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setReadTimeout(10000 /* milliseconds */);
             urlConnection.setConnectTimeout(15000 /* milliseconds */);
+            urlConnection.setRequestProperty("PSGE", "SzeBmdMIEKQdsgpuk63Ipm6OXbH7b9Gx48FW7q2J");
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
@@ -153,14 +161,14 @@ public final class QueryUtils {
      * Return a list of {@link Hospital} objects that has been built up from
      * parsing the given JSON response.
      */
-    private static List<Hospital> extractFeatureFromJson(String hospitalJSON) {
+    private static HospitalListCustom extractFeatureFromJson(String hospitalJSON) {
         // If the JSON string is empty or null, then return early.
         if (TextUtils.isEmpty(hospitalJSON)) {
             return null;
         }
 
         // Create an empty ArrayList that we can start adding earthquakes to
-        List<Hospital> hospitals = new ArrayList<>();
+        HospitalListCustom hospitals = new HospitalListCustom();
 
         // Try to parse the JSON response string. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.
@@ -186,17 +194,17 @@ public final class QueryUtils {
                 // for that earthquake.
 //                JSONObject properties = currentEarthquake.getJSONObject("properties");
 
-                String name = hospitalJSONObj.getString("name");
-                int ww = hospitalJSONObj.getInt("whiteWaiting");
-                int gw = hospitalJSONObj.getInt("greenWaiting");
-                int yw = hospitalJSONObj.getInt("yellowWaiting");
-                int rw = hospitalJSONObj.getInt("redWaiting");
-                int wr = hospitalJSONObj.getInt("whiteRunning");
-                int gr = hospitalJSONObj.getInt("greenRunning");
-                int yr = hospitalJSONObj.getInt("yellowRunning");
-                int rr = hospitalJSONObj.getInt("redRunning");
-                int obi = hospitalJSONObj.getInt("obi");
-                String lastUpdated = hospitalJSONObj.getString("lastUpdate");
+                String name = hospitalJSONObj.getString(HOSPITAL_NAME);
+                int ww = hospitalJSONObj.getInt(WHITE_WAITING);
+                int gw = hospitalJSONObj.getInt(GREEN_WAITING);
+                int yw = hospitalJSONObj.getInt(YELLOW_WAITING);
+                int rw = hospitalJSONObj.getInt(RED_WAITING);
+                int wr = hospitalJSONObj.getInt(WHITE_RUNNING);
+                int gr = hospitalJSONObj.getInt(GREEN_RUNNING);
+                int yr = hospitalJSONObj.getInt(YELLOW_RUNNING);
+                int rr = hospitalJSONObj.getInt(RED_RUNNING);
+                int obi = hospitalJSONObj.getInt(OBI);
+                String lastUpdated = hospitalJSONObj.getString(LASTUPDATED);
 
 
                 // Create a new {@link Earthquake} object with the magnitude, location, time,
@@ -216,6 +224,40 @@ public final class QueryUtils {
 
         // Return the list of earthquakes
         return hospitals;
+    }
+
+    public static void callWebAPI(String requestUrl) {
+
+        URL url = createUrl(requestUrl);
+
+        // If the URL is null, then return early.
+        if (url == null) {
+            return;
+        }
+
+        HttpURLConnection urlConnection = null;
+        InputStream inputStream = null;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setReadTimeout(10000 /* milliseconds */);
+            urlConnection.setConnectTimeout(15000 /* milliseconds */);
+            urlConnection.setRequestProperty("PSGE", "SzeBmdMIEKQdsgpuk63Ipm6OXbH7b9Gx48FW7q2J");
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            // If the request was successful (response code 200),
+            // then read the input stream and parse the response.
+//            if (urlConnection.getResponseCode() != 200) {
+//                Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
+//            }
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results.", e);
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+
+        }
     }
 
 }

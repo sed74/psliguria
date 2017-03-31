@@ -21,4 +21,6 @@
     <string name="lavagna_asl4">Lavagna ASL4</string>
     <string name="home">Home</string>
     <string name="accsso_ps">Accessi ai PS</string>
+    <string name="refresh">Aggiorna</string>
+    <string name="action_force_refresh">Forza aggiornamento</string>
 </resources>

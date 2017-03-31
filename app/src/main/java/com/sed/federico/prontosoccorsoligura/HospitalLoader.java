@@ -24,7 +24,7 @@ import java.util.List;
  * Loads a list of earthquakes by using an AsyncTask to perform the
  * network request to the given URL.
  */
-public class HospitalLoader extends AsyncTaskLoader<List<Hospital>> {
+public class HospitalLoader extends AsyncTaskLoader<HospitalListCustom> {
 
     /** Tag for log messages */
     private static final String LOG_TAG = Hospital.class.getName();
@@ -52,13 +52,13 @@ public class HospitalLoader extends AsyncTaskLoader<List<Hospital>> {
      * This is on a background thread.
      */
     @Override
-    public List<Hospital> loadInBackground() {
+    public HospitalListCustom loadInBackground() {
         if (mUrl == null) {
             return null;
         }
 
         // Perform the network request, parse the response, and extract a list of earthquakes.
-        List<Hospital> hospitals = QueryUtils.fetchHospitalData(mUrl);
+        HospitalListCustom hospitals = QueryUtils.fetchHospitalData(mUrl);
         return hospitals;
     }
 }
