@@ -2,6 +2,7 @@ package com.sed.federico.prontosoccorsoligura;
 
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,21 +25,29 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, LoaderCallbacks<HospitalListCustom> {
 
+    public static final String EXTRA_HOSPITAL_NAME = "hospital_name";
+    public static final String EXTRA_HOSPITAL_WW = "white_waiting";
+    public static final String EXTRA_HOSPITAL_GW = "green_waiting";
+    //    private static final int HOSPITAL_FORCE_LOADER_ID = 2;
+    public static final String EXTRA_HOSPITAL_YW = "yellow_waiting";
+    public static final String EXTRA_HOSPITAL_RW = "red_waiting";
+    public static final String EXTRA_HOSPITAL_WR = "white_running";
+    public static final String EXTRA_HOSPITAL_GR = "green_running";
+    public static final String EXTRA_HOSPITAL_YR = "yellow_running";
+    public static final String EXTRA_HOSPITAL_RR = "red_running";
     private static final String DATI_PS_REQUEST_URL =
             "http://datipsge.azurewebsites.net/api/hospital/";
     private static final String DATI_PS_FORCE_REQUEST_URL =
             "http://datipsge.azurewebsites.net/api/hospital/cache/reload";
-
     /**
      * Constant value for the earthquake loader ID. We can choose any integer.
      * This really only comes into play if you're using multiple loaders.
      */
     private static final int HOSPITAL_LOADER_ID = 1;
-//    private static final int HOSPITAL_FORCE_LOADER_ID = 2;
-
     /**
      * Adapter for the list of earthquakes
      */
+
     private HospitalAdapter mAdapter;
 
     @Override
@@ -110,6 +120,22 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
 
         }
+        hospitalListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent hospitalIntent = new Intent(MainActivity.this, HospitalActivity.class);
+
+                Hospital localHospital = mAdapter.getItem(position);
+                hospitalIntent.putExtra(EXTRA_HOSPITAL_NAME, localHospital.getName());
+                hospitalIntent.putExtra(EXTRA_HOSPITAL_WW, localHospital.getWhiteWaiting());
+                hospitalIntent.putExtra(EXTRA_HOSPITAL_GW, localHospital.getGreenWaiting());
+                hospitalIntent.putExtra(EXTRA_HOSPITAL_YW, localHospital.getYellowWaiting());
+                hospitalIntent.putExtra(EXTRA_HOSPITAL_RW, localHospital.getRedWaiting());
+                startActivity(hospitalIntent);
+
+            }
+        });
 
     }
 
@@ -142,7 +168,7 @@ public class MainActivity extends AppCompatActivity
             return true;
         } else if (id == R.id.action_refresh) {
             refreshView();
-        } else if (id == R.id.action_force_refresh){
+        } else if (id == R.id.action_force_refresh) {
 
             QueryUtils.callWebAPI(DATI_PS_FORCE_REQUEST_URL);
             refreshView();
@@ -151,7 +177,7 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    private void refreshView(){
+    private void refreshView() {
         View loadingIndicator = findViewById(R.id.loading_indicator);
         loadingIndicator.setVisibility(View.VISIBLE);
 
@@ -159,24 +185,15 @@ public class MainActivity extends AppCompatActivity
         getLoaderManager().restartLoader(HOSPITAL_LOADER_ID, null, MainActivity.this);
 
     }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_san_martino) {
+        if (id == R.id.ps_activity) {
             // Handle the camera action
-        } else if (id == R.id.nav_galliera) {
-
-        } else if (id == R.id.nav_villa_scassi) {
-
-        } else if (id == R.id.nav_micone_asl3) {
-
-        } else if (id == R.id.nav_gallino_asl3) {
-
-        } else if (id == R.id.nav_evangelico_voltri) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

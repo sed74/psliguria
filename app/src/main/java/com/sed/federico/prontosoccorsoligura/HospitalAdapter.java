@@ -16,7 +16,9 @@
 package com.sed.federico.prontosoccorsoligura;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,7 +67,7 @@ public class HospitalAdapter extends ArrayAdapter<Hospital> {
         View listItemView = convertView;
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.hospital_entry_constraint, parent, false);
+                    R.layout.hospital_entry_constraint2, parent, false);
         }
 
         // Find the earthquake at the given position in the list of earthquakes

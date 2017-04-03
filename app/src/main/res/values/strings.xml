@@ -23,4 +23,5 @@
     <string name="accsso_ps">Accessi ai PS</string>
     <string name="refresh">Aggiorna</string>
     <string name="action_force_refresh">Forza aggiornamento</string>
+    <string name="ps_activity_label">Accessi ai PS</string>
 </resources>

@@ -36,7 +36,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/hospital_name"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="RtlHardcoded"
         tools:text="10:20" />
@@ -45,16 +45,15 @@
         android:id="@+id/waiting_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="8dp"
         android:text="Attesa"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textColor="@color/black"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/waiting_white"
         app:layout_constraintTop_toBottomOf="@+id/hospital_name" />
 
 
@@ -62,15 +61,15 @@
         android:id="@+id/waiting_green"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
 
+        android:layout_marginTop="8dp"
         android:background="@drawable/bar_green"
         android:textAlignment="center"
         android:textColor="@color/black"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toRightOf="@+id/waiting_white"
         app:layout_constraintRight_toLeftOf="@+id/waiting_yellow"
-        app:layout_constraintTop_toBottomOf="@+id/waiting_label"
+        app:layout_constraintTop_toBottomOf="@+id/hospital_name"
         app:layout_constraintVertical_weight="1"
         tools:layout_width="80dp"
         tools:text="10" />
@@ -87,7 +86,7 @@
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toRightOf="@+id/waiting_green"
         app:layout_constraintRight_toLeftOf="@+id/waiting_red"
-        app:layout_constraintTop_toBottomOf="@+id/waiting_label"
+        app:layout_constraintTop_toBottomOf="@+id/hospital_name"
         app:layout_constraintVertical_weight="1"
         tools:layout_width="80dp"
         tools:text="10" />
@@ -96,7 +95,7 @@
         android:id="@+id/waiting_red"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
+        android:layout_marginRight="5dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/bar_red"
         android:textAlignment="center"
@@ -104,7 +103,7 @@
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toRightOf="@+id/waiting_yellow"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/waiting_label"
+        app:layout_constraintTop_toBottomOf="@+id/hospital_name"
         app:layout_constraintVertical_weight="1"
         tools:layout_width="80dp"
         tools:text="10" />
@@ -113,16 +112,14 @@
         android:id="@+id/running_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="8dp"
         android:text="Visita"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textColor="@color/black"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/running_white"
         app:layout_constraintTop_toBottomOf="@+id/waiting_green" />
 
 
@@ -136,9 +133,9 @@
         android:textColor="@color/black"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/waiting_label"
         app:layout_constraintRight_toLeftOf="@+id/waiting_green"
-        app:layout_constraintTop_toBottomOf="@+id/waiting_label"
+        app:layout_constraintTop_toBottomOf="@+id/hospital_name"
         app:layout_constraintVertical_weight="1"
         tools:layout_width="100dp"
         tools:text="10" />
@@ -147,16 +144,15 @@
         android:id="@+id/running_white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/bar_white"
         android:textAlignment="center"
         android:textColor="@color/black"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/running_label"
         app:layout_constraintRight_toLeftOf="@+id/running_green"
-        app:layout_constraintTop_toBottomOf="@+id/running_label"
+        app:layout_constraintTop_toBottomOf="@+id/waiting_green"
         app:layout_constraintVertical_weight="1"
         tools:text="10" />
 
@@ -164,7 +160,6 @@
         android:id="@+id/running_green"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/bar_green"
         android:textAlignment="center"
@@ -172,7 +167,7 @@
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toRightOf="@+id/running_white"
         app:layout_constraintRight_toLeftOf="@+id/running_yellow"
-        app:layout_constraintTop_toBottomOf="@+id/running_label"
+        app:layout_constraintTop_toBottomOf="@+id/waiting_green"
         app:layout_constraintVertical_weight="1"
         tools:text="10" />
 
@@ -180,7 +175,6 @@
         android:id="@+id/running_yellow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/bar_yellow"
         android:textAlignment="center"
@@ -188,7 +182,7 @@
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toRightOf="@+id/running_green"
         app:layout_constraintRight_toLeftOf="@+id/running_red"
-        app:layout_constraintTop_toBottomOf="@+id/running_label"
+        app:layout_constraintTop_toBottomOf="@+id/waiting_green"
         app:layout_constraintVertical_weight="1"
         tools:text="10" />
 
@@ -196,7 +190,7 @@
         android:id="@+id/running_red"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/bar_red"
         android:textAlignment="center"
@@ -204,7 +198,7 @@
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toRightOf="@+id/running_yellow"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/running_label"
+        app:layout_constraintTop_toBottomOf="@+id/waiting_green"
         app:layout_constraintVertical_weight="1"
         tools:text="10" />
 
