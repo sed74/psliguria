@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hospital_entry_bck"
+    android:fitsSystemWindows="true"
+    android:paddingBottom="5dp"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
+
+
+    <TextView
+        android:id="@+id/hospital_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="San Martino" />
+
+    <TextView
+        android:id="@+id/last_updated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="10:20" />
+
+    <TextView
+        android:id="@+id/waiting_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Attesa"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hospital_name" />
+
+
+    <TextView
+        android:id="@+id/waiting_green"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+
+        android:background="@drawable/bar_green"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@+id/waiting_white"
+        app:layout_constraintRight_toLeftOf="@+id/waiting_yellow"
+        app:layout_constraintTop_toBottomOf="@+id/waiting_label"
+        app:layout_constraintVertical_weight="1"
+        tools:layout_width="80dp"
+        tools:text="10" />
+
+    <TextView
+        android:id="@+id/waiting_yellow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bar_yellow"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@+id/waiting_green"
+        app:layout_constraintRight_toLeftOf="@+id/waiting_red"
+        app:layout_constraintTop_toBottomOf="@+id/waiting_label"
+        app:layout_constraintVertical_weight="1"
+        tools:layout_width="80dp"
+        tools:text="10" />
+
+    <TextView
+        android:id="@+id/waiting_red"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bar_red"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@+id/waiting_yellow"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/waiting_label"
+        app:layout_constraintVertical_weight="1"
+        tools:layout_width="80dp"
+        tools:text="10" />
+
+    <TextView
+        android:id="@+id/running_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Visita"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/waiting_green" />
+
+
+    <TextView
+        android:id="@+id/waiting_white"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bar_white"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/waiting_green"
+        app:layout_constraintTop_toBottomOf="@+id/waiting_label"
+        app:layout_constraintVertical_weight="1"
+        tools:layout_width="100dp"
+        tools:text="10" />
+
+    <TextView
+        android:id="@+id/running_white"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bar_white"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/running_green"
+        app:layout_constraintTop_toBottomOf="@+id/running_label"
+        app:layout_constraintVertical_weight="1"
+        tools:text="10" />
+
+    <TextView
+        android:id="@+id/running_green"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bar_green"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@+id/running_white"
+        app:layout_constraintRight_toLeftOf="@+id/running_yellow"
+        app:layout_constraintTop_toBottomOf="@+id/running_label"
+        app:layout_constraintVertical_weight="1"
+        tools:text="10" />
+
+    <TextView
+        android:id="@+id/running_yellow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bar_yellow"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@+id/running_green"
+        app:layout_constraintRight_toLeftOf="@+id/running_red"
+        app:layout_constraintTop_toBottomOf="@+id/running_label"
+        app:layout_constraintVertical_weight="1"
+        tools:text="10" />
+
+    <TextView
+        android:id="@+id/running_red"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bar_red"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@+id/running_yellow"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/running_label"
+        app:layout_constraintVertical_weight="1"
+        tools:text="10" />
+
+
+</android.support.constraint.ConstraintLayout>

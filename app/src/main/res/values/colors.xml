@@ -10,4 +10,6 @@
     <color name="red">#be0000</color>
     <color name="black">#000000</color>
     <color name="gray">#6c6c6c</color>
+    <color name="hospital_entry_bck">#d1d1d1</color>
+
 </resources>

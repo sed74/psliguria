@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity
      * This really only comes into play if you're using multiple loaders.
      */
     private static final int HOSPITAL_LOADER_ID = 1;
-    private static final int HOSPITAL_FORCE_LOADER_ID = 2;
+//    private static final int HOSPITAL_FORCE_LOADER_ID = 2;
 
     /**
      * Adapter for the list of earthquakes
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity
             // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
             // because this activity implements the LoaderCallbacks interface).
             loaderManager.initLoader(HOSPITAL_LOADER_ID, null, this);
-            loaderManager.initLoader(HOSPITAL_FORCE_LOADER_ID, null, this);
+//            loaderManager.initLoader(HOSPITAL_FORCE_LOADER_ID, null, this);
         } else {
             // Otherwise, display error
             // First, hide loading indicator so error message will be visible

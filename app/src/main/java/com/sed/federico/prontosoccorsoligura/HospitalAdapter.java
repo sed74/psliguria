@@ -65,7 +65,7 @@ public class HospitalAdapter extends ArrayAdapter<Hospital> {
         View listItemView = convertView;
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.hospital_entry_alternative, parent, false);
+                    R.layout.hospital_entry_constraint, parent, false);
         }
 
         // Find the earthquake at the given position in the list of earthquakes
@@ -73,7 +73,10 @@ public class HospitalAdapter extends ArrayAdapter<Hospital> {
 
         // Find the TextView with view ID magnitude
         TextView name = (TextView) listItemView.findViewById(R.id.hospital_name);
-        name.setText(currentHospital.getName() + " - " + currentHospital.getLastUpdated());
+        name.setText(currentHospital.getName());
+
+        TextView lastUpdated = (TextView) listItemView.findViewById(R.id.last_updated);
+        lastUpdated.setText(currentHospital.getLastUpdated());
 
         TextView ww = (TextView) listItemView.findViewById(R.id.waiting_white);
         ww.setText(String.valueOf(currentHospital.getWhiteWaiting()));
