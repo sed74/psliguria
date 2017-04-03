@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingBottom="20dp">
 
     <LinearLayout
         android:id="@+id/hospital_layout"
@@ -12,20 +13,24 @@
 
         <TextView
             android:id="@+id/hospital_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:textStyle="bold"
             tools:text="San Martino" />
 
-        <TextView
-            android:id="@+id/last_updated"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            tools:text="10:20" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/last_updated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center_vertical"
+        android:paddingRight="10dp"
+        android:visibility="gone"
+        tools:text="10:20" />
 
     <TextView
         android:id="@+id/waiting_label"
@@ -42,6 +47,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/waiting_label"
         android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:paddingTop="5dp">
 
         <TextView
@@ -98,8 +105,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:layout_below="@id/running_label"
         android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:paddingTop="5dp">
 
         <TextView

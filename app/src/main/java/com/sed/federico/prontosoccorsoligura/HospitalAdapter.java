@@ -65,7 +65,7 @@ public class HospitalAdapter extends ArrayAdapter<Hospital> {
         View listItemView = convertView;
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.hospital_entry_alternative, parent, false);
+                    R.layout.hospital_entry, parent, false);
         }
 
         // Find the earthquake at the given position in the list of earthquakes
