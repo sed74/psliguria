@@ -132,6 +132,13 @@ public class MainActivity extends AppCompatActivity
                 hospitalIntent.putExtra(EXTRA_HOSPITAL_GW, localHospital.getGreenWaiting());
                 hospitalIntent.putExtra(EXTRA_HOSPITAL_YW, localHospital.getYellowWaiting());
                 hospitalIntent.putExtra(EXTRA_HOSPITAL_RW, localHospital.getRedWaiting());
+                hospitalIntent.putExtra(EXTRA_HOSPITAL_WR, localHospital.getWhiteRunning());
+                hospitalIntent.putExtra(EXTRA_HOSPITAL_GR, localHospital.getGreenRunning());
+                hospitalIntent.putExtra(EXTRA_HOSPITAL_YR, localHospital.getYellowRunning());
+                hospitalIntent.putExtra(EXTRA_HOSPITAL_RR, localHospital.getRedRunning());
+
+
+
                 startActivity(hospitalIntent);
 
             }
