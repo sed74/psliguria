@@ -15,6 +15,7 @@
  */
 package com.sed.federico.prontosoccorsoligura;
 
+import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -228,36 +229,77 @@ public final class QueryUtils {
 
     public static void callWebAPI(String requestUrl) {
 
-        URL url = createUrl(requestUrl);
-
-        // If the URL is null, then return early.
-        if (url == null) {
-            return;
-        }
-
-        HttpURLConnection urlConnection = null;
-        InputStream inputStream = null;
-        try {
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setReadTimeout(10000 /* milliseconds */);
-            urlConnection.setConnectTimeout(15000 /* milliseconds */);
-            urlConnection.setRequestProperty("PSGE", "SzeBmdMIEKQdsgpuk63Ipm6OXbH7b9Gx48FW7q2J");
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-
-            // If the request was successful (response code 200),
-            // then read the input stream and parse the response.
+        new callWebApi().execute(requestUrl);
+//        URL url = createUrl(requestUrl);
+//
+//        // If the URL is null, then return early.
+//        if (url == null) {
+//            return;
+//        }
+//
+//        HttpURLConnection urlConnection = null;
+//        InputStream inputStream = null;
+//        try {
+//            urlConnection = (HttpURLConnection) url.openConnection();
+//            urlConnection.setReadTimeout(10000 /* milliseconds */);
+//            urlConnection.setConnectTimeout(15000 /* milliseconds */);
+//            urlConnection.setRequestProperty("PSGE", "SzeBmdMIEKQdsgpuk63Ipm6OXbH7b9Gx48FW7q2J");
+////            urlConnection.setRequestMethod("GET");
+//            urlConnection.connect();
+//
+//            // If the request was successful (response code 200),
+//            // then read the input stream and parse the response.
 //            if (urlConnection.getResponseCode() != 200) {
 //                Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
 //            }
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results.", e);
-        } finally {
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-
-        }
+//        } catch (IOException e) {
+//            Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results.", e);
+//        } finally {
+//            if (urlConnection != null) {
+//                urlConnection.disconnect();
+//            }
+//
+//        }
     }
 
+    public static class callWebApi extends AsyncTask<String, Integer, Long> {
+
+        private Exception exception;
+
+        @Override
+        protected Long doInBackground(String... params) {
+            URL url = createUrl(params[0]);
+
+            // If the URL is null, then return early.
+            if (url == null) {
+                return 0l;
+            }
+
+            HttpURLConnection urlConnection = null;
+
+            try {
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setReadTimeout(10000 /* milliseconds */);
+                urlConnection.setConnectTimeout(15000 /* milliseconds */);
+                urlConnection.setRequestProperty("PSGE", "SzeBmdMIEKQdsgpuk63Ipm6OXbH7b9Gx48FW7q2J");
+//            urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+
+                // If the request was successful (response code 200),
+                // then read the input stream and parse the response.
+                if (urlConnection.getResponseCode() != 200) {
+                    Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
+                }
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results.", e);
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                    return 1l;
+                }
+
+            }
+            return 0l;
+        }
+    }
 }

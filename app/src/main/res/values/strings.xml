@@ -102,4 +102,12 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="settings">Impostazioni</string>
     <string name="no_data_display">Caricamento dati non riuscito.</string>
+    <string name="waiting_label">Pazienti in attesa (tot. %1$d)</string>
+    <string name="running_label">Pazienti in visita (tot. %1$d + %2$d OBI)</string>
+    <string name="total_label">Tot. %1$d</string>
+    <string name="croce_name">Croce:</string>
+    <string name="mezzo">Mezzo:</string>
+    <string name="location">Località:</string>
+    <string name="sintesi">Sintesi:</string>
+    <string name="mission_no">Missione No.:</string>
 </resources>

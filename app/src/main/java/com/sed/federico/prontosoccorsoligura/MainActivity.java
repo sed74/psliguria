@@ -30,9 +30,9 @@ public class MainActivity extends AppCompatActivity
 
     public static final String EXTRA_HOSPITAL_NAME = "hospital_name";
     public static final String EXTRA_HOSPITAL_POSITION = "hospital_position";
-    private static final String DATI_PS_REQUEST_URL =
+    public static final String DATI_PS_REQUEST_URL =
             "http://datipsge.azurewebsites.net/api/hospital/";
-    private static final String DATI_PS_FORCE_REQUEST_URL =
+    public static final String DATI_PS_FORCE_REQUEST_URL =
             "http://datipsge.azurewebsites.net/api/hospital/cache/reload";
     /**
      * Constant value for the earthquake loader ID. We can choose any integer.
@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity
         if (networkInfo != null && networkInfo.isConnected()) {
             // Get a reference to the LoaderManager, in order to interact with loaders.
             android.app.LoaderManager loaderManager = getLoaderManager();
+
 
             // Initialize the loader. Pass in the int ID constant defined above and pass in null for
             // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
@@ -209,7 +210,6 @@ public class MainActivity extends AppCompatActivity
         String url = DATI_PS_REQUEST_URL;
         Uri baseUri = Uri.parse(url);
         Uri.Builder uriBuilder = baseUri.buildUpon();
-
 
         return new HospitalLoader(this, uriBuilder.toString());
     }

@@ -207,14 +207,15 @@
         tools:text="10" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/obi_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="8dp"
         android:text="@string/obi"
         android:textColor="@color/black"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/obi"
         app:layout_constraintTop_toBottomOf="@+id/running_green" />
@@ -226,33 +227,9 @@
         android:layout_marginTop="8dp"
         android:background="@color/obi"
         android:textAlignment="center"
-        app:layout_constraintLeft_toRightOf="@+id/textView4"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@+id/obi_label"
         app:layout_constraintRight_toLeftOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/running_green"
-        tools:text="10" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="8dp"
-        android:textAlignment="center"
-        app:layout_constraintLeft_toRightOf="@+id/textView6"
-        app:layout_constraintRight_toLeftOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/running_green"
-        tools:text="10" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:textAlignment="center"
-        app:layout_constraintLeft_toRightOf="@+id/textView7"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/running_green"
         tools:text="10" />
 
@@ -263,8 +240,9 @@
 
         android:layout_marginTop="8dp"
         android:textAlignment="center"
+        app:layout_constraintHorizontal_weight="3"
         app:layout_constraintLeft_toRightOf="@+id/obi"
-        app:layout_constraintRight_toLeftOf="@+id/textView7"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/running_green"
         tools:text="10" />
 

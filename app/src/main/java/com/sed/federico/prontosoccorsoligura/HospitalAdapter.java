@@ -16,10 +16,6 @@
 package com.sed.federico.prontosoccorsoligura;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
-import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,7 +101,15 @@ public class HospitalAdapter extends ArrayAdapter<Hospital> {
         rr.setText(String.valueOf(currentHospital.getRedRunning()));
 
         TextView obi = (TextView) listItemView.findViewById(R.id.obi);
-        obi.setText(String.valueOf(currentHospital.getObi()));
+        if (currentHospital.getHasOBI()) {
+            obi.setText(String.valueOf(currentHospital.getObi()));
+        } else {
+            TextView obiLabel = (TextView) listItemView.findViewById(R.id.obi_label);
+            obi.setVisibility(View.GONE);
+            obiLabel.setVisibility(View.GONE);
+            TextView text1 = (TextView) listItemView.findViewById(R.id.textView6);
+            text1.setVisibility(View.GONE);
+        }
 
         // Return the list item view that is now showing the appropriate data
         return listItemView;
