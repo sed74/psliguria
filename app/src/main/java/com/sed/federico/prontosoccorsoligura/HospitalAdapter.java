@@ -104,6 +104,9 @@ public class HospitalAdapter extends ArrayAdapter<Hospital> {
         TextView rr = (TextView) listItemView.findViewById(R.id.running_red);
         rr.setText(String.valueOf(currentHospital.getRedRunning()));
 
+        TextView obi = (TextView) listItemView.findViewById(R.id.obi);
+        obi.setText(String.valueOf(currentHospital.getObi()));
+
         // Return the list item view that is now showing the appropriate data
         return listItemView;
     }

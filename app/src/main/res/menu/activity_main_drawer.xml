@@ -29,5 +29,12 @@
                 android:title="@string/savona" />
         </menu>
     </item>
-
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings_white_24dp"
+            android:title="@string/settings" />
+    </group>
 </menu>

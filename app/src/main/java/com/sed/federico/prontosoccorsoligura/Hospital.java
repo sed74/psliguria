@@ -20,6 +20,8 @@ public class Hospital {
     private int mObi;
     private int mMaxNo;
 
+    private int mTotal;
+
 
     public Hospital(String name) {
         mName = name;
@@ -66,7 +68,9 @@ public class Hospital {
 
     private int calculateMax(int[] values) {
         int max = Integer.MIN_VALUE;
+        mTotal = 0;
         for (int i = 0; i < values.length; i++) {
+            mTotal += values[i];
             if (values[i] > max) {
                 max = values[i];
             }
@@ -166,6 +170,10 @@ public class Hospital {
 
     public int getMaxNo() {
         return mMaxNo;
+    }
+
+    public int getTotal() {
+        return mTotal;
     }
 
     //{"name":"SAN MARTINO ","lastUpdate":" 17:15","whiteWaiting":0,"greenWaiting":3,"yellowWaiting":12,"redWaiting":0,"whiteRunning":1,"greenRunning":12,"yellowRunning":24,

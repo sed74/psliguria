@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,19 +23,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, LoaderCallbacks<HospitalListCustom> {
 
     public static final String EXTRA_HOSPITAL_NAME = "hospital_name";
-    public static final String EXTRA_HOSPITAL_WW = "white_waiting";
-    public static final String EXTRA_HOSPITAL_GW = "green_waiting";
-    //    private static final int HOSPITAL_FORCE_LOADER_ID = 2;
-    public static final String EXTRA_HOSPITAL_YW = "yellow_waiting";
-    public static final String EXTRA_HOSPITAL_RW = "red_waiting";
-    public static final String EXTRA_HOSPITAL_WR = "white_running";
-    public static final String EXTRA_HOSPITAL_GR = "green_running";
-    public static final String EXTRA_HOSPITAL_YR = "yellow_running";
-    public static final String EXTRA_HOSPITAL_RR = "red_running";
+    public static final String EXTRA_HOSPITAL_POSITION = "hospital_position";
     private static final String DATI_PS_REQUEST_URL =
             "http://datipsge.azurewebsites.net/api/hospital/";
     private static final String DATI_PS_FORCE_REQUEST_URL =
@@ -44,11 +39,16 @@ public class MainActivity extends AppCompatActivity
      * This really only comes into play if you're using multiple loaders.
      */
     private static final int HOSPITAL_LOADER_ID = 1;
+    private static HospitalListCustom mHospitals;
     /**
      * Adapter for the list of earthquakes
      */
 
     private HospitalAdapter mAdapter;
+
+    public static HospitalListCustom getHospitals() {
+        return mHospitals;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,20 +127,9 @@ public class MainActivity extends AppCompatActivity
                 Intent hospitalIntent = new Intent(MainActivity.this, HospitalActivity.class);
 
                 Hospital localHospital = mAdapter.getItem(position);
-                hospitalIntent.putExtra(EXTRA_HOSPITAL_NAME, localHospital.getName());
-                hospitalIntent.putExtra(EXTRA_HOSPITAL_WW, localHospital.getWhiteWaiting());
-                hospitalIntent.putExtra(EXTRA_HOSPITAL_GW, localHospital.getGreenWaiting());
-                hospitalIntent.putExtra(EXTRA_HOSPITAL_YW, localHospital.getYellowWaiting());
-                hospitalIntent.putExtra(EXTRA_HOSPITAL_RW, localHospital.getRedWaiting());
-                hospitalIntent.putExtra(EXTRA_HOSPITAL_WR, localHospital.getWhiteRunning());
-                hospitalIntent.putExtra(EXTRA_HOSPITAL_GR, localHospital.getGreenRunning());
-                hospitalIntent.putExtra(EXTRA_HOSPITAL_YR, localHospital.getYellowRunning());
-                hospitalIntent.putExtra(EXTRA_HOSPITAL_RR, localHospital.getRedRunning());
-
-
+                hospitalIntent.putExtra(EXTRA_HOSPITAL_POSITION, position);
 
                 startActivity(hospitalIntent);
-
             }
         });
 
@@ -159,7 +148,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu_hospital, menu);
         return true;
     }
 
@@ -172,7 +161,8 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+
+
         } else if (id == R.id.action_refresh) {
             refreshView();
         } else if (id == R.id.action_force_refresh) {
@@ -186,6 +176,8 @@ public class MainActivity extends AppCompatActivity
 
     private void refreshView() {
         View loadingIndicator = findViewById(R.id.loading_indicator);
+        TextView text = (TextView) findViewById(R.id.text);
+        text.setVisibility(View.INVISIBLE);
         loadingIndicator.setVisibility(View.VISIBLE);
 
         // Restart the loader to requery the USGS as the query settings have been updated
@@ -201,6 +193,9 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.ps_activity) {
             // Handle the camera action
+        } else if (id == R.id.nav_settings) {
+            Intent settingsActivity = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(settingsActivity);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -236,14 +231,12 @@ public class MainActivity extends AppCompatActivity
         if (hospitals != null && !hospitals.isEmpty()) {
             mAdapter.addAll(hospitals);
             text.setVisibility(View.GONE);
+            mHospitals = hospitals;
         } else {
-            text.setText("No data to display");
+            text.setText(R.string.no_data_display);
             text.setVisibility(View.VISIBLE);
         }
 
-//        text.setText(Integer.toString(hospitals.getMaxGlobalValue()));
-//        text.setVisibility(View.VISIBLE);
-//        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -251,4 +244,5 @@ public class MainActivity extends AppCompatActivity
         // Loader reset, so we can clear out our existing data.
 //        mAdapter.clear();
     }
+
 }
