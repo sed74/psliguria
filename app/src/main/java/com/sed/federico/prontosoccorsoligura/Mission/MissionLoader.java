@@ -13,34 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sed.federico.prontosoccorsoligura;
+package com.sed.federico.prontosoccorsoligura.Mission;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 
-import java.util.List;
+import com.sed.federico.prontosoccorsoligura.Hospital;
+import com.sed.federico.prontosoccorsoligura.HospitalListCustom;
+import com.sed.federico.prontosoccorsoligura.QueryUtils;
 
 /**
  * Loads a list of hospital by using an AsyncTask to perform the
  * network request to the given URL.
  */
-public class HospitalLoader extends AsyncTaskLoader<HospitalListCustom> {
+public class MissionLoader extends AsyncTaskLoader<MissionListCustom> {
 
-    /** Tag for log messages */
+    /**
+     * Tag for log messages
+     */
     private static final String LOG_TAG = Hospital.class.getName();
+    private Context mContext;
 
-    /** Query URL */
+    /**
+     * Query URL
+     */
     private String mUrl;
 
     /**
-     * Constructs a new {@link HospitalLoader}.
+     * Constructs a new {@link MissionLoader}.
      *
      * @param context of the activity
-     * @param url to load data from
+     * @param url     to load data from
      */
-    public HospitalLoader(Context context, String url) {
+    public MissionLoader(Context context, String url) {
         super(context);
         mUrl = url;
+        mContext = context;
     }
 
     @Override
@@ -52,13 +60,13 @@ public class HospitalLoader extends AsyncTaskLoader<HospitalListCustom> {
      * This is on a background thread.
      */
     @Override
-    public HospitalListCustom loadInBackground() {
+    public MissionListCustom loadInBackground() {
         if (mUrl == null) {
             return null;
         }
 
         // Perform the network request, parse the response, and extract a list of earthquakes.
-        HospitalListCustom hospitals = QueryUtils.fetchHospitalData(mUrl);
+        MissionListCustom hospitals = QueryUtils.fetchMissionData(mContext, mUrl);
         return hospitals;
     }
 }

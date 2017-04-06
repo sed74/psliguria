@@ -15,9 +15,13 @@
  */
 package com.sed.federico.prontosoccorsoligura;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
+
+import com.sed.federico.prontosoccorsoligura.Mission.Mission;
+import com.sed.federico.prontosoccorsoligura.Mission.MissionListCustom;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,10 +51,21 @@ public final class QueryUtils {
     public static final String RED_RUNNING = "redRunning";
     public static final String OBI = "obi";
     public static final String LASTUPDATED = "lastUpdate";
+
+
+    public static final String MISSION = "missione";
+    public static final String AMBULANCE = "mezzo";
+    public static final String PUBBLICA_ASSISTENZA = "postazione";
+    public static final String EMERGENCY_CODE = "codice";
+    public static final String PICKUP_LOCATION = "localita";
+    public static final String SYNTHESIS = "sintesi";
+    public static final String DESTINATION = "destinazione";
+    public static final String ASL = "asl";
     /**
      * Tag for the log messages
      */
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
+
 
     /**
      * Create a private constructor because no one should ever create a {@link QueryUtils} object.
@@ -76,7 +91,7 @@ public final class QueryUtils {
         }
 
         // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
-        HospitalListCustom earthquakes = extractFeatureFromJson(jsonResponse);
+        HospitalListCustom earthquakes = extractHospitalFromJson(jsonResponse);
 
         // Return the list of {@link Earthquake}s
         return earthquakes;
@@ -162,7 +177,7 @@ public final class QueryUtils {
      * Return a list of {@link Hospital} objects that has been built up from
      * parsing the given JSON response.
      */
-    private static HospitalListCustom extractFeatureFromJson(String hospitalJSON) {
+    private static HospitalListCustom extractHospitalFromJson(String hospitalJSON) {
         // If the JSON string is empty or null, then return early.
         if (TextUtils.isEmpty(hospitalJSON)) {
             return null;
@@ -230,36 +245,95 @@ public final class QueryUtils {
     public static void callWebAPI(String requestUrl) {
 
         new callWebApi().execute(requestUrl);
-//        URL url = createUrl(requestUrl);
-//
-//        // If the URL is null, then return early.
-//        if (url == null) {
-//            return;
-//        }
-//
-//        HttpURLConnection urlConnection = null;
-//        InputStream inputStream = null;
-//        try {
-//            urlConnection = (HttpURLConnection) url.openConnection();
-//            urlConnection.setReadTimeout(10000 /* milliseconds */);
-//            urlConnection.setConnectTimeout(15000 /* milliseconds */);
-//            urlConnection.setRequestProperty("PSGE", "SzeBmdMIEKQdsgpuk63Ipm6OXbH7b9Gx48FW7q2J");
-////            urlConnection.setRequestMethod("GET");
-//            urlConnection.connect();
-//
-//            // If the request was successful (response code 200),
-//            // then read the input stream and parse the response.
-//            if (urlConnection.getResponseCode() != 200) {
-//                Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
-//            }
-//        } catch (IOException e) {
-//            Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results.", e);
-//        } finally {
-//            if (urlConnection != null) {
-//                urlConnection.disconnect();
-//            }
-//
-//        }
+    }
+
+    /**
+     * Query the USGS dataset and return a list of {@link Hospital} objects.
+     */
+    public static MissionListCustom fetchMissionData(Context context, String requestUrl) {
+        // Create URL object
+        URL url = createUrl(requestUrl);
+
+        // Perform HTTP request to the URL and receive a JSON response back
+        String jsonResponse = null;
+        try {
+            jsonResponse = makeHttpRequest(url);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Problem making the HTTP request.", e);
+        }
+
+        // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
+        MissionListCustom missions = extractMissionFromJson(context, jsonResponse);
+
+        // Return the list of {@link Earthquake}s
+        return missions;
+    }
+
+    /**
+     * Return a list of {@link MissionListCustom} objects that has been built up from
+     * parsing the given JSON response.
+     */
+    private static MissionListCustom extractMissionFromJson(Context context, String hospitalJSON) {
+        // If the JSON string is empty or null, then return early.
+        if (TextUtils.isEmpty(hospitalJSON)) {
+            return null;
+        }
+
+        // Create an empty ArrayList that we can start adding earthquakes to
+        MissionListCustom missions = new MissionListCustom();
+
+        // Try to parse the JSON response string. If there's a problem with the way the JSON
+        // is formatted, a JSONException exception object will be thrown.
+        // Catch the exception so the app doesn't crash, and print the error message to the logs.
+        try {
+
+            // Create a JSONObject from the JSON response string
+//            JSONObject baseJsonResponse = new JSONObject(hospitalJSON);
+
+            // Extract the JSONArray associated with the key called "features",
+            // which represents a list of features (or earthquakes).
+//            JSONArray earthquakeArray = baseJsonResponse.getJSONArray("features");
+            JSONArray missionArray = new JSONArray(hospitalJSON);
+
+            // For each earthquake in the earthquakeArray, create an {@link Earthquake} object
+            for (int i = 0; i < missionArray.length(); i++) {
+                JSONObject hospitalJSONObj = missionArray.getJSONObject(i);
+                // Get a single earthquake at position i within the list of earthquakes
+//                JSONObject currentEarthquake = earthquakeArray.getJSONObject(i);
+
+                // For a given earthquake, extract the JSONObject associated with the
+                // key called "properties", which represents a list of all properties
+                // for that earthquake.
+//                JSONObject properties = currentEarthquake.getJSONObject("properties");
+
+                String mission = hospitalJSONObj.getString(MISSION);
+                String ambulance = hospitalJSONObj.getString(AMBULANCE);
+                String pubblicaAssistenza = hospitalJSONObj.getString(PUBBLICA_ASSISTENZA);
+                String emergencyCode = hospitalJSONObj.getString(EMERGENCY_CODE);
+                String pickuplocation = hospitalJSONObj.getString(PICKUP_LOCATION);
+                String synthesis = hospitalJSONObj.getString(SYNTHESIS);
+                String destination = hospitalJSONObj.getString(DESTINATION);
+                String asl = hospitalJSONObj.getString(ASL);
+
+
+                // Create a new {@link Earthquake} object with the magnitude, location, time,
+                // and url from the JSON Hospital.
+                Mission missionObj = new Mission(context, mission, ambulance, pubblicaAssistenza, emergencyCode,
+                        pickuplocation, synthesis, destination, asl);
+
+                // Add the new {@link Earthquake} to the list of earthquakes.
+                missions.add(missionObj);
+            }
+
+        } catch (JSONException e) {
+            // If an error is thrown when executing any of the above statements in the "try" block,
+            // catch the exception here, so the app doesn't crash. Print a log message
+            // with the message from the exception.
+            Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
+        }
+
+        // Return the list of earthquakes
+        return missions;
     }
 
     public static class callWebApi extends AsyncTask<String, Integer, Long> {
@@ -302,4 +376,5 @@ public final class QueryUtils {
             return 0l;
         }
     }
+
 }

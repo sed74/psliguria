@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,7 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.sed.federico.prontosoccorsoligura.Mission.MissionActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, LoaderCallbacks<HospitalListCustom> {
@@ -191,12 +190,34 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        Intent missionIntent = new Intent(MainActivity.this, MissionActivity.class);
         if (id == R.id.ps_activity) {
             // Handle the camera action
         } else if (id == R.id.nav_settings) {
             Intent settingsActivity = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(settingsActivity);
+        } else if (id == R.id.nav_genova || id == R.id.nav_imperia || id == R.id.nav_la_spezia ||
+                id == R.id.nav_lavagna || id == R.id.nav_savona) {
+            switch (id) {
+                case R.id.nav_genova:
+                    missionIntent.putExtra("hospital", "Genova");
+                    break;
+                case R.id.nav_imperia:
+                    missionIntent.putExtra("hospital", "Imperia");
+                    break;
+                case R.id.nav_la_spezia:
+                    missionIntent.putExtra("hospital", "LaSpezia");
+                    break;
+                case R.id.nav_lavagna:
+                    missionIntent.putExtra("hospital", "Lavagna");
+                    break;
+                case R.id.nav_savona:
+                    missionIntent.putExtra("hospital", "Savona");
+                    break;
+            }
+
+
+            startActivity(missionIntent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
