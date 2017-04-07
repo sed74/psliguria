@@ -66,7 +66,7 @@ public class MissionLoader extends AsyncTaskLoader<MissionListCustom> {
         }
 
         // Perform the network request, parse the response, and extract a list of earthquakes.
-        MissionListCustom hospitals = QueryUtils.fetchMissionData(mContext, mUrl);
-        return hospitals;
+        MissionListCustom missions = QueryUtils.fetchMissionData(mContext, mUrl);
+        return missions;
     }
 }

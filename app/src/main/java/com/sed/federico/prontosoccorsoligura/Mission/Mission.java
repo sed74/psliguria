@@ -18,7 +18,8 @@ public class Mission {
     private HashMap<String, String> mPubblicaAssistenza;
     private String mCode;
     private String mLocation;
-    private MissionSynthesis mSynthesis;
+    private MissionSynthesis mMissionSynthesis;
+    private String mSynthesis;
     private String mDestination;
     private String mAsl;
 
@@ -35,7 +36,8 @@ public class Mission {
         this.mPostazione = pubblicaAssitenza;
         this.mCode = code;
         this.mLocation = location;
-        this.mSynthesis = new MissionSynthesis(mContext, synthesis);
+        this.mSynthesis = synthesis;
+        this.mMissionSynthesis = new MissionSynthesis(mContext, mSynthesis);
         this.mDestination = destination;
         this.mAsl = asl;
         initPostazione();
@@ -55,7 +57,6 @@ public class Mission {
         mPubblicaAssistenza.put("VER", "P.A. Croce Verde Genovese");
         mPubblicaAssistenza.put("BIA", "P.A. Croce Bianca Genovese");
         mPubblicaAssistenza.put("ISO", "P.A. Isoverde");
-        mPubblicaAssistenza.put("BOL", "P.A. Bolzaneto");
         mPubblicaAssistenza.put("SES", "P.A. Sestri Ponente");
         mPubblicaAssistenza.put("PRA", "P.A. Prato");
         mPubblicaAssistenza.put("PGL", "P.A. Croce Verde Pegliese");
@@ -84,6 +85,9 @@ public class Mission {
         mPubblicaAssistenza.put("SGT", "P.A. Croce Verde San Gottardo");
         mPubblicaAssistenza.put("SQR", "P.A. Croce Rosa San Quirico");
         mPubblicaAssistenza.put("FEG", "P.A. Croce Azzurra Fegino");
+        mPubblicaAssistenza.put("MEL", "P.A. Croce Verde Mele");
+        mPubblicaAssistenza.put("COR", "P.A. Croce Bianca Cornigliano");
+        mPubblicaAssistenza.put("RUT", "P.A. Volontari Del Soccorso Ruta Di Camogli");
 
 
         //BUR
@@ -94,7 +98,6 @@ public class Mission {
 //        mPubblicaAssistenza.put("", "P.A. Croce Azzurra Bavari");
 //        mPubblicaAssistenza.put("", "P.A. Croce Azzurra Borzoli");
 //        mPubblicaAssistenza.put("", "P.A. Croce Azzurra Moneglia");
-//        mPubblicaAssistenza.put("", "P.A. Croce Bianca Cornigliano");
 //        mPubblicaAssistenza.put("", "P.A. Croce Bianca Mignanego");
 //        mPubblicaAssistenza.put("", "P.A. Croce Bianca Rapallese");
 //        mPubblicaAssistenza.put("", "P.A. Croce Bianca San Desiderio");
@@ -109,7 +112,6 @@ public class Mission {
 //        mPubblicaAssistenza.put("", "P.A. Croce Verde Crocefieschi");
 //        mPubblicaAssistenza.put("", "P.A. Croce Verde Isoverde");
 //        mPubblicaAssistenza.put("", "P.A. Croce Verde Lumarzo");
-//        mPubblicaAssistenza.put("", "P.A. Croce Verde Mele");
 //        mPubblicaAssistenza.put("", "P.A. Croce Verde Quarto");
 //        mPubblicaAssistenza.put("", "P.A. Croce Verde Quinto");
 //        mPubblicaAssistenza.put("", "P.A. Croce Verde Recco");
@@ -119,7 +121,6 @@ public class Mission {
 //        mPubblicaAssistenza.put("", "P.A. G.A.U. Struppa");
 //        mPubblicaAssistenza.put("", "P.A. Nerviese");
 //        mPubblicaAssistenza.put("", "P.A. Volontari Del Soccorso Alta Val Trebbia");
-//        mPubblicaAssistenza.put("", "P.A. Volontari Del Soccorso Ruta Di Camogli");
 //        mPubblicaAssistenza.put("", "P.A. Volontari Del Soccorso Sestri Levante");
 //
 //
@@ -234,12 +235,12 @@ public class Mission {
         this.mLocation = location;
     }
 
-    public MissionSynthesis getSynthesis() {
-        return mSynthesis;
+    public MissionSynthesis getMissionSynthesis() {
+        return mMissionSynthesis;
     }
 
     public void setSynthesis(String synthesis) {
-        this.mSynthesis = new MissionSynthesis(mContext, synthesis);
+        this.mMissionSynthesis = new MissionSynthesis(mContext, synthesis);
     }
 
     public String getDestination() {
@@ -256,5 +257,17 @@ public class Mission {
 
     public void setAsl(String asl) {
         this.mAsl = asl;
+    }
+
+    public String getPickUpLocation() {
+        return mMissionSynthesis.getPickUpLocation();
+    }
+
+    public String getCharlie() {
+        return mMissionSynthesis.getPatologia();
+    }
+
+    public String getEmergencyCode() {
+        return mMissionSynthesis.getEmergencyCode();
     }
 }

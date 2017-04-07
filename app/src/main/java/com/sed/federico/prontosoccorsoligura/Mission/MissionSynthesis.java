@@ -72,7 +72,11 @@ public class MissionSynthesis {
         return mEmergencyCode.get(mCode);
     }
 
-    public String getCharlie() {
+    public String getPatologia() {
         return mCharlieCode.get(mCharlie);
+    }
+
+    public String getCharlieCode() {
+        return mCharlie;
     }
 }

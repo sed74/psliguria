@@ -150,4 +150,8 @@
     <string name="not_implemented_yet">Funzionalità non ancora implementata.</string>
     <string name="sort_by_postazione">Ordina per P.A.</string>
     <string name="sort_by_mission">Ordina per numero missione</string>
+    <string name="pickup_location">Luogo di intervento:</string>
+    <string name="charlie_code">Codice Charlie:</string>
+    <string name="india_code">Codice assegnato:</string>
+    <string name="destination_hospital">Ospedale destinazione:</string>
 </resources>

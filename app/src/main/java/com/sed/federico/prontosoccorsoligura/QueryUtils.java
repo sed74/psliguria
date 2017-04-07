@@ -127,7 +127,7 @@ public final class QueryUtils {
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setReadTimeout(10000 /* milliseconds */);
             urlConnection.setConnectTimeout(15000 /* milliseconds */);
-            urlConnection.setRequestProperty("PSGE", "SzeBmdMIEKQdsgpuk63Ipm6OXbH7b9Gx48FW7q2J");
+            urlConnection.setRequestProperty("PSGE", SecurityToken.mSecurityToken);
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
@@ -355,7 +355,7 @@ public final class QueryUtils {
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setReadTimeout(10000 /* milliseconds */);
                 urlConnection.setConnectTimeout(15000 /* milliseconds */);
-                urlConnection.setRequestProperty("PSGE", "SzeBmdMIEKQdsgpuk63Ipm6OXbH7b9Gx48FW7q2J");
+                urlConnection.setRequestProperty("PSGE", SecurityToken.mSecurityToken);
 //            urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
 

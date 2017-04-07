@@ -28,7 +28,6 @@ import com.sed.federico.prontosoccorsoligura.Hospital;
 import com.sed.federico.prontosoccorsoligura.R;
 
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * An {@link MissionAdapter} knows how to create a list item layout for each earthquake
@@ -87,7 +86,7 @@ public class MissionAdapter extends ArrayAdapter<Mission> {
         // Set the color on the magnitude circle
         magnitudeCircle.setColor(magnitudeColor);
 
-        TextView croceName = (TextView) listItemView.findViewById(R.id.croce_name);
+        TextView croceName = (TextView) listItemView.findViewById(R.id.pickup_location);
         croceName.setText(currentMission.getPubblicaAssistenza());
 
         TextView ambulanceNo = (TextView) listItemView.findViewById(R.id.ambulance_no);
