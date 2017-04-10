@@ -29,7 +29,8 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import java.util.ArrayList;
 
 public class HospitalActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, LoaderManager.LoaderCallbacks<HospitalListCustom> {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        LoaderManager.LoaderCallbacks<HospitalListCustom> {
 
     private static final int HOSPITAL_LOADER_ID = 2;
     private BarChart barChartWaiting;

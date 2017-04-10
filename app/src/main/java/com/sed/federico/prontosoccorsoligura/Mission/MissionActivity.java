@@ -7,12 +7,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,12 +17,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sed.federico.prontosoccorsoligura.HospitalActivity;
 import com.sed.federico.prontosoccorsoligura.MainActivity;
 import com.sed.federico.prontosoccorsoligura.R;
-import com.sed.federico.prontosoccorsoligura.SettingsActivity;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -42,12 +35,14 @@ public class MissionActivity extends AppCompatActivity
     private static final int HOSPITAL_LOADER_ID = 1;
     private static final String EXTRA_MISSION_POSITION = "position";
     private static MissionListCustom mMissions;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     /**
      * Adapter for the list of earthquakes
      */
 
     private MissionAdapter mAdapter;
     private String mActualURL;
+    private String mHospitalName;
 
     public static MissionListCustom getHospitals() {
         return mMissions;
@@ -61,10 +56,17 @@ public class MissionActivity extends AppCompatActivity
         // Find a reference to the {@link ListView} in the layout
         ListView missionListView = (ListView) findViewById(R.id.list);
 
-        Intent intent = getIntent();
+        Bundle bundle = savedInstanceState != null ? savedInstanceState : getIntent().getExtras();
+        mHospitalName = bundle.getString(MainActivity.EXTRA_HOSPITAL_NAME);
+//        if (savedInstanceState == null){
+//            Intent intent = getIntent();
+//            mHospitalName = intent.getStringExtra(MainActivity.EXTRA_HOSPITAL_NAME);
+//        }else{
+//            mHospitalName = savedInstanceState.getString(MainActivity.EXTRA_HOSPITAL_NAME);
+//        }
 
-        mActualURL = MISSION_REQUEST_BASE_URL + "/" + intent.getStringExtra("hospital");
-        this.setTitle(intent.getStringExtra("hospital"));
+        mActualURL = MISSION_REQUEST_BASE_URL + "/" + mHospitalName;
+        this.setTitle(mHospitalName);
 
         // Create a new adapter that takes an empty list of earthquakes as input
         mAdapter = new MissionAdapter(this, new MissionListCustom());
@@ -107,29 +109,47 @@ public class MissionActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent missionIntent = new Intent(MissionActivity.this, HospitalActivity.class);
+                Intent missionIntent = new Intent(MissionActivity.this, MissionDetail.class);
 
-                missionIntent.putExtra(EXTRA_MISSION_POSITION, position);
-//                startActivity(missionIntent);
+                Mission local = mMissions.get(position);
+                missionIntent.putExtra(MissionDetail.EXTRA_PA_NAME, local.getPubblicaAssistenza());
+                missionIntent.putExtra(MissionDetail.EXTRA_CHARLIE_CODE, local.getCharlie());
+                missionIntent.putExtra(MissionDetail.EXTRA_DEST_HOSPITAL, local.getDestination());
+                missionIntent.putExtra(MissionDetail.EXTRA_INDIA_CODE, local.getEmergencyCode());
+                missionIntent.putExtra(MissionDetail.EXTRA_LOCATION, local.getLocation());
+                missionIntent.putExtra(MissionDetail.EXTRA_MISSION_NO, local.getMissionNo());
+                missionIntent.putExtra(MissionDetail.EXTRA_PICKUP_LOCATION, local.getPickUpLocation());
+                missionIntent.putExtra(MissionDetail.EXTRA_AMBULANCE_NO, local.getAmbulanceNo());
+                missionIntent.putExtra(MissionDetail.EXTRA_CODE, local.getCode());
+                startActivity(missionIntent);
 
-                Toast toast = Toast.makeText(MissionActivity.this, getString(R.string.not_implemented_yet), Toast.LENGTH_SHORT);
+//                Toast toast = Toast.makeText(MissionActivity.this, getString(R.string.not_implemented_yet), Toast.LENGTH_SHORT);
 //                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
+//                toast.show();
             }
         });
 
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshView();
+            }
+        });
+
+
     }
 
-   /* @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }*/
 
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save the user's current game state
+        savedInstanceState.putString(MainActivity.EXTRA_HOSPITAL_NAME, mHospitalName);
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(savedInstanceState);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -219,13 +239,16 @@ public class MissionActivity extends AppCompatActivity
             text.setVisibility(View.VISIBLE);
         }
 
-        Collections.sort(hospitals, new Comparator<Mission>() {
-            @Override
-            public int compare(Mission o1, Mission o2) {
-                return o1.getmPostazione().compareToIgnoreCase(o2.getmPostazione());
-            }
+        if (hospitals != null) {
+            Collections.sort(hospitals, new Comparator<Mission>() {
+                @Override
+                public int compare(Mission o1, Mission o2) {
+                    return o1.getmPostazione().compareToIgnoreCase(o2.getmPostazione());
+                }
 
-        });
+            });
+        }
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
 

@@ -154,4 +154,5 @@
     <string name="charlie_code">Codice Charlie:</string>
     <string name="india_code">Codice assegnato:</string>
     <string name="destination_hospital">Ospedale destinazione:</string>
+    <string name="title_mission_detail">Dettaglio Missione</string>
 </resources>

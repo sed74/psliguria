@@ -23,8 +23,8 @@ public class MissionSynthesis {
     public MissionSynthesis(Context context, String missionCode) {
         mContext = context;
         mLocation = missionCode.substring(0, 1);
-        mCharlie = missionCode.substring(1, 3);
-        mCode = missionCode.substring(3, 4);
+        mCharlie = missionCode.substring(1, 4);
+        mCode = missionCode.substring(4, 5);
         init();
     }
 

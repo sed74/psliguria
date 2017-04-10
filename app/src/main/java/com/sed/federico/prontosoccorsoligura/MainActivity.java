@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity
      */
     private static final int HOSPITAL_LOADER_ID = 1;
     private static HospitalListCustom mHospitals;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     /**
      * Adapter for the list of earthquakes
      */
@@ -133,6 +135,14 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshView();
+            }
+        });
+
     }
 
     @Override
@@ -200,19 +210,19 @@ public class MainActivity extends AppCompatActivity
                 id == R.id.nav_lavagna || id == R.id.nav_savona) {
             switch (id) {
                 case R.id.nav_genova:
-                    missionIntent.putExtra("hospital", "Genova");
+                    missionIntent.putExtra(EXTRA_HOSPITAL_NAME, "Genova");
                     break;
                 case R.id.nav_imperia:
-                    missionIntent.putExtra("hospital", "Imperia");
+                    missionIntent.putExtra(EXTRA_HOSPITAL_NAME, "Imperia");
                     break;
                 case R.id.nav_la_spezia:
-                    missionIntent.putExtra("hospital", "LaSpezia");
+                    missionIntent.putExtra(EXTRA_HOSPITAL_NAME, "LaSpezia");
                     break;
                 case R.id.nav_lavagna:
-                    missionIntent.putExtra("hospital", "Lavagna");
+                    missionIntent.putExtra(EXTRA_HOSPITAL_NAME, "Lavagna");
                     break;
                 case R.id.nav_savona:
-                    missionIntent.putExtra("hospital", "Savona");
+                    missionIntent.putExtra(EXTRA_HOSPITAL_NAME, "Savona");
                     break;
             }
 
@@ -258,6 +268,7 @@ public class MainActivity extends AppCompatActivity
             text.setVisibility(View.VISIBLE);
         }
 
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

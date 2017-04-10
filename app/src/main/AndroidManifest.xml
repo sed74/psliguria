@@ -43,6 +43,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".Mission.MissionDetail"
+            android:label="@string/title_mission_detail"
+            android:parentActivityName=".Mission.MissionActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Mission.MissionActivity" />
+        </activity>
     </application>
 
 </manifest>

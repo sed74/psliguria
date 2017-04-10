@@ -264,7 +264,7 @@ public class Mission {
     }
 
     public String getCharlie() {
-        return mMissionSynthesis.getPatologia();
+        return mMissionSynthesis.getCharlieCode() + " - " + mMissionSynthesis.getPatologia();
     }
 
     public String getEmergencyCode() {
