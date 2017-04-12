@@ -13,5 +13,10 @@
     <color name="hospital_entry_bck">#d1d1d1</color>
     <color name="mission_list_bck">#d1d1d1</color>
     <color name="obi">#1e8bf9</color>
+    <color name="light_blue">#81839b</color>
+    <color name="blue">#1d2897</color>
+    <color name="tab_text_color">#A8A19E</color>
+    <color name="tab_page_back_color">#4A312A</color>
+    <color name="tab_selected_text">#FFFFFF</color>
 
 </resources>

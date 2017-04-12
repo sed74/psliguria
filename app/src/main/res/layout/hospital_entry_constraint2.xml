@@ -246,5 +246,16 @@
         app:layout_constraintTop_toBottomOf="@+id/running_green"
         tools:text="10" />
 
+    <TextView
+        android:id="@+id/total_people"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Tot:70 " />
+
 
 </android.support.constraint.ConstraintLayout>

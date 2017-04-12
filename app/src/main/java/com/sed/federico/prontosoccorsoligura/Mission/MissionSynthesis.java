@@ -1,6 +1,7 @@
 package com.sed.federico.prontosoccorsoligura.Mission;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.sed.federico.prontosoccorsoligura.R;
 
@@ -22,9 +23,15 @@ public class MissionSynthesis {
 
     public MissionSynthesis(Context context, String missionCode) {
         mContext = context;
-        mLocation = missionCode.substring(0, 1);
-        mCharlie = missionCode.substring(1, 4);
-        mCode = missionCode.substring(4, 5);
+        if (missionCode.length() == 5) {
+            mLocation = missionCode.substring(0, 1);
+            mCharlie = missionCode.substring(1, 4);
+            mCode = missionCode.substring(4, 5);
+        } else {
+            mLocation = "N/A";
+            mCharlie = "N/A";
+            mCode = "N/A";
+        }
         init();
     }
 

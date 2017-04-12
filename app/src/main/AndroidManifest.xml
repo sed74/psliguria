@@ -51,6 +51,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Mission.MissionActivity" />
         </activity>
+        <activity android:name=".MissionFragmentActivity"></activity>
     </application>
 
 </manifest>

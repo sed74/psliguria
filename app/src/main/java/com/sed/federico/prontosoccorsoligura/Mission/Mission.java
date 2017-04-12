@@ -77,6 +77,8 @@ public class Mission {
         mPubblicaAssistenza.put("CRGENO", "Croce Rossa Genova");
         mPubblicaAssistenza.put("CRRONC", "Croce Rossa Ronco Scrivia");
         mPubblicaAssistenza.put("CRVTR", "Croce Rossa Voltri");
+        mPubblicaAssistenza.put("CRCMOR", "Croce Rossa Campomorone");
+        mPubblicaAssistenza.put("CRDAVA", "Croce Rossa Davagna");
         mPubblicaAssistenza.put("CRSTUR", "Croce Rossa Sturla");
         mPubblicaAssistenza.put("FIU", "Volontari Del Soccorso Fiumara");
         mPubblicaAssistenza.put("BUR", "P.A. Croce Verde San Gottardo - Sezione Burlando");
@@ -84,10 +86,18 @@ public class Mission {
         mPubblicaAssistenza.put("MOL", "P.A. Molassana");
         mPubblicaAssistenza.put("SGT", "P.A. Croce Verde San Gottardo");
         mPubblicaAssistenza.put("SQR", "P.A. Croce Rosa San Quirico");
+        mPubblicaAssistenza.put("QUA", "P.A. Croce Verde Quarto dei Mille");
         mPubblicaAssistenza.put("FEG", "P.A. Croce Azzurra Fegino");
         mPubblicaAssistenza.put("MEL", "P.A. Croce Verde Mele");
-        mPubblicaAssistenza.put("COR", "P.A. Croce Bianca Cornigliano");
+        mPubblicaAssistenza.put("BOR", "P.A. Croce Bianca Cornigliano");
         mPubblicaAssistenza.put("RUT", "P.A. Volontari Del Soccorso Ruta Di Camogli");
+        mPubblicaAssistenza.put("NER", "P.A. Nerviese");
+        mPubblicaAssistenza.put("RCC", "P.A. Croce Verde Recco");
+        mPubblicaAssistenza.put("MISGE", "P.A. Misericordia Genova Centro");
+        mPubblicaAssistenza.put("CAS", "P.A. Croce Verde Casellese");
+        mPubblicaAssistenza.put("STR", "P.A. G.A.U. Struppa");
+        mPubblicaAssistenza.put("CAM", "P.A. Croce Verde Camogliese");
+        mPubblicaAssistenza.put("VAL", "P.A. Croce Bianca Valsecca");
 
 
         //BUR
@@ -103,23 +113,17 @@ public class Mission {
 //        mPubblicaAssistenza.put("", "P.A. Croce Bianca San Desiderio");
 //        mPubblicaAssistenza.put("", "P.A. Croce Bianca Tiglieto");
 //        mPubblicaAssistenza.put("", "P.A. Croce Bianca Torrazza");
-//        mPubblicaAssistenza.put("", "P.A. Croce Bianca Valsecca");
 //        mPubblicaAssistenza.put("", "P.A. Croce D'oro Fascia");
 //        mPubblicaAssistenza.put("", "P.A. Croce D'oro Sciarborasca");
 //        mPubblicaAssistenza.put("", "P.A. Croce Rosa Di Trensasco");
-//        mPubblicaAssistenza.put("", "P.A. Croce Verde Camogliese");
-//        mPubblicaAssistenza.put("", "P.A. Croce Verde Casellese");
 //        mPubblicaAssistenza.put("", "P.A. Croce Verde Crocefieschi");
 //        mPubblicaAssistenza.put("", "P.A. Croce Verde Isoverde");
 //        mPubblicaAssistenza.put("", "P.A. Croce Verde Lumarzo");
 //        mPubblicaAssistenza.put("", "P.A. Croce Verde Quarto");
 //        mPubblicaAssistenza.put("", "P.A. Croce Verde Quinto");
-//        mPubblicaAssistenza.put("", "P.A. Croce Verde Recco");
 //        mPubblicaAssistenza.put("", "P.A. Croce Verde Sestri Ponente");
 //        mPubblicaAssistenza.put("", "P.A. Croce Verde Vobbia - C/O Grosso Zaverio");
 //        mPubblicaAssistenza.put("", "P.A. Fontanigorda");
-//        mPubblicaAssistenza.put("", "P.A. G.A.U. Struppa");
-//        mPubblicaAssistenza.put("", "P.A. Nerviese");
 //        mPubblicaAssistenza.put("", "P.A. Volontari Del Soccorso Alta Val Trebbia");
 //        mPubblicaAssistenza.put("", "P.A. Volontari Del Soccorso Sestri Levante");
 //

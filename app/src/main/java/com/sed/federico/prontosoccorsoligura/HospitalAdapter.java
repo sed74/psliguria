@@ -41,6 +41,7 @@ public class HospitalAdapter extends ArrayAdapter<Hospital> {
      * whether or not there is a location offset present ("5km N of Cairo, Egypt").
      */
     private static final String LOCATION_SEPARATOR = " of ";
+    Context mContext;
 
     /**
      * Constructs a new {@link HospitalAdapter}.
@@ -50,6 +51,7 @@ public class HospitalAdapter extends ArrayAdapter<Hospital> {
      */
     public HospitalAdapter(Context context, List<Hospital> hospitals) {
         super(context, 0, hospitals);
+        mContext = context;
     }
 
     /**
@@ -99,6 +101,10 @@ public class HospitalAdapter extends ArrayAdapter<Hospital> {
 
         TextView rr = (TextView) listItemView.findViewById(R.id.running_red);
         rr.setText(String.valueOf(currentHospital.getRedRunning()));
+
+        TextView total = (TextView) listItemView.findViewById(R.id.total_people);
+        total.setText(mContext.getString(R.string.total_people, currentHospital.getTotal()));
+
 
         TextView obi = (TextView) listItemView.findViewById(R.id.obi);
         if (currentHospital.getHasOBI()) {

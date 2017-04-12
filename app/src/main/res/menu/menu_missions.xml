@@ -8,6 +8,12 @@
         android:title="@string/refresh"
         app:showAsAction="always" />
     <item
+        android:id="@+id/where_is_drago"
+        android:icon="@drawable/helicopter_solid"
+        android:orderInCategory="150"
+        android:title="@string/where_is_drago"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_sort_by_postazione"
         android:orderInCategory="200"
         android:title="@string/sort_by_postazione"

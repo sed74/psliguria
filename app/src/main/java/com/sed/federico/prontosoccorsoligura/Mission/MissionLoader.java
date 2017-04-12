@@ -18,8 +18,6 @@ package com.sed.federico.prontosoccorsoligura.Mission;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 
-import com.sed.federico.prontosoccorsoligura.Hospital;
-import com.sed.federico.prontosoccorsoligura.HospitalListCustom;
 import com.sed.federico.prontosoccorsoligura.QueryUtils;
 
 /**
@@ -28,16 +26,13 @@ import com.sed.federico.prontosoccorsoligura.QueryUtils;
  */
 public class MissionLoader extends AsyncTaskLoader<MissionListCustom> {
 
-    /**
-     * Tag for log messages
-     */
-    private static final String LOG_TAG = Hospital.class.getName();
     private Context mContext;
 
     /**
      * Query URL
      */
     private String mUrl;
+    private String[] mUrls;
 
     /**
      * Constructs a new {@link MissionLoader}.
@@ -51,6 +46,12 @@ public class MissionLoader extends AsyncTaskLoader<MissionListCustom> {
         mContext = context;
     }
 
+    public MissionLoader(Context context, String[] url) {
+        super(context);
+        mUrls = url;
+        mContext = context;
+    }
+
     @Override
     protected void onStartLoading() {
         forceLoad();
@@ -61,12 +62,20 @@ public class MissionLoader extends AsyncTaskLoader<MissionListCustom> {
      */
     @Override
     public MissionListCustom loadInBackground() {
-        if (mUrl == null) {
+        if (mUrl == null && mUrls.length == 0) {
             return null;
         }
-
-        // Perform the network request, parse the response, and extract a list of earthquakes.
-        MissionListCustom missions = QueryUtils.fetchMissionData(mContext, mUrl);
-        return missions;
+        if (mUrl != null) {
+            // Perform the network request, parse the response, and extract a list of earthquakes.
+            return QueryUtils.fetchMissionData(mContext, mUrl);
+        } else {
+            MissionListCustom missions = new MissionListCustom();
+            for (String url :
+                    mUrls) {
+                MissionListCustom temp = QueryUtils.fetchMissionData(mContext, url);
+                missions.addAll(temp);
+            }
+            return missions;
+        }
     }
 }

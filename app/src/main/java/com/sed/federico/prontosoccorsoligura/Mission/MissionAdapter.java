@@ -68,7 +68,7 @@ public class MissionAdapter extends ArrayAdapter<Mission> {
         View listItemView = convertView;
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.mission_list, parent, false);
+                    R.layout.mission_list_clickable, parent, false);
         }
 
         // Find the earthquake at the given position in the list of earthquakes
@@ -86,19 +86,34 @@ public class MissionAdapter extends ArrayAdapter<Mission> {
         // Set the color on the magnitude circle
         magnitudeCircle.setColor(magnitudeColor);
 
-        TextView croceName = (TextView) listItemView.findViewById(R.id.pickup_location);
+        TextView croceName = (TextView) listItemView.findViewById(R.id.pa_name);
         croceName.setText(currentMission.getPubblicaAssistenza());
 
         TextView ambulanceNo = (TextView) listItemView.findViewById(R.id.ambulance_no);
         ambulanceNo.setText(currentMission.getAmbulanceNo());
 
         TextView mission = (TextView) listItemView.findViewById(R.id.mission);
-        mission.setText(String.format(mContext.getString(R.string.mission_label),
-                currentMission.getMissionNo()));
+        mission.setText(currentMission.getMissionNo());
 
         TextView location = (TextView) listItemView.findViewById(R.id.location);
-        location.setText(String.format(mContext.getString(R.string.location_label),
-                currentMission.getLocation()));
+        location.setText(currentMission.getLocation());
+
+        TextView pickupLocation = (TextView) listItemView.findViewById(R.id.pickup_location);
+        pickupLocation.setText(currentMission.getPickUpLocation());
+
+        TextView charlieCode = (TextView) listItemView.findViewById(R.id.charlie_code);
+        charlieCode.setText(currentMission.getCharlie());
+
+        String indiaCodeText = currentMission.getCode().substring(0, 1).toUpperCase() +
+                currentMission.getCode().substring(1).toLowerCase();
+
+        TextView indiaCode = (TextView) listItemView.findViewById(R.id.india_code);
+        indiaCode.setText(indiaCodeText);
+
+        TextView hospital = (TextView) listItemView.findViewById(R.id.hospital);
+        hospital.setText(currentMission.getDestination());
+
+        listItemView.setTag(false);
 
         // Return the list item view that is now showing the appropriate data
         return listItemView;

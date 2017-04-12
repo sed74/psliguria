@@ -1,5 +1,6 @@
 package com.sed.federico.prontosoccorsoligura;
 
+import android.app.ActivityOptions;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.Intent;
@@ -14,10 +15,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,6 +29,10 @@ import android.widget.Toast;
 
 import com.sed.federico.prontosoccorsoligura.Mission.MissionActivity;
 
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
+import android.widget.LinearLayout.LayoutParams;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, LoaderCallbacks<HospitalListCustom> {
 
@@ -225,9 +233,10 @@ public class MainActivity extends AppCompatActivity
                     missionIntent.putExtra(EXTRA_HOSPITAL_NAME, "Savona");
                     break;
             }
-
-
-            startActivity(missionIntent);
+            View view = findViewById(R.id.list);
+            ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
+                    0, view.getWidth(), view.getHeight());
+            startActivity(missionIntent, options.toBundle());
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -276,5 +285,6 @@ public class MainActivity extends AppCompatActivity
         // Loader reset, so we can clear out our existing data.
 //        mAdapter.clear();
     }
+
 
 }

@@ -318,8 +318,8 @@ public final class QueryUtils {
 
                 // Create a new {@link Earthquake} object with the magnitude, location, time,
                 // and url from the JSON Hospital.
-                Mission missionObj = new Mission(context, mission, ambulance, pubblicaAssistenza, emergencyCode,
-                        pickuplocation, synthesis, destination, asl);
+                Mission missionObj = new Mission(context, mission, ambulance, pubblicaAssistenza,
+                        emergencyCode, pickuplocation, synthesis, destination, asl);
 
                 // Add the new {@link Earthquake} to the list of earthquakes.
                 missions.add(missionObj);

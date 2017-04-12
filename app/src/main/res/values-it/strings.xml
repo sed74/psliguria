@@ -150,4 +150,20 @@
     <string name="not_implemented_yet">Funzionalità non ancora implementata.</string>
     <string name="sort_by_postazione">Ordina per P.A.</string>
     <string name="sort_by_mission">Ordina per numero missione</string>
+    <string name="total_people">Tot. %1$d</string>
+    <string name="charlie_code">Charlie:</string>
+    <string name="charlie_code_text">Codice Charlie: %1$s</string>
+    <string name="destination_hospital">Ospedale destinazione:</string>
+    <string name="destination_hospital_text">Ospedale destinazione: %1$s</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="india_code">Codice india:</string>
+    <string name="india_code_text">Codice india: %1$s</string>
+    <string name="invalid_synthesis_code">Codice sintesi invalido: %1$s</string>
+    <string name="pickup_location">Luogo di intervento:</string>
+    <string name="pickup_location_text">Luogo di intervento: %1$s</string>
+    <string name="title_mission_detail">Dettaglio Missione</string>
+    <string name="get_all_missions">Visualizza tutte le missioni</string>
+    <string name="where_is_drago">Dov\'è Drago?</string>
+    <string name="drago_is">Drago è a %1$s</string>
+    <string name="drago_is_not_working">Drago non è operativo in questo momento</string>
 </resources>

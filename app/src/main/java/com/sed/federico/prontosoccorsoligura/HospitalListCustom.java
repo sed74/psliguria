@@ -16,8 +16,8 @@ public class HospitalListCustom extends ArrayList<Hospital> {
 
     @Override
     public boolean add(Hospital hospital) {
-        if (hospital.getMaxNo() > mMaxGlobalValue)
-            mMaxGlobalValue = hospital.getMaxNo();
+
+        mMaxGlobalValue = Math.max(hospital.getMaxNo(), mMaxGlobalValue);
 
         return super.add(hospital);
     }
