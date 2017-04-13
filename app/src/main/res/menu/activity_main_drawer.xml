@@ -29,6 +29,27 @@
                 android:title="@string/savona" />
         </menu>
     </item>
+    <item android:title="@string/legend">
+        <menu>
+            <item
+                android:id="@+id/nav_emergency_code_legend"
+                android:icon="@drawable/ic_help_box_black_24dp"
+                android:title="@string/emergency_code_legend" />
+            <item
+                android:id="@+id/nav_charlie_code_legend"
+                android:icon="@drawable/ic_help_box_black_24dp"
+                android:title="@string/charlie_code_legend" />
+        </menu>
+    </item>
+    <group
+        android:id="@+id/menu_about"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_information_black_24dp"
+            android:title="@string/about"
+            android:visible="false" />
+    </group>
     <group
         android:id="@+id/menu_bottom"
         android:checkableBehavior="none">

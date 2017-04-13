@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.sed.federico.prontosoccorsoligura.AsyncDownloader;
 import com.sed.federico.prontosoccorsoligura.MainActivity;
+import com.sed.federico.prontosoccorsoligura.QueryUtils;
 import com.sed.federico.prontosoccorsoligura.R;
 
 import java.util.Collections;
@@ -110,18 +112,19 @@ public class MissionActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                boolean isSelected = (boolean) view.getTag();
+                if (getResources().getConfiguration().screenWidthDp < QueryUtils.TABLET_MIN_WIDTH) {
 
-                ListView lv = missionListView;
-                int childCount = lv.getChildCount();
+                    boolean isSelected = (boolean) view.getTag();
 
-                for (int i = 0; i < childCount; i++) {
-                    View v = lv.getChildAt(i);
-                    setVisibility(v, false);
+                    ListView lv = missionListView;
+                    int childCount = lv.getChildCount();
+
+                    for (int i = 0; i < childCount; i++) {
+                        View v = lv.getChildAt(i);
+                        setVisibility(v, false);
+                    }
+                    setVisibility(view, !isSelected);
                 }
-
-                setVisibility(view, !isSelected);
-
             }
         });
 
@@ -151,11 +154,12 @@ public class MissionActivity extends AppCompatActivity
         charlieCode.setVisibility(visibility);
         indiaCode.setVisibility(visibility);
         hospital.setVisibility(visibility);
-        view.setTag(isSelected);
         text1.setVisibility(visibility);
         text2.setVisibility(visibility);
         text3.setVisibility(visibility);
         text4.setVisibility(visibility);
+
+        view.setTag(isSelected);
     }
 
 
@@ -272,14 +276,16 @@ public class MissionActivity extends AppCompatActivity
         } else {
             toastText = getString(R.string.drago_is_not_working);
         }
-        Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(this, toastText, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
 
         View loadingIndicator = findViewById(R.id.loading_indicator);
         loadingIndicator.setVisibility(View.GONE);
     }
 
     @Override
-    public void onDownloadBegin() {
+    public void onDownloadStart() {
         View loadingIndicator = findViewById(R.id.loading_indicator);
         loadingIndicator.setVisibility(View.VISIBLE);
     }

@@ -51,7 +51,21 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Mission.MissionActivity" />
         </activity>
-        <activity android:name=".MissionFragmentActivity"></activity>
+        <activity android:name=".MissionFragmentActivity" />
+        <activity
+            android:name=".LegendActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".CharlieCodeActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
     </application>
 
 </manifest>

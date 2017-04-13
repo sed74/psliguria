@@ -25,8 +25,7 @@ public class AsyncDownloader extends AsyncTask<String, Void, MissionListCustom> 
         }
 
         MissionListCustom missions = new MissionListCustom();
-        for (String url :
-                params) {
+        for (String url : params) {
             MissionListCustom temp = QueryUtils.fetchMissionData(mContext, url);
             missions.addAll(temp);
         }
@@ -37,7 +36,7 @@ public class AsyncDownloader extends AsyncTask<String, Void, MissionListCustom> 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        mOnDownloadFinishedListener.onDownloadBegin();
+        mOnDownloadFinishedListener.onDownloadStart();
     }
 
     @Override
@@ -50,8 +49,6 @@ public class AsyncDownloader extends AsyncTask<String, Void, MissionListCustom> 
         } else {
             toastText = "";
         }
-
-
         mOnDownloadFinishedListener.onDownloadFinished(toastText);
     }
 
@@ -62,6 +59,6 @@ public class AsyncDownloader extends AsyncTask<String, Void, MissionListCustom> 
     public interface onDownloadFinishedListener {
         void onDownloadFinished(String location);
 
-        void onDownloadBegin();
+        void onDownloadStart();
     }
 }

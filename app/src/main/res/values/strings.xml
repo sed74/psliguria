@@ -168,4 +168,15 @@
     <string name="where_is_drago">Dov\'è Drago?</string>
     <string name="drago_is">Drago è a %1$s</string>
     <string name="drago_is_not_working">Drago non è operativo in questo momento</string>
+    <string name="code_white_label">Codice Bianco</string>
+    <string name="white_description">Viene assegnato ai casi senza caratteristiche di gravità.\nI pazienti vengono assistiti solo dopo aver fronteggiato le situazioni più urgenti.\nIn OSPEDALE: Queste prestazioni sono soggette al pagamento del ticket.\nVisita NON urgente, attesa indeterminata.\nPaziente non grave, dopo i codici rossi, gialli e verdi.</string>
+    <string name="green_description">Viene assegnato quando il paziente non è in pericolo di vita.\nL\'assistenza viene prestata con rapidità ma dopo aver risposto ai casi più urgenti.\nIn OSPEDALE: Queste prestazioni sono talvolta soggette al pagamento del ticket.\nVisita NON urgente, di norma entro 2 ore.\nPaziente non grave, dopo i codici rossi e gialli.</string>
+    <string name="red_description">Viene assegnato ai pazienti più gravi con pericolo immediato di vita.\nIn OSPEDALE: Il Pronto Soccorso si mobilita dando priorità assoluta al caso, in termini sia di personale sanitario che delle tecnologie a disposizione.\nVisita IMMEDIATA\nPaziente in apparente pericolo di vita.</string>
+    <string name="yellow_description">Viene assegnato ai pazienti con lesioni gravi, o serie alterazioni di una delle funzioni vitali (respiratoria, cardiocircolatoria, nervosa).\nIn OSPEDALE: Il personale sanitario si adopera per assicurare la massima rapidità di intervento.\nVisita URGENTE, di norma entro 20 minuti.\nPaziente grave, ma NON in apparente pericolo di vita.</string>
+    <string name="emergency_code">Codice emergenza</string>
+    <string name="help">Aiuto</string>
+    <string name="emergency_code_legend">Codici emergenza</string>
+    <string name="charlie_code_legend">Codici Charlie</string>
+    <string name="about">Info</string>
+    <string name="legend">Legenda</string>
 </resources>

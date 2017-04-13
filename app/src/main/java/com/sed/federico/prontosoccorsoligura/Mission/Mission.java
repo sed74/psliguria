@@ -77,8 +77,11 @@ public class Mission {
         mPubblicaAssistenza.put("CRGENO", "Croce Rossa Genova");
         mPubblicaAssistenza.put("CRRONC", "Croce Rossa Ronco Scrivia");
         mPubblicaAssistenza.put("CRVTR", "Croce Rossa Voltri");
+        mPubblicaAssistenza.put("CRSORI", "Croce Rossa Sori");
+        mPubblicaAssistenza.put("CRUSCI", "Croce Rossa Uscio");
         mPubblicaAssistenza.put("CRCMOR", "Croce Rossa Campomorone");
         mPubblicaAssistenza.put("CRDAVA", "Croce Rossa Davagna");
+        mPubblicaAssistenza.put("CRMONT", "Croce Rossa Montoggio");
         mPubblicaAssistenza.put("CRSTUR", "Croce Rossa Sturla");
         mPubblicaAssistenza.put("FIU", "Volontari Del Soccorso Fiumara");
         mPubblicaAssistenza.put("BUR", "P.A. Croce Verde San Gottardo - Sezione Burlando");
@@ -89,7 +92,7 @@ public class Mission {
         mPubblicaAssistenza.put("QUA", "P.A. Croce Verde Quarto dei Mille");
         mPubblicaAssistenza.put("FEG", "P.A. Croce Azzurra Fegino");
         mPubblicaAssistenza.put("MEL", "P.A. Croce Verde Mele");
-        mPubblicaAssistenza.put("BOR", "P.A. Croce Bianca Cornigliano");
+        mPubblicaAssistenza.put("COR", "P.A. Croce Bianca Cornigliano");
         mPubblicaAssistenza.put("RUT", "P.A. Volontari Del Soccorso Ruta Di Camogli");
         mPubblicaAssistenza.put("NER", "P.A. Nerviese");
         mPubblicaAssistenza.put("RCC", "P.A. Croce Verde Recco");
@@ -98,6 +101,7 @@ public class Mission {
         mPubblicaAssistenza.put("STR", "P.A. G.A.U. Struppa");
         mPubblicaAssistenza.put("CAM", "P.A. Croce Verde Camogliese");
         mPubblicaAssistenza.put("VAL", "P.A. Croce Bianca Valsecca");
+        mPubblicaAssistenza.put("MIG", "P.A. Croce Bianca Mignanego");
 
 
         //BUR
@@ -108,7 +112,6 @@ public class Mission {
 //        mPubblicaAssistenza.put("", "P.A. Croce Azzurra Bavari");
 //        mPubblicaAssistenza.put("", "P.A. Croce Azzurra Borzoli");
 //        mPubblicaAssistenza.put("", "P.A. Croce Azzurra Moneglia");
-//        mPubblicaAssistenza.put("", "P.A. Croce Bianca Mignanego");
 //        mPubblicaAssistenza.put("", "P.A. Croce Bianca Rapallese");
 //        mPubblicaAssistenza.put("", "P.A. Croce Bianca San Desiderio");
 //        mPubblicaAssistenza.put("", "P.A. Croce Bianca Tiglieto");

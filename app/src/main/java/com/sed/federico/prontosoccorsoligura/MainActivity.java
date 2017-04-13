@@ -47,17 +47,12 @@ public class MainActivity extends AppCompatActivity
      * This really only comes into play if you're using multiple loaders.
      */
     private static final int HOSPITAL_LOADER_ID = 1;
-    private static HospitalListCustom mHospitals;
     SwipeRefreshLayout mSwipeRefreshLayout;
     /**
      * Adapter for the list of earthquakes
      */
 
     private HospitalAdapter mAdapter;
-
-    public static HospitalListCustom getHospitals() {
-        return mHospitals;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,14 +203,23 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Intent missionIntent = new Intent(MainActivity.this, MissionActivity.class);
         if (id == R.id.ps_activity) {
             // Handle the camera action
         } else if (id == R.id.nav_settings) {
             Intent settingsActivity = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(settingsActivity);
+        } else if (id == R.id.nav_charlie_code_legend) {
+            Intent settingsActivity = new Intent(MainActivity.this, CharlieCodeActivity.class);
+            startActivity(settingsActivity);
+        } else if (id == R.id.nav_emergency_code_legend) {
+            Intent settingsActivity = new Intent(MainActivity.this, LegendActivity.class);
+            startActivity(settingsActivity);
+        } else if (id == R.id.nav_about) {
+//            Intent settingsActivity = new Intent(MainActivity.this, SettingsActivity.class);
+//            startActivity(settingsActivity);
         } else if (id == R.id.nav_genova || id == R.id.nav_imperia || id == R.id.nav_la_spezia ||
                 id == R.id.nav_lavagna || id == R.id.nav_savona) {
+            Intent missionIntent = new Intent(MainActivity.this, MissionActivity.class);
             switch (id) {
                 case R.id.nav_genova:
                     missionIntent.putExtra(EXTRA_HOSPITAL_NAME, "Genova");
@@ -271,7 +275,6 @@ public class MainActivity extends AppCompatActivity
         if (hospitals != null && !hospitals.isEmpty()) {
             mAdapter.addAll(hospitals);
             text.setVisibility(View.GONE);
-            mHospitals = hospitals;
         } else {
             text.setText(R.string.no_data_display);
             text.setVisibility(View.VISIBLE);

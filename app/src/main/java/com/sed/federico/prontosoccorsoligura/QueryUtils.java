@@ -40,6 +40,7 @@ import java.nio.charset.Charset;
  * Helper methods related to requesting and receiving earthquake data from USGS.
  */
 public final class QueryUtils {
+    public static final int TABLET_MIN_WIDTH = 720;
     public static final String HOSPITAL_NAME = "name";
     public static final String WHITE_WAITING = "whiteWaiting";
     public static final String GREEN_WAITING = "greenWaiting";
