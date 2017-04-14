@@ -177,4 +177,9 @@
     <string name="emergency_code_legend">Codici emergenza</string>
     <string name="about">Info</string>
     <string name="help">Aiuto</string>
+    <string name="centrali">Centrali</string>
+    <string name="title_activity_centrali">Centrali:</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="charlie_code_title">Codici Charlie</string>
+    <string name="looking_for_drago">Alla ricerca di Drago...</string>
 </resources>

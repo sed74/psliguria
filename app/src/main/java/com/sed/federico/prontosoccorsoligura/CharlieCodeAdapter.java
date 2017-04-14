@@ -55,13 +55,11 @@ public class CharlieCodeAdapter extends RecyclerView.Adapter<CharlieCodeAdapter.
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public View mView;
         public TextView mCharlieCode;
         public TextView mCharlieCodeDesc;
 
         public ViewHolder(View v) {
             super(v);
-            mView = v;
             mCharlieCode = (TextView) v.findViewById(R.id.charlie_code);
             mCharlieCodeDesc = (TextView) v.findViewById(R.id.charlie_code_description);
         }

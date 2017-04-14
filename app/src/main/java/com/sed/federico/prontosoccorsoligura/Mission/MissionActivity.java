@@ -1,6 +1,7 @@
 package com.sed.federico.prontosoccorsoligura.Mission;
 
 import android.app.LoaderManager.LoaderCallbacks;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -41,6 +42,7 @@ public class MissionActivity extends AppCompatActivity
     private static final int SORT_BY_POSTAZIONE = 2;
     private static MissionListCustom mMissions;
     SwipeRefreshLayout mSwipeRefreshLayout;
+    ProgressDialog mProgressDialog;
     private int mSortedBy = SORT_BY_MISSION;
     /**
      * Adapter for the list of Missions
@@ -259,6 +261,10 @@ public class MissionActivity extends AppCompatActivity
 
     private void whereIsDrago() {
 
+        mProgressDialog = new ProgressDialog(MissionActivity.this);
+        mProgressDialog.setMessage(getString(R.string.looking_for_drago));
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
 //        AsyncTask<String, Void, MissionListCustom> temp =
         new AsyncDownloader(getBaseContext(), this).execute(MISSION_REQUEST_BASE_URL + "Genova",
                 MISSION_REQUEST_BASE_URL + "Savona", MISSION_REQUEST_BASE_URL + "LaSpezia",
@@ -280,14 +286,18 @@ public class MissionActivity extends AppCompatActivity
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
 
-        View loadingIndicator = findViewById(R.id.loading_indicator);
-        loadingIndicator.setVisibility(View.GONE);
+        if (mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+
+//        View loadingIndicator = findViewById(R.id.loading_indicator);
+//        loadingIndicator.setVisibility(View.GONE);
     }
 
     @Override
-    public void onDownloadStart() {
-        View loadingIndicator = findViewById(R.id.loading_indicator);
-        loadingIndicator.setVisibility(View.VISIBLE);
+    public void onDownloadStarted() {
+//        View loadingIndicator = findViewById(R.id.loading_indicator);
+//        loadingIndicator.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -62,6 +62,12 @@ public final class QueryUtils {
     public static final String SYNTHESIS = "sintesi";
     public static final String DESTINATION = "destinazione";
     public static final String ASL = "asl";
+
+    public static final String CENTRALE_ID = "id";
+    public static final String CENTRALE_CODE = "code";
+    public static final String CENTRALE_DESCRIZIONE = "descrizione";
+    public static final String CENTRALE_CITTA = "citta";
+    public static final String CENTRALE_CENTRALE = "centrale";
     /**
      * Tag for the log messages
      */
@@ -96,6 +102,28 @@ public final class QueryUtils {
 
         // Return the list of {@link Earthquake}s
         return earthquakes;
+    }
+
+    /**
+     * Query the USGS dataset and return a list of {@link Hospital} objects.
+     */
+    public static CentraleListCustom fetchCentrali(String requestUrl) {
+        // Create URL object
+        URL url = createUrl(requestUrl);
+
+        // Perform HTTP request to the URL and receive a JSON response back
+        String jsonResponse = null;
+        try {
+            jsonResponse = makeHttpRequest(url);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Problem making the HTTP request.", e);
+        }
+
+        // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
+        CentraleListCustom centrali = extractCentraleFromJson(jsonResponse);
+
+        // Return the list of {@link Earthquake}s
+        return centrali;
     }
 
     /**
@@ -241,6 +269,53 @@ public final class QueryUtils {
 
         // Return the list of earthquakes
         return hospitals;
+    }
+
+    /**
+     * Return a list of {@link Hospital} objects that has been built up from
+     * parsing the given JSON response.
+     */
+    private static CentraleListCustom extractCentraleFromJson(String hospitalJSON) {
+        // If the JSON string is empty or null, then return early.
+        if (TextUtils.isEmpty(hospitalJSON)) {
+            return null;
+        }
+
+        // Create an empty ArrayList that we can start adding earthquakes to
+        CentraleListCustom centrali = new CentraleListCustom();
+
+        // Try to parse the JSON response string. If there's a problem with the way the JSON
+        // is formatted, a JSONException exception object will be thrown.
+        // Catch the exception so the app doesn't crash, and print the error message to the logs.
+        try {
+
+            JSONArray centraliArray = new JSONArray(hospitalJSON);
+
+            // For each earthquake in the earthquakeArray, create an {@link Earthquake} object
+            for (int i = 0; i < centraliArray.length(); i++) {
+                JSONObject hospitalJSONObj = centraliArray.getJSONObject(i);
+
+                int id = hospitalJSONObj.getInt(CENTRALE_ID);
+                String code = hospitalJSONObj.getString(CENTRALE_CODE);
+                String descr = hospitalJSONObj.getString(CENTRALE_DESCRIZIONE);
+                String city = hospitalJSONObj.getString(CENTRALE_CITTA);
+                String centrale = hospitalJSONObj.getString(CENTRALE_CENTRALE);
+
+                Centrale c = new Centrale(id, code, descr, city, centrale);
+
+                // Add the new {@link Earthquake} to the list of earthquakes.
+                centrali.add(c);
+            }
+
+        } catch (JSONException e) {
+            // If an error is thrown when executing any of the above statements in the "try" block,
+            // catch the exception here, so the app doesn't crash. Print a log message
+            // with the message from the exception.
+            Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
+        }
+
+        // Return the list of earthquakes
+        return centrali;
     }
 
     public static void callWebAPI(String requestUrl) {

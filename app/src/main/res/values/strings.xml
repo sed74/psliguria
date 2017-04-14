@@ -179,4 +179,9 @@
     <string name="charlie_code_legend">Codici Charlie</string>
     <string name="about">Info</string>
     <string name="legend">Legenda</string>
+    <string name="title_activity_centrali">Centrali:</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="centrali">Centrali</string>
+    <string name="charlie_code_title">Codici Charlie</string>
+    <string name="looking_for_drago">Alla ricerca di Drago...</string>
 </resources>

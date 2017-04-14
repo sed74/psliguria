@@ -20,6 +20,7 @@ public class AsyncDownloader extends AsyncTask<String, Void, MissionListCustom> 
 
     @Override
     protected MissionListCustom doInBackground(String... params) {
+        mOnDownloadFinishedListener.onDownloadStarted();
         if (params.length == 0) {
             return null;
         }
@@ -36,7 +37,7 @@ public class AsyncDownloader extends AsyncTask<String, Void, MissionListCustom> 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        mOnDownloadFinishedListener.onDownloadStart();
+
     }
 
     @Override
@@ -59,6 +60,6 @@ public class AsyncDownloader extends AsyncTask<String, Void, MissionListCustom> 
     public interface onDownloadFinishedListener {
         void onDownloadFinished(String location);
 
-        void onDownloadStart();
+        void onDownloadStarted();
     }
 }

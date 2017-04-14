@@ -28,11 +28,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sed.federico.prontosoccorsoligura.Mission.MissionActivity;
+import com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.CentraliActivity;
 
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.LinearLayout.LayoutParams;
+
+import java.net.URL;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, LoaderCallbacks<HospitalListCustom> {
 
@@ -42,6 +46,8 @@ public class MainActivity extends AppCompatActivity
             "http://datipsge.azurewebsites.net/api/hospital/";
     public static final String DATI_PS_FORCE_REQUEST_URL =
             "http://datipsge.azurewebsites.net/api/hospital/cache/reload";
+    private static final String URL_CENTRALI =
+            "http://datipsge.azurewebsites.net/api/anagrafiche/headquarter/all";
     /**
      * Constant value for the earthquake loader ID. We can choose any integer.
      * This really only comes into play if you're using multiple loaders.
@@ -214,6 +220,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_emergency_code_legend) {
             Intent settingsActivity = new Intent(MainActivity.this, LegendActivity.class);
             startActivity(settingsActivity);
+        } else if (id == R.id.nav_centrali) {
+            new AsyncString(MainActivity.this).execute(URL_CENTRALI);
         } else if (id == R.id.nav_about) {
 //            Intent settingsActivity = new Intent(MainActivity.this, SettingsActivity.class);
 //            startActivity(settingsActivity);

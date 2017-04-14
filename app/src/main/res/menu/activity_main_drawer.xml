@@ -29,6 +29,15 @@
                 android:title="@string/savona" />
         </menu>
     </item>
+    <group
+        android:id="@+id/menu_centrali"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_centrali"
+            android:icon="@drawable/ic_hospital_building_white_24dp"
+            android:title="@string/centrali"
+            android:visible="false" />
+    </group>
     <item android:title="@string/legend">
         <menu>
             <item
