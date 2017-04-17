@@ -80,9 +80,12 @@ public class Mission {
         mPubblicaAssistenza.put("CRSORI", "Croce Rossa Sori");
         mPubblicaAssistenza.put("CRUSCI", "Croce Rossa Uscio");
         mPubblicaAssistenza.put("CRCMOR", "Croce Rossa Campomorone");
+        mPubblicaAssistenza.put("CRBARG", "Croce Rossa Bargagli");
         mPubblicaAssistenza.put("CRDAVA", "Croce Rossa Davagna");
         mPubblicaAssistenza.put("CRMONT", "Croce Rossa Montoggio");
         mPubblicaAssistenza.put("CRSTUR", "Croce Rossa Sturla");
+        mPubblicaAssistenza.put("CRCERA", "Croce Rossa Ceranesi");
+        mPubblicaAssistenza.put("CRTERR", "Croce Rossa Ceranesi");
         mPubblicaAssistenza.put("FIU", "Volontari Del Soccorso Fiumara");
         mPubblicaAssistenza.put("BUR", "P.A. Croce Verde San Gottardo - Sezione Burlando");
         mPubblicaAssistenza.put("BUS", "P.A. Croce Verde Busallese");
@@ -102,16 +105,18 @@ public class Mission {
         mPubblicaAssistenza.put("CAM", "P.A. Croce Verde Camogliese");
         mPubblicaAssistenza.put("VAL", "P.A. Croce Bianca Valsecca");
         mPubblicaAssistenza.put("MIG", "P.A. Croce Bianca Mignanego");
-
+        mPubblicaAssistenza.put("LUM", "P.A. Croce Verde Lumarzo");
+        mPubblicaAssistenza.put("CEL", "P.A. Croce Celeste San Benigno");
+        mPubblicaAssistenza.put("BOR", "P.A. Croce Azzurra Borzoli");
+        mPubblicaAssistenza.put("CEL", "P.A. Croce Celeste");
+        mPubblicaAssistenza.put("CCF", "P.A. Croce Verde Crocefieschi");
 
         //BUR
         //FIU
-        //
+        //CCF
 //        mPubblicaAssistenza.put("", "Associazione Cinofili Da Soccorso \"Il Branco\" Onlus");
 //        mPubblicaAssistenza.put("", "Medicina E Progresso");
 //        mPubblicaAssistenza.put("", "P.A. Croce Azzurra Bavari");
-//        mPubblicaAssistenza.put("", "P.A. Croce Azzurra Borzoli");
-//        mPubblicaAssistenza.put("", "P.A. Croce Azzurra Moneglia");
 //        mPubblicaAssistenza.put("", "P.A. Croce Bianca Rapallese");
 //        mPubblicaAssistenza.put("", "P.A. Croce Bianca San Desiderio");
 //        mPubblicaAssistenza.put("", "P.A. Croce Bianca Tiglieto");
@@ -119,9 +124,7 @@ public class Mission {
 //        mPubblicaAssistenza.put("", "P.A. Croce D'oro Fascia");
 //        mPubblicaAssistenza.put("", "P.A. Croce D'oro Sciarborasca");
 //        mPubblicaAssistenza.put("", "P.A. Croce Rosa Di Trensasco");
-//        mPubblicaAssistenza.put("", "P.A. Croce Verde Crocefieschi");
 //        mPubblicaAssistenza.put("", "P.A. Croce Verde Isoverde");
-//        mPubblicaAssistenza.put("", "P.A. Croce Verde Lumarzo");
 //        mPubblicaAssistenza.put("", "P.A. Croce Verde Quarto");
 //        mPubblicaAssistenza.put("", "P.A. Croce Verde Quinto");
 //        mPubblicaAssistenza.put("", "P.A. Croce Verde Sestri Ponente");
@@ -192,8 +195,11 @@ public class Mission {
 
     }
 
-    public String getMissionNo() {
+    public String getFullMissionNo() {
         return mMissionNo;
+    }
+    public String getMissionNo() {
+        return mMissionNo.substring(2);
     }
 
     public void setMissionNo(String missionNo) {
