@@ -136,6 +136,7 @@ public class Mission {
         mPubblicaAssistenza.put("BOR", "P.A. Croce Azzurra Borzoli");
         mPubblicaAssistenza.put("CEL", "P.A. Croce Celeste");
         mPubblicaAssistenza.put("CCF", "P.A. Croce Verde Crocefieschi");
+        mPubblicaAssistenza.put("LERCA", "P.A. Croce d'Oro Sciarborasca - Sezione Lerca");
 
         //BUR
         //FIU

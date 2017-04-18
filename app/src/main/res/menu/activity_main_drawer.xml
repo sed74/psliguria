@@ -35,8 +35,7 @@
         <item
             android:id="@+id/nav_centrali"
             android:icon="@drawable/ic_hospital_building_white_24dp"
-            android:title="@string/centrali"
-            android:visible="false" />
+            android:title="@string/centrali" />
     </group>
     <item android:title="@string/legend">
         <menu>
