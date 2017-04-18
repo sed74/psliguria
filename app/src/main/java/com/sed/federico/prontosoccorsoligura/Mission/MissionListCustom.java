@@ -14,6 +14,7 @@ public class MissionListCustom extends ArrayList<Mission> {
 
     private boolean mIsDragoWorking = false;
     private String mWhereIsDrago;
+    private String mWhereIsDragoCentrale;
 
     public MissionListCustom() {
         // Do some initialization
@@ -37,6 +38,7 @@ public class MissionListCustom extends ArrayList<Mission> {
         if (mission.getmPostazione().equalsIgnoreCase(DRAGO_POSTAZIONE)){
             mIsDragoWorking = true;
             mWhereIsDrago = mission.getLocation();
+            mWhereIsDragoCentrale = mission.getCentrale();
         }
     }
 
@@ -46,5 +48,9 @@ public class MissionListCustom extends ArrayList<Mission> {
 
     public String getDragoPosition() {
         return mWhereIsDrago;
+    }
+
+    public String getDragoCentrale() {
+        return mWhereIsDragoCentrale;
     }
 }

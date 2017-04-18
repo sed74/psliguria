@@ -22,6 +22,7 @@ public class Mission {
     private String mSynthesis;
     private String mDestination;
     private String mAsl;
+    private String mCentrale;
 
     public Mission(Context context) {
         this.mContext = context;
@@ -41,6 +42,31 @@ public class Mission {
         this.mDestination = destination;
         this.mAsl = asl;
         initPostazione();
+    }
+
+    public Mission(Context context, String missionNo, String ambulanceNo,
+                   String pubblicaAssitenza, String code, String location,
+                   String synthesis, String destination, String asl, String centrale) {
+        this.mContext = context;
+        this.mMissionNo = missionNo;
+        this.mAmbulanceNo = ambulanceNo;
+        this.mPostazione = pubblicaAssitenza;
+        this.mCode = code;
+        this.mLocation = location;
+        this.mSynthesis = synthesis;
+        this.mMissionSynthesis = new MissionSynthesis(mContext, mSynthesis);
+        this.mDestination = destination;
+        this.mAsl = asl;
+        this.mCentrale = centrale;
+        initPostazione();
+    }
+
+    public String getCentrale() {
+        return mCentrale;
+    }
+
+    public void setCentrale(String centrale) {
+        this.mCentrale = centrale;
     }
 
     public void setContext(Context context) {
