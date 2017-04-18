@@ -62,6 +62,7 @@ public final class QueryUtils {
     public static final String SYNTHESIS = "sintesi";
     public static final String DESTINATION = "destinazione";
     public static final String ASL = "asl";
+    public static final String CENTRALE = "centrale";
 
     public static final String CENTRALE_ID = "id";
     public static final String CENTRALE_CODE = "code";
@@ -72,6 +73,8 @@ public final class QueryUtils {
      * Tag for the log messages
      */
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
+    private static final int READ_TIMEOUT = 15000;
+    private static final int CONNECT_TIMEOUT = 15000;
 
 
     /**
@@ -154,8 +157,8 @@ public final class QueryUtils {
         InputStream inputStream = null;
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setReadTimeout(10000 /* milliseconds */);
-            urlConnection.setConnectTimeout(15000 /* milliseconds */);
+            urlConnection.setReadTimeout(READ_TIMEOUT /* milliseconds */);
+            urlConnection.setConnectTimeout(CONNECT_TIMEOUT /* milliseconds */);
             urlConnection.setRequestProperty("PSGE", SecurityToken.mSecurityToken);
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
@@ -169,7 +172,7 @@ public final class QueryUtils {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results.", e);
+            Log.e(LOG_TAG, "Problem retrieving JSON results.\n" + url.toString(), e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -335,7 +338,7 @@ public final class QueryUtils {
         try {
             jsonResponse = makeHttpRequest(url);
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem making the HTTP request.", e);
+            Log.e(LOG_TAG, "Problem making the HTTP request.\n" + requestUrl, e);
         }
 
         // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
@@ -390,12 +393,13 @@ public final class QueryUtils {
                 String synthesis = hospitalJSONObj.getString(SYNTHESIS);
                 String destination = hospitalJSONObj.getString(DESTINATION);
                 String asl = hospitalJSONObj.getString(ASL);
+                String centrale = hospitalJSONObj.getString(CENTRALE);
 
 
                 // Create a new {@link Earthquake} object with the magnitude, location, time,
                 // and url from the JSON Hospital.
                 Mission missionObj = new Mission(context, mission, ambulance, pubblicaAssistenza,
-                        emergencyCode, pickuplocation, synthesis, destination, asl);
+                        emergencyCode, pickuplocation, synthesis, destination, asl, centrale);
 
                 // Add the new {@link Earthquake} to the list of earthquakes.
                 missions.add(missionObj);
