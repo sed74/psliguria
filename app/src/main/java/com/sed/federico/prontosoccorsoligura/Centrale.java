@@ -20,6 +20,7 @@ public class Centrale {
         this.mDescrizione = descrizione;
         this.mCitta = citta;
         this.mCentrale = centrale;
+        this.checkDescription();
     }
 
     public Centrale(String codice, String descrizione) {
@@ -27,6 +28,15 @@ public class Centrale {
         this.mDescrizione = descrizione;
     }
 
+    private void checkDescription() {
+        if (mDescrizione.isEmpty()) {
+            if (QueryUtils.getPostazioneName(mCodice).isEmpty()) {
+                mDescrizione = mCodice;
+            } else {
+                mDescrizione = QueryUtils.getPostazioneName(mCodice);
+            }
+        }
+    }
     public int getId() {
         return mId;
     }

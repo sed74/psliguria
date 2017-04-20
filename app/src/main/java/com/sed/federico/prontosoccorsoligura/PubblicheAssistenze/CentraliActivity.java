@@ -36,6 +36,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class CentraliActivity extends AppCompatActivity {
 
@@ -230,7 +232,7 @@ public class CentraliActivity extends AppCompatActivity {
                     }
                 }
             }
-
+            Collections.sort(centrali, new CentraleComparator());
             return centrali;
         }
 
@@ -247,6 +249,13 @@ public class CentraliActivity extends AppCompatActivity {
                 mProgressDialog.dismiss();
 
         }
+
+        class CentraleComparator implements Comparator<Centrale> {
+            public int compare(Centrale p1, Centrale p2) {
+                return p1.getDescrizione().compareToIgnoreCase(p2.getDescrizione());
+            }
+        }
+
     }
 
     public static class CentraliAdapter extends RecyclerView.Adapter<CentraliViewHolder> {
@@ -291,19 +300,23 @@ public class CentraliActivity extends AppCompatActivity {
             int resource;
             if (centrale.toLowerCase().contains("oro")) {
                 resource = R.drawable.cross_gold;
-            } else if (centrale.toLowerCase().contains("bianca")) {
+            } else if (centrale.toLowerCase().contains("bianca") ||
+                    centrale.toLowerCase().contains("cb")) {
                 resource = R.drawable.cross_white;
             } else if (centrale.toLowerCase().contains("blu")) {
                 resource = R.drawable.cross_blue;
             } else if (centrale.toLowerCase().contains("celeste")) {
                 resource = R.drawable.cross_celeste;
-            } else if (centrale.toLowerCase().contains("verde")) {
+            } else if (centrale.toLowerCase().contains("verde") ||
+                    centrale.toLowerCase().contains(" cv ")) {
                 resource = R.drawable.cross_green;
             } else if (centrale.toLowerCase().contains("azzurra")) {
                 resource = R.drawable.cross_light_blue;
             } else if (centrale.toLowerCase().contains("rosa")) {
                 resource = R.drawable.cross_rose;
-            } else if (centrale.toLowerCase().contains("rossa")) {
+            } else if (centrale.toLowerCase().contains("rossa") ||
+                    centrale.toLowerCase().contains("cri ") ||
+                    centrale.toLowerCase().contains(" cr ")) {
                 resource = R.drawable.cross_red;
             } else if (centrale.toLowerCase().contains("gialla")) {
                 resource = R.drawable.cross_yellow;

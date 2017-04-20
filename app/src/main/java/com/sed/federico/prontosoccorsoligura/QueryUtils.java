@@ -468,6 +468,8 @@ public final class QueryUtils {
         pubblicaAssistenza.put("CRSTUR", "Croce Rossa Sturla");
         pubblicaAssistenza.put("CRCERA", "Croce Rossa Ceranesi");
         pubblicaAssistenza.put("CRTERR", "Croce Rossa Ceranesi");
+        pubblicaAssistenza.put("CRMTBRUNO", "Croce Rossa Montebruno");
+        pubblicaAssistenza.put("CRCLIG", "Croce Rossa Campo Ligure");
         pubblicaAssistenza.put("FIU", "Volontari Del Soccorso Fiumara");
         pubblicaAssistenza.put("BUR", "P.A. Croce Verde San Gottardo - Sezione Burlando");
         pubblicaAssistenza.put("BUS", "P.A. Croce Verde Busallese");
@@ -493,13 +495,13 @@ public final class QueryUtils {
         pubblicaAssistenza.put("CEL", "P.A. Croce Celeste");
         pubblicaAssistenza.put("CCF", "P.A. Croce Verde Crocefieschi");
         pubblicaAssistenza.put("LERCA", "P.A. Croce d'Oro Sciarborasca - Sezione Lerca");
+        pubblicaAssistenza.put("BAV", "P.A. Croce Azzurra Bavari");
 
         //BUR
         //FIU
         //CCF
 //        pubblicaAssistenza.put("", "Associazione Cinofili Da Soccorso \"Il Branco\" Onlus");
 //        pubblicaAssistenza.put("", "Medicina E Progresso");
-//        pubblicaAssistenza.put("", "P.A. Croce Azzurra Bavari");
 //        pubblicaAssistenza.put("", "P.A. Croce Bianca Rapallese");
 //        pubblicaAssistenza.put("", "P.A. Croce Bianca San Desiderio");
 //        pubblicaAssistenza.put("", "P.A. Croce Bianca Tiglieto");
