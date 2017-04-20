@@ -22,6 +22,11 @@ public class Centrale {
         this.mCentrale = centrale;
     }
 
+    public Centrale(String codice, String descrizione) {
+        this.mCodice = codice;
+        this.mDescrizione = descrizione;
+    }
+
     public int getId() {
         return mId;
     }

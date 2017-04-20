@@ -2,22 +2,128 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.CentraliActivity$PlaceholderFragment">
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+
+    tools:context="com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.CentraliActivity$PlaceholderFragment"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
 
 
     <TextView
         android:id="@+id/pa_label"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@+id/view2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="P.A. Croce Bianca Genovese" />
+
+    <TextView
+        android:id="@+id/avg_red_per_day"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/avg_red_per_day"
+        android:visibility="gone"
+        tools:layout_editor_absoluteX="204dp"
+        tools:layout_editor_absoluteY="78dp" />
+
+    <TextView
+        android:id="@+id/avg_yellow_per_day"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/avg_yellow_per_day"
+        android:visibility="gone"
+        tools:layout_editor_absoluteX="204dp"
+        tools:layout_editor_absoluteY="78dp" />
+
+    <TextView
+        android:id="@+id/avg_green_per_day"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/avg_green_per_day"
+        android:visibility="gone"
+        tools:layout_editor_absoluteX="204dp"
+        tools:layout_editor_absoluteY="78dp" />
+
+    <TextView
+        android:id="@+id/avg_white_per_day"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/avg_white_per_day"
+        android:visibility="gone"
+        tools:layout_editor_absoluteX="204dp"
+        tools:layout_editor_absoluteY="78dp" />
+
+    <TextView
+        android:id="@+id/avg_mission_per_day"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/avg_mission_per_day"
+        android:visibility="gone"
+        tools:layout_editor_absoluteX="204dp"
+        tools:layout_editor_absoluteY="78dp" />
+
+    <TextView
+        android:id="@+id/centrale"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/no_of_ambulances"
+        app:layout_constraintLeft_toRightOf="@+id/view2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pa_label" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="?android:attr/listDivider"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="P.A. Croce Bianca Genovese" />
+        app:layout_constraintTop_toBottomOf="@+id/cross_icon" />
 
+    <View
+        android:id="@+id/view2"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="0dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/cross_icon"
+        app:layout_constraintLeft_toRightOf="@+id/cross_icon"
+        app:layout_constraintTop_toTopOf="@+id/cross_icon" />
+
+    <TextView
+        android:id="@+id/cross_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/cross"
+        app:layout_constraintBottom_toBottomOf="@+id/centrale"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

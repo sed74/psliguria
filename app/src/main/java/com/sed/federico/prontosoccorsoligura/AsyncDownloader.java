@@ -45,7 +45,7 @@ public class AsyncDownloader extends AsyncTask<String, Void, MissionListCustom> 
         super.onPostExecute(missions);
         String toastText;
         if (missions.isIsDragoWorking()) {
-            toastText = missions.getDragoCentrale() + "(" + missions.getDragoPosition() + ")";
+            toastText = missions.getDragoCentrale() + " (" + missions.getDragoPosition() + ")";
 
         } else {
             toastText = "";

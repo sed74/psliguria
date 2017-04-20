@@ -1,6 +1,10 @@
 package com.sed.federico.prontosoccorsoligura.PubblicheAssistenze;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +13,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.sed.federico.prontosoccorsoligura.Centrale;
 import com.sed.federico.prontosoccorsoligura.CentraleListCustom;
 import com.sed.federico.prontosoccorsoligura.QueryUtils;
 import com.sed.federico.prontosoccorsoligura.R;
@@ -33,13 +39,12 @@ import java.util.ArrayList;
 
 public class CentraliActivity extends AppCompatActivity {
 
-    private static final String URL_CENTRALI =
-            "http://datipsge.azurewebsites.net/api/anagrafiche/headquarter/all";
     private static final String URL_PA =
             "http://datipsge.azurewebsites.net/api/anagrafiche/comitato/all";
-    ProgressDialog mProgressDialog;
-    String mJason;
-    ArrayList<String> mNomiCentrali;
+    static ArrayList<String> mNomiCentrali;
+    //    static CentraleListCustom mActivityCentrali;
+    static ProgressDialog mProgressDialog;
+    String mJson;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -62,8 +67,13 @@ public class CentraliActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mJason = getIntent().getStringExtra("centrali");
-        populateTab(mJason);
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage(getString(R.string.retrieving_data));
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+
+        mJson = getIntent().getStringExtra("centrali");
+        populateTab(mJson);
         // Create the adapter that will return a fragment for each of the sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -132,11 +142,12 @@ public class CentraliActivity extends AppCompatActivity {
          * The fragment argument representing the section number for this
          * fragment.
          */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-        private static ArrayList<String> mCentrali;
-        protected RecyclerView mRecyclerView;
+        public static final String ARG_SECTION_NUMBER = "section_number";
+        protected static CentraleListCustom mCentrali;
         protected RecyclerView.LayoutManager mLayoutManager;
         protected LayoutManagerType mCurrentLayoutManagerType;
+        protected RecyclerView mRecyclerView;
+
 
         public PlaceholderFragment() {
         }
@@ -145,12 +156,10 @@ public class CentraliActivity extends AppCompatActivity {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber,
-                                                      ArrayList<String> nomiCentrali) {
+        public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-//            args.putParcelableArray("",nomiCentrali);
             fragment.setArguments(args);
             return fragment;
         }
@@ -159,13 +168,6 @@ public class CentraliActivity extends AppCompatActivity {
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             int temp = getArguments().getInt(ARG_SECTION_NUMBER);
-
-            initData();
-        }
-
-        private void initData() {
-            CentraleListCustom listaCentrali = QueryUtils.fetchCentrali(URL_PA);
-            int i = 0;
         }
 
         @Override
@@ -175,6 +177,7 @@ public class CentraliActivity extends AppCompatActivity {
 
             mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycle_view);
 
+            int sectionNo = getArguments().getInt(ARG_SECTION_NUMBER);
             // LinearLayoutManager is used here, this will layout the elements in a similar fashion
             // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
             // elements are laid out.
@@ -182,9 +185,11 @@ public class CentraliActivity extends AppCompatActivity {
 
             mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
 
+            new CentraliAsyncDownloader(getActivity(), mRecyclerView,
+                    mNomiCentrali.get(sectionNo - 1)).execute(URL_PA);
 
-            TextView textView = (TextView) rootView.findViewById(R.id.pa_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
             return rootView;
         }
 
@@ -194,22 +199,165 @@ public class CentraliActivity extends AppCompatActivity {
         }
     }
 
+
+    public static class CentraliAsyncDownloader extends AsyncTask<String, Void, CentraleListCustom> {
+        Activity mContext;
+        RecyclerView mRecyclerViewAsync;
+        String mCentrale;
+
+
+        public CentraliAsyncDownloader(Activity context, RecyclerView recyclerView,
+                                       String centrale) {
+            mContext = context;
+            mRecyclerViewAsync = recyclerView;
+            mCentrale = centrale;
+        }
+
+        @Override
+        protected CentraleListCustom doInBackground(String... params) {
+            if (params.length == 0) {
+                return null;
+            }
+
+            CentraleListCustom centrali = new CentraleListCustom();
+
+            for (String url : params) {
+                CentraleListCustom temp = QueryUtils.fetchCentrali(url);
+                for (Centrale c :
+                        temp) {
+                    if (c.getCentrale().equalsIgnoreCase(mCentrale)) {
+                        centrali.add(c);
+                    }
+                }
+            }
+
+            return centrali;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(CentraleListCustom centrali) {
+            super.onPostExecute(centrali);
+            mRecyclerViewAsync.setAdapter(new CentraliAdapter(mContext, centrali));
+            if (mProgressDialog.isShowing())
+                mProgressDialog.dismiss();
+
+        }
+    }
+
+    public static class CentraliAdapter extends RecyclerView.Adapter<CentraliViewHolder> {
+        private CentraleListCustom mCentrali;
+        private Context mContext;
+
+        // Provide a suitable constructor (depends on the kind of dataset)
+        public CentraliAdapter(Context context, CentraleListCustom centrali) {
+//            super();
+            mCentrali = centrali;
+            mContext = context;
+        }
+
+        // Create new views (invoked by the layout manager)
+        @Override
+        public CentraliViewHolder onCreateViewHolder(ViewGroup parent,
+                                                     int viewType) {
+            // create a new view
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.centrale_element, parent, false);
+
+            CentraliViewHolder vh = new CentraliViewHolder(v);
+            return vh;
+        }
+
+        // Replace the contents of a view (invoked by the layout manager)
+        @Override
+        public void onBindViewHolder(CentraliViewHolder holder, int position) {
+            // - get element from your dataset at this position
+            // - replace the contents of the view with that element
+            Centrale centrale = mCentrali.get(position);
+
+            String paName = QueryUtils.getPostazioneName(centrale.getCodice());
+            holder.mPaName.setText(paName);
+            holder.mCentrale.setText(String.format(mContext.getString(R.string.belong_to_centrale),
+                    centrale.getCentrale()));
+
+            holder.mCross.setBackground(getDrawable(paName));
+        }
+
+        private Drawable getDrawable(String centrale) {
+            int resource;
+            if (centrale.toLowerCase().contains("oro")) {
+                resource = R.drawable.cross_gold;
+            } else if (centrale.toLowerCase().contains("bianca")) {
+                resource = R.drawable.cross_white;
+            } else if (centrale.toLowerCase().contains("blu")) {
+                resource = R.drawable.cross_blue;
+            } else if (centrale.toLowerCase().contains("celeste")) {
+                resource = R.drawable.cross_celeste;
+            } else if (centrale.toLowerCase().contains("verde")) {
+                resource = R.drawable.cross_green;
+            } else if (centrale.toLowerCase().contains("azzurra")) {
+                resource = R.drawable.cross_light_blue;
+            } else if (centrale.toLowerCase().contains("rosa")) {
+                resource = R.drawable.cross_rose;
+            } else if (centrale.toLowerCase().contains("rossa")) {
+                resource = R.drawable.cross_red;
+            } else if (centrale.toLowerCase().contains("gialla")) {
+                resource = R.drawable.cross_yellow;
+            } else if (centrale.toLowerCase().contains("elisoccorso")) {
+                resource = R.drawable.cross_eli;
+            } else {
+                resource = R.drawable.cross;
+            }
+            return ContextCompat.getDrawable(mContext, resource);
+        }
+
+        // Return the size of your dataset (invoked by the layout manager)
+        @Override
+        public int getItemCount() {
+            return mCentrali.size();
+        }
+    }
+
+    // Provide a reference to the views for each data item
+    // Complex data items may need more than one view per item, and
+    // you provide access to all the views for a data item in a view holder
+    public static class CentraliViewHolder extends RecyclerView.ViewHolder {
+        // each data item is just a string in this case
+        public TextView mPaName;
+        public TextView mCross;
+        public TextView mCentrale;
+
+
+        public CentraliViewHolder(View v) {
+            super(v);
+            mPaName = (TextView) v.findViewById(R.id.pa_label);
+            mCentrale = (TextView) v.findViewById(R.id.centrale);
+            mCross = (TextView) v.findViewById(R.id.cross_icon);
+
+        }
+    }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
-
         }
 
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1, mNomiCentrali);
+
+            return PlaceholderFragment.newInstance(position + 1);
         }
 
         @Override
@@ -220,14 +368,7 @@ public class CentraliActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-//            switch (position) {
-//                case 0:
-//                    return "SECTION 1";
-//                case 1:
-//                    return "SECTION 2";
-//                case 2:
-//                    return "SECTION 3";
-//            }
+
             return mNomiCentrali.get(position);
         }
     }
