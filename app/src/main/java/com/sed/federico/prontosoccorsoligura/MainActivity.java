@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity
             "http://datipsge.azurewebsites.net/api/hospital/";
     public static final String DATI_PS_FORCE_REQUEST_URL =
             "http://datipsge.azurewebsites.net/api/hospital/cache/reload";
-    private static final String URL_CENTRALI =
+    public static final String URL_CENTRALI =
             "http://datipsge.azurewebsites.net/api/anagrafiche/headquarter/all";
     /**
      * Constant value for the earthquake loader ID. We can choose any integer.

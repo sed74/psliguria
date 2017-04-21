@@ -80,11 +80,11 @@ public class MissionAdapter extends ArrayAdapter<Mission> {
 
         // Set the proper background color on the magnitude circle.
         // Fetch the background from the TextView, which is a GradientDrawable.
-        GradientDrawable magnitudeCircle = (GradientDrawable) ambulance.getBackground();
+        GradientDrawable ambulanceCircle = (GradientDrawable) ambulance.getBackground();
         // Get the appropriate background color based on the current earthquake magnitude
         int magnitudeColor = getCodeColor(currentMission.getCode());
         // Set the color on the magnitude circle
-        magnitudeCircle.setColor(magnitudeColor);
+        ambulanceCircle.setColor(magnitudeColor);
 
         TextView croceName = (TextView) listItemView.findViewById(R.id.pa_name);
         croceName.setText(currentMission.getPubblicaAssistenza());

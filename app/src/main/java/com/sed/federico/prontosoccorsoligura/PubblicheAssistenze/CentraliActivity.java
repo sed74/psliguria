@@ -1,18 +1,25 @@
 package com.sed.federico.prontosoccorsoligura.PubblicheAssistenze;
 
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,10 +34,16 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.sed.federico.prontosoccorsoligura.AsyncString;
 import com.sed.federico.prontosoccorsoligura.Centrale;
 import com.sed.federico.prontosoccorsoligura.CentraleListCustom;
+import com.sed.federico.prontosoccorsoligura.CharlieCodeActivity;
+import com.sed.federico.prontosoccorsoligura.LegendActivity;
+import com.sed.federico.prontosoccorsoligura.MainActivity;
+import com.sed.federico.prontosoccorsoligura.Mission.MissionActivity;
 import com.sed.federico.prontosoccorsoligura.QueryUtils;
 import com.sed.federico.prontosoccorsoligura.R;
+import com.sed.federico.prontosoccorsoligura.SettingsActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +52,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class CentraliActivity extends AppCompatActivity {
+public class CentraliActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String URL_PA =
             "http://datipsge.azurewebsites.net/api/anagrafiche/comitato/all";
@@ -65,17 +78,12 @@ public class CentraliActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_centrali);
+        setContentView(R.layout.activity_main_centrali);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         mCacheCentrali = new SparseArray<>();
-
-//        mProgressDialog = new ProgressDialog(this);
-//        mProgressDialog.setMessage(getString(R.string.retrieving_data));
-//        mProgressDialog.setCancelable(false);
-//        mProgressDialog.show();
 
         mJson = getIntent().getStringExtra("centrali");
         populateTab(mJson);
@@ -90,6 +98,15 @@ public class CentraliActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +130,11 @@ public class CentraliActivity extends AppCompatActivity {
         try {
             JSONArray jsonArray = new JSONArray(jason);
             for (int i = 0; i < jsonArray.length(); i++) {
-                mNomiCentrali.add(jsonArray.getString(i));
+                String name = jsonArray.getString(i).replaceAll("(\\p{Ll})(\\p{Lu})", "$1 $2");
+                ;
+//                mNomiCentrali.add(name.toLowerCase().contains("laspezia") ?
+//                        name.substring(0, 2) + " " + name.substring(2) : name);
+                mNomiCentrali.add(name);
 
             }
         } catch (JSONException e) {
@@ -146,6 +167,57 @@ public class CentraliActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        if (id == R.id.ps_activity) {
+            // Handle the camera action
+        } else if (id == R.id.nav_settings) {
+            Intent settingsActivity = new Intent(CentraliActivity.this, SettingsActivity.class);
+            startActivity(settingsActivity);
+        } else if (id == R.id.nav_charlie_code_legend) {
+            Intent settingsActivity = new Intent(CentraliActivity.this, CharlieCodeActivity.class);
+            startActivity(settingsActivity);
+        } else if (id == R.id.nav_emergency_code_legend) {
+            Intent settingsActivity = new Intent(CentraliActivity.this, LegendActivity.class);
+            startActivity(settingsActivity);
+        } else if (id == R.id.nav_centrali) {
+            new AsyncString(CentraliActivity.this).execute(MainActivity.URL_CENTRALI);
+        } else if (id == R.id.nav_about) {
+//            Intent settingsActivity = new Intent(CentraliActivity.this, SettingsActivity.class);
+//            startActivity(settingsActivity);
+        } else if (id == R.id.nav_genova || id == R.id.nav_imperia || id == R.id.nav_la_spezia ||
+                id == R.id.nav_lavagna || id == R.id.nav_savona) {
+            Intent missionIntent = new Intent(CentraliActivity.this, MissionActivity.class);
+            switch (id) {
+                case R.id.nav_genova:
+                    missionIntent.putExtra(MainActivity.EXTRA_HOSPITAL_NAME, "Genova");
+                    break;
+                case R.id.nav_imperia:
+                    missionIntent.putExtra(MainActivity.EXTRA_HOSPITAL_NAME, "Imperia");
+                    break;
+                case R.id.nav_la_spezia:
+                    missionIntent.putExtra(MainActivity.EXTRA_HOSPITAL_NAME, "LaSpezia");
+                    break;
+                case R.id.nav_lavagna:
+                    missionIntent.putExtra(MainActivity.EXTRA_HOSPITAL_NAME, "Lavagna");
+                    break;
+                case R.id.nav_savona:
+                    missionIntent.putExtra(MainActivity.EXTRA_HOSPITAL_NAME, "Savona");
+                    break;
+            }
+            View view = findViewById(R.id.recycle_view);
+            ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
+                    0, view.getWidth(), view.getHeight());
+            startActivity(missionIntent, options.toBundle());
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     /**
@@ -228,7 +300,7 @@ public class CentraliActivity extends AppCompatActivity {
                                            String centrale) {
                 mContext = context;
                 mRecyclerViewAsync = recyclerView;
-                mCentrale = centrale;
+                mCentrale = centrale.replaceAll(" ", "");
             }
 
             @Override
@@ -330,7 +402,7 @@ public class CentraliActivity extends AppCompatActivity {
                 resource = R.drawable.cross_gold;
             } else if (centrale.toLowerCase().contains("bianca") ||
                     centrale.toLowerCase().contains("cb")) {
-                resource = R.drawable.cross_white;
+                resource = R.drawable.cross_white_no_circle;
             } else if (centrale.toLowerCase().contains("blu")) {
                 resource = R.drawable.cross_blue;
             } else if (centrale.toLowerCase().contains("celeste")) {
