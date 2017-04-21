@@ -192,4 +192,5 @@
     <string name="no_of_ambulances">Totale mezzi censiti: %1$d</string>
     <string name="retrieving_data">Caricamento dati in corso...</string>
     <string name="belong_to_centrale">Centrale di appartenenza: %1$s</string>
+    <string name="pa_label_nav">Pubbliche Assistenze</string>
 </resources>

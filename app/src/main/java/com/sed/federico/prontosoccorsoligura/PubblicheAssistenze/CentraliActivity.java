@@ -1,7 +1,5 @@
 package com.sed.federico.prontosoccorsoligura.PubblicheAssistenze;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -20,11 +18,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.sed.federico.prontosoccorsoligura.Centrale;
@@ -45,8 +45,9 @@ public class CentraliActivity extends AppCompatActivity {
             "http://datipsge.azurewebsites.net/api/anagrafiche/comitato/all";
     static ArrayList<String> mNomiCentrali;
     //    static CentraleListCustom mActivityCentrali;
-    static ProgressDialog mProgressDialog;
+//    static ProgressDialog mProgressDialog;
     String mJson;
+    SparseArray<CentraleListCustom> mCacheCentrali;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -69,10 +70,12 @@ public class CentraliActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setMessage(getString(R.string.retrieving_data));
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.show();
+        mCacheCentrali = new SparseArray<>();
+
+//        mProgressDialog = new ProgressDialog(this);
+//        mProgressDialog.setMessage(getString(R.string.retrieving_data));
+//        mProgressDialog.setCancelable(false);
+//        mProgressDialog.show();
 
         mJson = getIntent().getStringExtra("centrali");
         populateTab(mJson);
@@ -82,6 +85,8 @@ public class CentraliActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+//        mViewPager.setOffscreenPageLimit(mNomiCentrali.size()-1);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -95,6 +100,12 @@ public class CentraliActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mCacheCentrali.clear();
     }
 
     private void populateTab(String jason) {
@@ -111,6 +122,7 @@ public class CentraliActivity extends AppCompatActivity {
             // with the message from the exception.
             Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
         }
+
     }
 
 
@@ -149,6 +161,7 @@ public class CentraliActivity extends AppCompatActivity {
         protected RecyclerView.LayoutManager mLayoutManager;
         protected LayoutManagerType mCurrentLayoutManagerType;
         protected RecyclerView mRecyclerView;
+        private ProgressBar mProgressBar;
 
 
         public PlaceholderFragment() {
@@ -179,6 +192,10 @@ public class CentraliActivity extends AppCompatActivity {
 
             mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycle_view);
 
+            CentraliActivity mainActivity = (CentraliActivity) getActivity();
+
+            mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
+
             int sectionNo = getArguments().getInt(ARG_SECTION_NUMBER);
             // LinearLayoutManager is used here, this will layout the elements in a similar fashion
             // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
@@ -187,8 +204,9 @@ public class CentraliActivity extends AppCompatActivity {
 
             mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
 
-            new CentraliAsyncDownloader(getActivity(), mRecyclerView,
-                    mNomiCentrali.get(sectionNo - 1)).execute(URL_PA);
+
+            new CentraliAsyncDownloader(mainActivity, mRecyclerView,
+                    mNomiCentrali.get(sectionNo - 1)).execute(URL_PA, String.valueOf(sectionNo));
 
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -199,64 +217,74 @@ public class CentraliActivity extends AppCompatActivity {
             GRID_LAYOUT_MANAGER,
             LINEAR_LAYOUT_MANAGER
         }
-    }
+
+        public class CentraliAsyncDownloader extends AsyncTask<String, Void, CentraleListCustom> {
+            CentraliActivity mContext;
+            RecyclerView mRecyclerViewAsync;
+            String mCentrale;
 
 
-    public static class CentraliAsyncDownloader extends AsyncTask<String, Void, CentraleListCustom> {
-        Activity mContext;
-        RecyclerView mRecyclerViewAsync;
-        String mCentrale;
-
-
-        public CentraliAsyncDownloader(Activity context, RecyclerView recyclerView,
-                                       String centrale) {
-            mContext = context;
-            mRecyclerViewAsync = recyclerView;
-            mCentrale = centrale;
-        }
-
-        @Override
-        protected CentraleListCustom doInBackground(String... params) {
-            if (params.length == 0) {
-                return null;
+            public CentraliAsyncDownloader(CentraliActivity context, RecyclerView recyclerView,
+                                           String centrale) {
+                mContext = context;
+                mRecyclerViewAsync = recyclerView;
+                mCentrale = centrale;
             }
 
-            CentraleListCustom centrali = new CentraleListCustom();
+            @Override
+            protected CentraleListCustom doInBackground(String... params) {
+                if (params.length == 0) {
+                    return null;
+                }
 
-            for (String url : params) {
-                CentraleListCustom temp = QueryUtils.fetchCentrali(url);
-                for (Centrale c :
-                        temp) {
-                    if (c.getCentrale().equalsIgnoreCase(mCentrale)) {
-                        centrali.add(c);
+                int currentSection = Integer.valueOf(params[1]) - 1;
+                CentraleListCustom centrali;
+
+                centrali = mContext.mCacheCentrali.get(currentSection);
+                if (centrali == null) {
+                    centrali = new CentraleListCustom();
+
+                    String url = params[0];
+                    CentraleListCustom temp = QueryUtils.fetchCentrali(url);
+                    for (Centrale c :
+                            temp) {
+                        if (c.getCentrale().equalsIgnoreCase(mCentrale)) {
+                            centrali.add(c);
+                        }
                     }
+                    mContext.mCacheCentrali.put(currentSection, centrali);
+                }
+                Collections.sort(centrali, new CentraleComparator());
+                return centrali;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                mProgressBar.setVisibility(View.VISIBLE);
+
+            }
+
+            @Override
+            protected void onPostExecute(CentraleListCustom centrali) {
+                super.onPostExecute(centrali);
+                mProgressBar.setVisibility(View.GONE);
+                mRecyclerViewAsync.setAdapter(new CentraliAdapter(mContext, centrali));
+//            if (mProgressDialog.isShowing())
+//                mProgressDialog.dismiss();
+
+            }
+
+            class CentraleComparator implements Comparator<Centrale> {
+                public int compare(Centrale p1, Centrale p2) {
+                    return p1.getDescrizione().compareToIgnoreCase(p2.getDescrizione());
                 }
             }
-            Collections.sort(centrali, new CentraleComparator());
-            return centrali;
-        }
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onPostExecute(CentraleListCustom centrali) {
-            super.onPostExecute(centrali);
-            mRecyclerViewAsync.setAdapter(new CentraliAdapter(mContext, centrali));
-            if (mProgressDialog.isShowing())
-                mProgressDialog.dismiss();
-
-        }
-
-        class CentraleComparator implements Comparator<Centrale> {
-            public int compare(Centrale p1, Centrale p2) {
-                return p1.getDescrizione().compareToIgnoreCase(p2.getDescrizione());
-            }
         }
 
     }
+
 
     public static class CentraliAdapter extends RecyclerView.Adapter<CentraliViewHolder> {
         private CentraleListCustom mCentrali;
