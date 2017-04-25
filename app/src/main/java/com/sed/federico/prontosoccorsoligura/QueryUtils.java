@@ -452,6 +452,7 @@ public final class QueryUtils {
         pubblicaAssistenza.put("POS", "P.A. Croce Verde Praese");
         pubblicaAssistenza.put("RIV", "P.A. Croce Rosa San Rivarolo");
         pubblicaAssistenza.put("BLU", "P.A. Croce Blu Castelletto");
+        pubblicaAssistenza.put("ORG", "P.A. Croce Blu dist. Oregina");
         pubblicaAssistenza.put("CRMASO", "Croce Rossa Masone");
         pubblicaAssistenza.put("CRCOGO", "Croce Rossa Cogoleto");
         pubblicaAssistenza.put("CRROSS", "Croce Rossa Rossiglione");
@@ -470,6 +471,8 @@ public final class QueryUtils {
         pubblicaAssistenza.put("CRTERR", "Croce Rossa Ceranesi");
         pubblicaAssistenza.put("CRMTBRUNO", "Croce Rossa Montebruno");
         pubblicaAssistenza.put("CRCLIG", "Croce Rossa Campo Ligure");
+        pubblicaAssistenza.put("CRRICC", "Croce Rossa Serra Riccò");
+        pubblicaAssistenza.put("CROLCE", "Croce Rossa Sant'Olcese");
         pubblicaAssistenza.put("FIU", "Volontari Del Soccorso Fiumara");
         pubblicaAssistenza.put("BUR", "P.A. Croce Verde San Gottardo - Sezione Burlando");
         pubblicaAssistenza.put("BUS", "P.A. Croce Verde Busallese");
@@ -495,7 +498,11 @@ public final class QueryUtils {
         pubblicaAssistenza.put("CEL", "P.A. Croce Celeste");
         pubblicaAssistenza.put("CCF", "P.A. Croce Verde Crocefieschi");
         pubblicaAssistenza.put("LERCA", "P.A. Croce d'Oro Sciarborasca - Sezione Lerca");
+        pubblicaAssistenza.put("SCI", "P.A. Croce d'Oro Sciarborasca");
         pubblicaAssistenza.put("BAV", "P.A. Croce Azzurra Bavari");
+        pubblicaAssistenza.put("A.V.T.", "P.A. Volontari Del Soccorso Alta Val Trebbia");
+        pubblicaAssistenza.put("TOR", "P.A. Croce Bianca Torrazza");
+        pubblicaAssistenza.put("CROCE TIGLIETO", "P.A. Croce Bianca Tiglieto");
 
         //BUR
         //FIU
@@ -504,8 +511,6 @@ public final class QueryUtils {
 //        pubblicaAssistenza.put("", "Medicina E Progresso");
 //        pubblicaAssistenza.put("", "P.A. Croce Bianca Rapallese");
 //        pubblicaAssistenza.put("", "P.A. Croce Bianca San Desiderio");
-//        pubblicaAssistenza.put("", "P.A. Croce Bianca Tiglieto");
-//        pubblicaAssistenza.put("", "P.A. Croce Bianca Torrazza");
 //        pubblicaAssistenza.put("", "P.A. Croce D'oro Fascia");
 //        pubblicaAssistenza.put("", "P.A. Croce D'oro Sciarborasca");
 //        pubblicaAssistenza.put("", "P.A. Croce Rosa Di Trensasco");
@@ -515,7 +520,6 @@ public final class QueryUtils {
 //        pubblicaAssistenza.put("", "P.A. Croce Verde Sestri Ponente");
 //        pubblicaAssistenza.put("", "P.A. Croce Verde Vobbia - C/O Grosso Zaverio");
 //        pubblicaAssistenza.put("", "P.A. Fontanigorda");
-//        pubblicaAssistenza.put("", "P.A. Volontari Del Soccorso Alta Val Trebbia");
 //        pubblicaAssistenza.put("", "P.A. Volontari Del Soccorso Sestri Levante");
 //
 //

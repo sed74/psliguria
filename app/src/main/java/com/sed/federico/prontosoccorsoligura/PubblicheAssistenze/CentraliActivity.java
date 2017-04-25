@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -33,6 +32,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sed.federico.prontosoccorsoligura.AsyncString;
 import com.sed.federico.prontosoccorsoligura.Centrale;
@@ -235,7 +235,6 @@ public class CentraliActivity extends AppCompatActivity implements NavigationVie
         protected RecyclerView mRecyclerView;
         private ProgressBar mProgressBar;
 
-
         public PlaceholderFragment() {
         }
 
@@ -352,9 +351,7 @@ public class CentraliActivity extends AppCompatActivity implements NavigationVie
                     return p1.getDescrizione().compareToIgnoreCase(p2.getDescrizione());
                 }
             }
-
         }
-
     }
 
 
@@ -377,7 +374,13 @@ public class CentraliActivity extends AppCompatActivity implements NavigationVie
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.centrale_element, parent, false);
 
-            CentraliViewHolder vh = new CentraliViewHolder(v);
+            CentraliViewHolder vh = new CentraliViewHolder(v, new CentraliViewHolder.onRecyclerViewClickListener() {
+                @Override
+                public void onClick(View caller) {
+                    Toast.makeText(mContext, mContext.getString(R.string.not_implemented_yet),
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
             return vh;
         }
 
@@ -394,33 +397,31 @@ public class CentraliActivity extends AppCompatActivity implements NavigationVie
                     centrale.getCentrale()));
 
             holder.mCross.setBackground(getDrawable(paName));
+
         }
 
         private Drawable getDrawable(String centrale) {
             int resource;
-            if (centrale.toLowerCase().contains("oro")) {
+            String cent = centrale.toLowerCase();
+            if (cent.contains("oro")) {
                 resource = R.drawable.cross_gold;
-            } else if (centrale.toLowerCase().contains("bianca") ||
-                    centrale.toLowerCase().contains("cb")) {
+            } else if (cent.contains("bianca") || cent.contains("cb")) {
                 resource = R.drawable.cross_white_no_circle;
-            } else if (centrale.toLowerCase().contains("blu")) {
+            } else if (cent.contains("blu")) {
                 resource = R.drawable.cross_blue;
-            } else if (centrale.toLowerCase().contains("celeste")) {
+            } else if (cent.contains("celeste")) {
                 resource = R.drawable.cross_celeste;
-            } else if (centrale.toLowerCase().contains("verde") ||
-                    centrale.toLowerCase().contains(" cv ")) {
+            } else if (cent.contains("verde") || cent.contains(" cv ")) {
                 resource = R.drawable.cross_green;
-            } else if (centrale.toLowerCase().contains("azzurra")) {
+            } else if (cent.contains("azzurra")) {
                 resource = R.drawable.cross_light_blue;
-            } else if (centrale.toLowerCase().contains("rosa")) {
+            } else if (cent.contains("rosa")) {
                 resource = R.drawable.cross_rose;
-            } else if (centrale.toLowerCase().contains("rossa") ||
-                    centrale.toLowerCase().contains("cri ") ||
-                    centrale.toLowerCase().contains(" cr ")) {
+            } else if (cent.contains("rossa") || cent.contains("cri ") || cent.contains(" cr ")) {
                 resource = R.drawable.cross_red;
-            } else if (centrale.toLowerCase().contains("gialla")) {
+            } else if (cent.contains("gialla")) {
                 resource = R.drawable.cross_yellow;
-            } else if (centrale.toLowerCase().contains("elisoccorso")) {
+            } else if (cent.contains("elisoccorso")) {
                 resource = R.drawable.cross_eli;
             } else {
                 resource = R.drawable.cross;
@@ -433,16 +434,20 @@ public class CentraliActivity extends AppCompatActivity implements NavigationVie
         public int getItemCount() {
             return mCentrali.size();
         }
+
     }
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class CentraliViewHolder extends RecyclerView.ViewHolder {
+    public static class CentraliViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener {
+
         // each data item is just a string in this case
         public TextView mPaName;
         public TextView mCross;
         public TextView mCentrale;
+        onRecyclerViewClickListener mListener;
 
 
         public CentraliViewHolder(View v) {
@@ -450,8 +455,31 @@ public class CentraliActivity extends AppCompatActivity implements NavigationVie
             mPaName = (TextView) v.findViewById(R.id.pa_label);
             mCentrale = (TextView) v.findViewById(R.id.centrale);
             mCross = (TextView) v.findViewById(R.id.cross_icon);
+        }
+
+        public CentraliViewHolder(View v, onRecyclerViewClickListener listener) {
+            super(v);
+            mPaName = (TextView) v.findViewById(R.id.pa_label);
+            mCentrale = (TextView) v.findViewById(R.id.centrale);
+            mCross = (TextView) v.findViewById(R.id.cross_icon);
+            mListener = listener;
+
+            v.setOnClickListener(this);
+//            mPaName.setOnClickListener(this);
+//            mCross.setOnClickListener(this);
+//            mCentrale.setOnClickListener(this);
 
         }
+
+        @Override
+        public void onClick(View v) {
+            mListener.onClick(v);
+        }
+
+        public interface onRecyclerViewClickListener {
+            void onClick(View caller);
+        }
+
     }
 
     /**
