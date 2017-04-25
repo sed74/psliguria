@@ -193,4 +193,6 @@
     <string name="retrieving_data">Caricamento dati in corso...</string>
     <string name="belong_to_centrale">Centrale di appartenenza: %1$s</string>
     <string name="pa_label_nav">Pubbliche Assistenze</string>
+    <string name="statistics_to_be_implemented">Statistische disponibili a breve\n\n* Media interventi per P.A\n* Media interventi per mezzo\n* Interventi totali per P.A\n* Interventi totali per mezzo\n\nIl tutto suddiviso per codice di urgenza.</string>
+    <string name="statistics_coming_soon">Statistiche disponibili a breve...</string>
 </resources>

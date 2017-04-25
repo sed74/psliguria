@@ -25,6 +25,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -377,8 +378,11 @@ public class CentraliActivity extends AppCompatActivity implements NavigationVie
             CentraliViewHolder vh = new CentraliViewHolder(v, new CentraliViewHolder.onRecyclerViewClickListener() {
                 @Override
                 public void onClick(View caller) {
-                    Toast.makeText(mContext, mContext.getString(R.string.not_implemented_yet),
-                            Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(mContext,
+                            mContext.getString(R.string.statistics_to_be_implemented),
+                            Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 }
             });
             return vh;
@@ -393,8 +397,9 @@ public class CentraliActivity extends AppCompatActivity implements NavigationVie
 
             String paName = QueryUtils.getPostazioneName(centrale.getCodice());
             holder.mPaName.setText(paName);
-            holder.mCentrale.setText(String.format(mContext.getString(R.string.belong_to_centrale),
-                    centrale.getCentrale()));
+//            holder.mCentrale.setText(String.format(mContext.getString(R.string.belong_to_centrale),
+//                    centrale.getCentrale()));
+            holder.mCentrale.setText(mContext.getString(R.string.statistics_coming_soon));
 
             holder.mCross.setBackground(getDrawable(paName));
 
