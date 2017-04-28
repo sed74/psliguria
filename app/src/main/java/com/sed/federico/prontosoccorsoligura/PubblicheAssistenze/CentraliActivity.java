@@ -1,6 +1,7 @@
 package com.sed.federico.prontosoccorsoligura.PubblicheAssistenze;
 
 import android.app.ActivityOptions;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -39,6 +40,7 @@ import com.sed.federico.prontosoccorsoligura.AsyncString;
 import com.sed.federico.prontosoccorsoligura.Centrale;
 import com.sed.federico.prontosoccorsoligura.CentraleListCustom;
 import com.sed.federico.prontosoccorsoligura.CharlieCodeActivity;
+import com.sed.federico.prontosoccorsoligura.FragmentMission.MissionFragment;
 import com.sed.federico.prontosoccorsoligura.LegendActivity;
 import com.sed.federico.prontosoccorsoligura.MainActivity;
 import com.sed.federico.prontosoccorsoligura.Mission.MissionActivity;
@@ -53,13 +55,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class CentraliActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class CentraliActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String URL_PA =
             "http://datipsge.azurewebsites.net/api/anagrafiche/comitato/all";
     static ArrayList<String> mNomiCentrali;
-    //    static CentraleListCustom mActivityCentrali;
-//    static ProgressDialog mProgressDialog;
     String mJson;
     SparseArray<CentraleListCustom> mCacheCentrali;
     /**
@@ -94,8 +95,6 @@ public class CentraliActivity extends AppCompatActivity implements NavigationVie
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
-//        mViewPager.setOffscreenPageLimit(mNomiCentrali.size()-1);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -188,6 +187,13 @@ public class CentraliActivity extends AppCompatActivity implements NavigationVie
         } else if (id == R.id.nav_centrali) {
             new AsyncString(CentraliActivity.this).execute(MainActivity.URL_CENTRALI);
         } else if (id == R.id.nav_about) {
+//            android.app.Fragment newFragment;
+//            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//            newFragment = new MissionFragment();
+//            transaction.replace(R.id.tabs, newFragment);
+//            transaction.addToBackStack(null);
+//            transaction.commit();
+//            break;
 //            Intent settingsActivity = new Intent(CentraliActivity.this, SettingsActivity.class);
 //            startActivity(settingsActivity);
         } else if (id == R.id.nav_genova || id == R.id.nav_imperia || id == R.id.nav_la_spezia ||
@@ -215,7 +221,7 @@ public class CentraliActivity extends AppCompatActivity implements NavigationVie
                     0, view.getWidth(), view.getHeight());
             startActivity(missionIntent, options.toBundle());
         }
-
+        item.setChecked(true);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

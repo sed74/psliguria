@@ -450,7 +450,6 @@ public final class QueryUtils {
         pubblicaAssistenza.put("MANESS", "P.A. Croce D'oro Manesseno");
         pubblicaAssistenza.put("RIV", "P.A. Croce Rosa Rivarolo");
         pubblicaAssistenza.put("POS", "P.A. Croce Verde Praese");
-        pubblicaAssistenza.put("RIV", "P.A. Croce Rosa San Rivarolo");
         pubblicaAssistenza.put("BLU", "P.A. Croce Blu Castelletto");
         pubblicaAssistenza.put("ORG", "P.A. Croce Blu dist. Oregina");
         pubblicaAssistenza.put("CRMASO", "Croce Rossa Masone");
@@ -503,6 +502,7 @@ public final class QueryUtils {
         pubblicaAssistenza.put("A.V.T.", "P.A. Volontari Del Soccorso Alta Val Trebbia");
         pubblicaAssistenza.put("TOR", "P.A. Croce Bianca Torrazza");
         pubblicaAssistenza.put("CROCE TIGLIETO", "P.A. Croce Bianca Tiglieto");
+        pubblicaAssistenza.put("FONGOR", "P.A. Fontanigorda");
 
         //BUR
         //FIU
@@ -519,7 +519,6 @@ public final class QueryUtils {
 //        pubblicaAssistenza.put("", "P.A. Croce Verde Quinto");
 //        pubblicaAssistenza.put("", "P.A. Croce Verde Sestri Ponente");
 //        pubblicaAssistenza.put("", "P.A. Croce Verde Vobbia - C/O Grosso Zaverio");
-//        pubblicaAssistenza.put("", "P.A. Fontanigorda");
 //        pubblicaAssistenza.put("", "P.A. Volontari Del Soccorso Sestri Levante");
 //
 //

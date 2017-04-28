@@ -1,6 +1,7 @@
 package com.sed.federico.prontosoccorsoligura;
 
 import android.app.ActivityOptions;
+import android.app.FragmentTransaction;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.Intent;
@@ -15,30 +16,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sed.federico.prontosoccorsoligura.FragmentMission.MissionFragment;
+import com.sed.federico.prontosoccorsoligura.FragmentMission.dummy.DummyContent;
 import com.sed.federico.prontosoccorsoligura.Mission.MissionActivity;
-import com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.CentraliActivity;
-
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
-import android.widget.LinearLayout.LayoutParams;
-
-import java.net.URL;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, LoaderCallbacks<HospitalListCustom> {
+        implements NavigationView.OnNavigationItemSelectedListener, LoaderCallbacks<HospitalListCustom>,
+        MissionFragment.OnListFragmentInteractionListener {
 
     public static final String EXTRA_HOSPITAL_NAME = "hospital_name";
     public static final String EXTRA_HOSPITAL_POSITION = "hospital_position";
@@ -223,6 +216,19 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_centrali) {
             new AsyncString(MainActivity.this).execute(URL_CENTRALI);
         } else if (id == R.id.nav_about) {
+
+//            FragmentTransaction ft = getFragmentManager().beginTransaction();
+//            ft.add(new MissionFragment(), null);
+//            ft.commit();
+
+//            android.app.Fragment newFragment;
+//            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//            newFragment = new MissionFragment();
+//            transaction.add(newFragment, null);
+////            transaction.replace(R.id.activity_main, newFragment);
+//            transaction.addToBackStack(null);
+//            transaction.commit();
+
 //            Intent settingsActivity = new Intent(MainActivity.this, SettingsActivity.class);
 //            startActivity(settingsActivity);
         } else if (id == R.id.nav_genova || id == R.id.nav_imperia || id == R.id.nav_la_spezia ||
@@ -298,4 +304,8 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
+    }
 }
