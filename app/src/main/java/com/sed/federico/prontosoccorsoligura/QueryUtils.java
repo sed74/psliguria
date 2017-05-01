@@ -41,6 +41,11 @@ import java.util.HashMap;
  * Helper methods related to requesting and receiving earthquake data from USGS.
  */
 public final class QueryUtils {
+
+    /**
+     * Firebase Constants
+     */
+    public static final String FBASE_AMBULANCE_NO = "ambulance_no";
     public static final int TABLET_MIN_WIDTH = 720;
     public static final String HOSPITAL_NAME = "name";
     public static final String WHITE_WAITING = "whiteWaiting";
@@ -503,6 +508,7 @@ public final class QueryUtils {
         pubblicaAssistenza.put("TOR", "P.A. Croce Bianca Torrazza");
         pubblicaAssistenza.put("CROCE TIGLIETO", "P.A. Croce Bianca Tiglieto");
         pubblicaAssistenza.put("FONGOR", "P.A. Fontanigorda");
+        pubblicaAssistenza.put("CNSAS SOCCORSO ALPINO", "Soccorso Alpino Genova");
 
         //BUR
         //FIU

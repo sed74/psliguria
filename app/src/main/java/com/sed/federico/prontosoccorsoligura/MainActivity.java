@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.sed.federico.prontosoccorsoligura.FragmentMission.MissionFragment;
 import com.sed.federico.prontosoccorsoligura.FragmentMission.dummy.DummyContent;
 import com.sed.federico.prontosoccorsoligura.Mission.MissionActivity;
@@ -51,6 +52,8 @@ public class MainActivity extends AppCompatActivity
      * Adapter for the list of earthquakes
      */
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     private HospitalAdapter mAdapter;
 
     @Override
@@ -59,6 +62,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         // Find a reference to the {@link ListView} in the layout
         ListView hospitalListView = (ListView) findViewById(R.id.list);
@@ -132,6 +138,12 @@ public class MainActivity extends AppCompatActivity
 
                 Hospital localHospital = mAdapter.getItem(position);
                 hospitalIntent.putExtra(EXTRA_HOSPITAL_POSITION, position);
+
+                Bundle bundle = new Bundle();
+//                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, localHospital.getName());
+                bundle.putString(FirebaseAnalytics.Param.ORIGIN, "MainActivity");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                 startActivity(hospitalIntent);
             }

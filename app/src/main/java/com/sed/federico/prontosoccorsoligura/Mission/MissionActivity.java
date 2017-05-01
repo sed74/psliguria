@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.sed.federico.prontosoccorsoligura.AsyncDownloader;
 import com.sed.federico.prontosoccorsoligura.MainActivity;
 import com.sed.federico.prontosoccorsoligura.QueryUtils;
@@ -51,6 +52,8 @@ public class MissionActivity extends AppCompatActivity
     private String mActualURL;
     private String mHospitalName;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     public static MissionListCustom getHospitals() {
         return mMissions;
     }
@@ -62,6 +65,8 @@ public class MissionActivity extends AppCompatActivity
 
         // Find a reference to the {@link ListView} in the layout
         final ListView missionListView = (ListView) findViewById(R.id.list);
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         Bundle bundle = savedInstanceState != null ? savedInstanceState : getIntent().getExtras();
         mHospitalName = bundle.getString(MainActivity.EXTRA_HOSPITAL_NAME);
@@ -127,6 +132,16 @@ public class MissionActivity extends AppCompatActivity
                     }
                     setVisibility(view, !isSelected);
                 }
+                Bundle bundle = new Bundle();
+//                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME,
+                        mMissions.get(position).getPubblicaAssistenza());
+                bundle.putString(FirebaseAnalytics.Param.ORIGIN, "MissionActivity-" +
+                        mMissions.get(position).getCentrale());
+                bundle.putString(QueryUtils.FBASE_AMBULANCE_NO,
+                        mMissions.get(position).getAmbulanceNo());
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             }
         });
 

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "667627282809",
+    "firebase_url": "https://pronto-soccorso-liguria-168e3.firebaseio.com",
+    "project_id": "pronto-soccorso-liguria-168e3",
+    "storage_bucket": "pronto-soccorso-liguria-168e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667627282809:android:42cd483b5b8190e3",
+        "android_client_info": {
+          "package_name": "com.sed.federico.prontosoccorsoligura"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "667627282809-doi22l5cis5eq220pnjma9i54t5q3f5g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8q4YU8SKFIVQ9JCOEqJ4mI5WI7l7uNHg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
