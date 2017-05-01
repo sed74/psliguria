@@ -414,7 +414,7 @@ public class CentraliActivity extends AppCompatActivity
         private Drawable getDrawable(String centrale) {
             int resource;
             String cent = centrale.toLowerCase();
-            if (cent.contains("oro")) {
+            if (cent.contains("oro ")) {
                 resource = R.drawable.cross_gold;
             } else if (cent.contains("bianca") || cent.contains("cb")) {
                 resource = R.drawable.cross_white_no_circle;
@@ -422,7 +422,7 @@ public class CentraliActivity extends AppCompatActivity
                 resource = R.drawable.cross_blue;
             } else if (cent.contains("celeste")) {
                 resource = R.drawable.cross_celeste;
-            } else if (cent.contains("verde") || cent.contains(" cv ")) {
+            } else if (cent.contains("verde ") || cent.contains(" cv ")) {
                 resource = R.drawable.cross_green;
             } else if (cent.contains("azzurra")) {
                 resource = R.drawable.cross_light_blue;
