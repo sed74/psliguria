@@ -2,10 +2,7 @@ package com.sed.federico.prontosoccorsoligura.Mission;
 
 import android.content.Context;
 
-import com.sed.federico.prontosoccorsoligura.Centrale;
-import com.sed.federico.prontosoccorsoligura.QueryUtils;
-
-import java.util.HashMap;
+import com.sed.federico.prontosoccorsoligura.Postazione;
 
 /**
  * Created by federico.marchesi on 05/04/2017.
@@ -25,7 +22,7 @@ public class Mission {
     private String mDestination;
     private String mAsl;
     private String mCentrale;
-    private Centrale mCentraleObj;
+    private Postazione mPostazioneObj;
 
     public Mission(Context context) {
         this.mContext = context;
@@ -44,7 +41,7 @@ public class Mission {
         this.mMissionSynthesis = new MissionSynthesis(mContext, mSynthesis);
         this.mDestination = destination;
         this.mAsl = asl;
-        this.mCentraleObj = new Centrale(code);
+        this.mPostazioneObj = new Postazione(code);
 
     }
 
@@ -62,7 +59,7 @@ public class Mission {
         this.mDestination = destination;
         this.mAsl = asl;
         this.mCentrale = centrale;
-        this.mCentraleObj = new Centrale(pubblicaAssitenza);
+        this.mPostazioneObj = new Postazione(pubblicaAssitenza);
 
     }
 
@@ -107,7 +104,7 @@ public class Mission {
     }
 
     public String getPubblicaAssistenza() {
-        return mCentraleObj.getDescription();
+        return mPostazioneObj.getDescription();
 //        String pubblicaAssistenza = mPubblicaAssistenza.get(mPostazione);
 //        if (pubblicaAssistenza == null) pubblicaAssistenza = mPostazione;
 //        return pubblicaAssistenza;

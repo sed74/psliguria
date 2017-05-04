@@ -35,7 +35,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.HashMap;
 
 /**
  * Helper methods related to requesting and receiving earthquake data from USGS.
@@ -313,7 +312,7 @@ public final class QueryUtils {
                 String city = hospitalJSONObj.getString(CENTRALE_CITTA);
                 String centrale = hospitalJSONObj.getString(CENTRALE_CENTRALE);
 
-                Centrale c = new Centrale(id, code, descr, city, centrale);
+                Postazione c = new Postazione(id, code, descr, city, centrale);
 
                 // Add the new {@link Earthquake} to the list of earthquakes.
                 centrali.add(c);
