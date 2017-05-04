@@ -119,7 +119,7 @@ public class MissionActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if (getResources().getConfiguration().screenWidthDp < QueryUtils.TABLET_MIN_WIDTH) {
+                if (getResources().getConfiguration().screenWidthDp < 600/*QueryUtils.TABLET_MIN_WIDTH*/) {
 
                     boolean isSelected = (boolean) view.getTag();
 
@@ -134,9 +134,9 @@ public class MissionActivity extends AppCompatActivity
                 }
                 Bundle bundle = new Bundle();
 //                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME,
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID,
                         mMissions.get(position).getPubblicaAssistenza());
-                bundle.putString(FirebaseAnalytics.Param.ORIGIN, "MissionActivity-" +
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "MissionDetail:" +
                         mMissions.get(position).getCentrale());
                 bundle.putString(QueryUtils.FBASE_AMBULANCE_NO,
                         mMissions.get(position).getAmbulanceNo());
@@ -280,7 +280,12 @@ public class MissionActivity extends AppCompatActivity
         mProgressDialog.setMessage(getString(R.string.looking_for_drago));
         mProgressDialog.setCancelable(false);
         mProgressDialog.show();
-//        AsyncTask<String, Void, MissionListCustom> temp =
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, MissionActivity.class.getName());
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Look 4 Drago");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
         new AsyncDownloader(getBaseContext(), this).execute(MISSION_REQUEST_BASE_URL + "Genova",
                 MISSION_REQUEST_BASE_URL + "Savona", MISSION_REQUEST_BASE_URL + "LaSpezia",
                 MISSION_REQUEST_BASE_URL + "Lavagna", MISSION_REQUEST_BASE_URL + "Imperia");

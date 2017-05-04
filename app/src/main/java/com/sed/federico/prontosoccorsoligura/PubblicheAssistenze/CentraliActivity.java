@@ -1,10 +1,8 @@
 package com.sed.federico.prontosoccorsoligura.PubblicheAssistenze;
 
 import android.app.ActivityOptions;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,11 +34,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.sed.federico.prontosoccorsoligura.AsyncString;
 import com.sed.federico.prontosoccorsoligura.Centrale;
 import com.sed.federico.prontosoccorsoligura.CentraleListCustom;
 import com.sed.federico.prontosoccorsoligura.CharlieCodeActivity;
-import com.sed.federico.prontosoccorsoligura.FragmentMission.MissionFragment;
 import com.sed.federico.prontosoccorsoligura.LegendActivity;
 import com.sed.federico.prontosoccorsoligura.MainActivity;
 import com.sed.federico.prontosoccorsoligura.Mission.MissionActivity;
@@ -75,6 +73,8 @@ public class CentraliActivity extends AppCompatActivity
     /**
      * The {@link ViewPager} that will host the section contents.
      */
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     private ViewPager mViewPager;
 
     @Override
@@ -84,6 +84,9 @@ public class CentraliActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         mCacheCentrali = new SparseArray<>();
 
@@ -173,28 +176,40 @@ public class CentraliActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "ActivityOpenedFromDrawer");
         if (id == R.id.ps_activity) {
             // Handle the camera action
         } else if (id == R.id.nav_settings) {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Settings");
             Intent settingsActivity = new Intent(CentraliActivity.this, SettingsActivity.class);
             startActivity(settingsActivity);
         } else if (id == R.id.nav_charlie_code_legend) {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Charlie");
             Intent settingsActivity = new Intent(CentraliActivity.this, CharlieCodeActivity.class);
             startActivity(settingsActivity);
         } else if (id == R.id.nav_emergency_code_legend) {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "CodeLegend");
             Intent settingsActivity = new Intent(CentraliActivity.this, LegendActivity.class);
             startActivity(settingsActivity);
         } else if (id == R.id.nav_centrali) {
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "PubblicheAssistenze");
             new AsyncString(CentraliActivity.this).execute(MainActivity.URL_CENTRALI);
         } else if (id == R.id.nav_about) {
+
+//            FragmentTransaction ft = getFragmentManager().beginTransaction();
+//            ft.add(new MissionFragment(), null);
+//            ft.commit();
+
 //            android.app.Fragment newFragment;
 //            FragmentTransaction transaction = getFragmentManager().beginTransaction();
 //            newFragment = new MissionFragment();
-//            transaction.replace(R.id.tabs, newFragment);
+//            transaction.add(newFragment, null);
+////            transaction.replace(R.id.activity_main, newFragment);
 //            transaction.addToBackStack(null);
 //            transaction.commit();
-//            break;
-//            Intent settingsActivity = new Intent(CentraliActivity.this, SettingsActivity.class);
+
+//            Intent settingsActivity = new Intent(MainActivity.this, SettingsActivity.class);
 //            startActivity(settingsActivity);
         } else if (id == R.id.nav_genova || id == R.id.nav_imperia || id == R.id.nav_la_spezia ||
                 id == R.id.nav_lavagna || id == R.id.nav_savona) {
@@ -216,12 +231,15 @@ public class CentraliActivity extends AppCompatActivity
                     missionIntent.putExtra(MainActivity.EXTRA_HOSPITAL_NAME, "Savona");
                     break;
             }
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID,
+                    "Mission:" + missionIntent.getStringExtra(MainActivity.EXTRA_HOSPITAL_NAME));
             View view = findViewById(R.id.recycle_view);
             ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
                     0, view.getWidth(), view.getHeight());
             startActivity(missionIntent, options.toBundle());
         }
-        item.setChecked(true);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -355,7 +373,7 @@ public class CentraliActivity extends AppCompatActivity
 
             class CentraleComparator implements Comparator<Centrale> {
                 public int compare(Centrale p1, Centrale p2) {
-                    return p1.getDescrizione().compareToIgnoreCase(p2.getDescrizione());
+                    return p1.getDescription().compareToIgnoreCase(p2.getDescription());
                 }
             }
         }
@@ -381,16 +399,20 @@ public class CentraliActivity extends AppCompatActivity
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.centrale_element, parent, false);
 
-            CentraliViewHolder vh = new CentraliViewHolder(v, new CentraliViewHolder.onRecyclerViewClickListener() {
-                @Override
-                public void onClick(View caller) {
-                    Toast toast = Toast.makeText(mContext,
-                            mContext.getString(R.string.statistics_to_be_implemented),
-                            Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
-                }
-            });
+            CentraliViewHolder vh = new CentraliViewHolder(v);
+
+//            CentraliViewHolder vh = new CentraliViewHolder(v, new CentraliViewHolder.onRecyclerViewClickListener() {
+//                @Override
+//                public void onClick(View caller) {
+//                    Toast toast = Toast.makeText(mContext,
+//                            mContext.getString(R.string.statistics_to_be_implemented),
+//                            Toast.LENGTH_LONG);
+//                    toast.setGravity(Gravity.CENTER, 0, 0);
+//                    toast.show();
+//
+//
+//                }
+//            });
             return vh;
         }
 
@@ -399,45 +421,36 @@ public class CentraliActivity extends AppCompatActivity
         public void onBindViewHolder(CentraliViewHolder holder, int position) {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
-            Centrale centrale = mCentrali.get(position);
+            final Centrale centrale = mCentrali.get(position);
 
-            String paName = QueryUtils.getPostazioneName(centrale.getCodice());
+            String paName = centrale.getDescription();
             holder.mPaName.setText(paName);
-//            holder.mCentrale.setText(String.format(mContext.getString(R.string.belong_to_centrale),
-//                    centrale.getCentrale()));
             holder.mCentrale.setText(mContext.getString(R.string.statistics_coming_soon));
 
-            holder.mCross.setBackground(getDrawable(paName));
+//            holder.mCross.setBackground(getDrawable(paName));
+            holder.mCross.setBackground(ContextCompat.getDrawable(mContext,
+                    centrale.getCrossImage()));
+            holder.setPostazioneCode(centrale.getCodice());
 
-        }
 
-        private Drawable getDrawable(String centrale) {
-            int resource;
-            String cent = centrale.toLowerCase();
-            if (cent.contains("oro ")) {
-                resource = R.drawable.cross_gold;
-            } else if (cent.contains("bianca") || cent.contains("cb")) {
-                resource = R.drawable.cross_white_no_circle;
-            } else if (cent.contains("blu")) {
-                resource = R.drawable.cross_blue;
-            } else if (cent.contains("celeste")) {
-                resource = R.drawable.cross_celeste;
-            } else if (cent.contains("verde ") || cent.contains(" cv ")) {
-                resource = R.drawable.cross_green;
-            } else if (cent.contains("azzurra")) {
-                resource = R.drawable.cross_light_blue;
-            } else if (cent.contains("rosa")) {
-                resource = R.drawable.cross_rose;
-            } else if (cent.contains("rossa") || cent.contains("cri ") || cent.contains(" cr ")) {
-                resource = R.drawable.cross_red;
-            } else if (cent.contains("gialla")) {
-                resource = R.drawable.cross_yellow;
-            } else if (cent.contains("elisoccorso")) {
-                resource = R.drawable.cross_eli;
-            } else {
-                resource = R.drawable.cross;
-            }
-            return ContextCompat.getDrawable(mContext, resource);
+            holder.setOnRecyclerViewClickListener(new CentraliViewHolder.onRecyclerViewClickListener() {
+                @Override
+                public void onClick(View caller) {
+                    Toast toast = Toast.makeText(mContext,
+                            mContext.getString(R.string.statistics_to_be_implemented),
+                            Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+
+                    FirebaseAnalytics firebaseAnalytics;
+                    firebaseAnalytics = FirebaseAnalytics.getInstance(mContext);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "PostazioneDetail");
+                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, centrale.getDescription());
+                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                }
+            });
+
         }
 
         // Return the size of your dataset (invoked by the layout manager)
@@ -459,13 +472,14 @@ public class CentraliActivity extends AppCompatActivity
         public TextView mCross;
         public TextView mCentrale;
         onRecyclerViewClickListener mListener;
-
+        private String mPostazioneCode;
 
         public CentraliViewHolder(View v) {
             super(v);
             mPaName = (TextView) v.findViewById(R.id.pa_label);
             mCentrale = (TextView) v.findViewById(R.id.centrale);
             mCross = (TextView) v.findViewById(R.id.cross_icon);
+            v.setOnClickListener(this);
         }
 
         public CentraliViewHolder(View v, onRecyclerViewClickListener listener) {
@@ -482,9 +496,21 @@ public class CentraliActivity extends AppCompatActivity
 
         }
 
+        public String getPostazioneCode() {
+            return mPostazioneCode;
+        }
+
+        public void setPostazioneCode(String postazioneCode) {
+            this.mPostazioneCode = postazioneCode;
+        }
+
         @Override
         public void onClick(View v) {
             mListener.onClick(v);
+        }
+
+        public void setOnRecyclerViewClickListener(onRecyclerViewClickListener listener) {
+            mListener = listener;
         }
 
         public interface onRecyclerViewClickListener {

@@ -47,6 +47,8 @@ public final class QueryUtils {
      */
     public static final String FBASE_AMBULANCE_NO = "ambulance_no";
     public static final int TABLET_MIN_WIDTH = 720;
+    public static final int PHONE_ORIZONTAL_WIDTH = 600;
+
     public static final String HOSPITAL_NAME = "name";
     public static final String WHITE_WAITING = "whiteWaiting";
     public static final String GREEN_WAITING = "greenWaiting";
