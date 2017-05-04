@@ -18,7 +18,6 @@ public class Mission {
     private String mMissionNo;
     private String mAmbulanceNo;
     private String mPostazione;
-    private HashMap<String, String> mPubblicaAssistenza;
     private String mCode;
     private String mLocation;
     private MissionSynthesis mMissionSynthesis;
@@ -45,7 +44,8 @@ public class Mission {
         this.mMissionSynthesis = new MissionSynthesis(mContext, mSynthesis);
         this.mDestination = destination;
         this.mAsl = asl;
-        mPubblicaAssistenza = QueryUtils.initPostazione();
+        this.mCentraleObj = new Centrale(code);
+
     }
 
     public Mission(Context context, String missionNo, String ambulanceNo,
@@ -62,7 +62,8 @@ public class Mission {
         this.mDestination = destination;
         this.mAsl = asl;
         this.mCentrale = centrale;
-        mPubblicaAssistenza = QueryUtils.initPostazione();
+        this.mCentraleObj = new Centrale(pubblicaAssitenza);
+
     }
 
     public String getCentrale() {
@@ -105,14 +106,11 @@ public class Mission {
         this.mPostazione = postazione;
     }
 
-    public String getPubblicaAssistenza(String postazione) {
-        return mPubblicaAssistenza.get(postazione);
-    }
-
     public String getPubblicaAssistenza() {
-        String pubblicaAssistenza = mPubblicaAssistenza.get(mPostazione);
-        if (pubblicaAssistenza == null) pubblicaAssistenza = mPostazione;
-        return pubblicaAssistenza;
+        return mCentraleObj.getDescription();
+//        String pubblicaAssistenza = mPubblicaAssistenza.get(mPostazione);
+//        if (pubblicaAssistenza == null) pubblicaAssistenza = mPostazione;
+//        return pubblicaAssistenza;
     }
 
     public String getCode() {

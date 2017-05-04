@@ -27,24 +27,18 @@ public class Centrale {
         this.mDescrizione = descrizione;
         this.mCitta = citta;
         this.mCentrale = centrale;
-//        this.checkDescription();
         this.populateExtraInfo();
     }
 
     public Centrale(String codice, String descrizione) {
         this.mCodice = codice;
         this.mDescrizione = descrizione;
+        this.populateExtraInfo();
     }
 
-    private void checkDescription() {
-        if (mDescrizione.isEmpty()) {
-            String descr = QueryUtils.getPostazioneName(mCodice);
-            if (descr.isEmpty()) {
-                mDescrizione = mCodice;
-            } else {
-                mDescrizione = descr;
-            }
-        }
+    public Centrale(String mCodice) {
+        this.mCodice = mCodice;
+        this.populateExtraInfo();
     }
 
     public int getCrossImage() {
@@ -374,7 +368,81 @@ public class Centrale {
                 mDescrizione = mCodice;
                 mCrossImage = new CrossImage(getDefaultCrossColor(mCodice));
         }
+/*
+"Associazione Cinofili Da Soccorso \"Il Branco\" Onlus"
+"Medicina E Progresso"
+"P.A. Croce Bianca Rapallese"
+"P.A. Croce Bianca San Desiderio"
+"P.A. Croce D'oro Fascia"
+"P.A. Croce D'oro Sciarborasca"
+"P.A. Croce Rosa Di Trensasco"
+"P.A. Croce Verde Isoverde"
+"P.A. Croce Verde Quarto"
+"P.A. Croce Verde Quinto"
+"P.A. Croce Verde Sestri Ponente"
+"P.A. Croce Verde Vobbia - C/O Grosso Zaverio"
+"P.A. Volontari Del Soccorso Sestri Levante"
 
+
+        Savona
+"P.A. Croce Azzurra Calizzano"
+"P.A. Croce Bianca Alassio "
+"P.A. Croce Bianca Albenga"
+"P.A. Croce Bianca Altare"
+"P.A. Croce Bianca Andora"
+"P.A. Croce Bianca Borghetto Santo Spirito"
+"P.A. Croce Bianca Borgio Verezzi"
+"P.A. Croce Bianca Cairo Montenotte"
+"P.A. Croce Bianca Calice Ligure \"Dott. G. Cesio\""
+"P.A. Croce Bianca Carcare"
+"P.A. Croce Bianca Dego"
+"P.A. Croce Bianca Finale Ligure"
+"P.A. Croce Bianca Giusvalla"
+"P.A. Croce Bianca Laigueglia"
+"P.A. Croce Bianca Mioglia"
+"P.A. Croce Bianca Noli"
+"P.A. Croce Bianca Pontinvrea"
+"P.A. Croce Bianca Savona"
+"P.A. Croce Bianca Spotorno"
+"P.A. Croce D'oro Albissola Marina"
+"P.A. Croce Rosa Cellese"
+"P.A. Croce Verde Albisola Superiore"
+"P.A. Croce Verde Bardineto"
+"P.A. Croce Verde Finalborgo"
+"P.A. Croce Verde Murialdo"
+
+        Imperia
+"P.A. Croce Bianca Imperia Onlus"
+"P.A. Croce Bianca Pornassio"
+"P.A. Croce D'oro Cervo"
+
+        La Spezia
+"P.A. \"Humanitas\" Romito Magra"
+"P.A. Croce Azzurra Bonassola"
+"P.A. Croce Azzurra Brugnato"
+"P.A. Croce Bianca Beverino"
+"P.A. Croce Bianca Le Grazie"
+"P.A. Croce Bianca Monterosso Al Mare"
+"P.A. Croce Bianca Portovenere"
+"P.A. Croce Bianca Riomaggiore"
+"P.A. Croce Bianca Santo Stefano Magra"
+"P.A. Croce D'oro Deivese"
+"P.A. Croce Gialla"
+"P.A. Croce Rosso-Bianca Lerici"
+"P.A. Croce Verde Arcola"
+"P.A. Croce Verde Borghetto Vara"
+"P.A. Croce Verde Carro"
+"P.A. Croce Verde Levanto"
+"P.A. Croce Verde Manarola"
+"P.A. Croce Verde Pignone"
+"P.A. Croce Verde Vernazza"
+"P.A. Croce Verde Zignago"
+"P.A. Framurese"
+"P.A. La Misericordia Et Olmo"
+"P.A. Luni Onlus"
+"P.A. Pitelli"
+"P.A. Vezzano Ligure"
+*/
     }
 
     private Color getDefaultCrossColor(String centrale) {
