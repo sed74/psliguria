@@ -8,7 +8,7 @@ import android.support.v4.content.ContextCompat;
  */
 
 
-public class Centrale {
+public class Postazione {
     private int mId;
     private String mCodice;
     private String mDescrizione;
@@ -17,11 +17,11 @@ public class Centrale {
     private CrossImage mCrossImage;
 //    private Color mCrossColor;
 
-    public Centrale() {
+    public Postazione() {
     }
 
 
-    public Centrale(int id, String codice, String descrizione, String citta, String centrale) {
+    public Postazione(int id, String codice, String descrizione, String citta, String centrale) {
         this.mId = id;
         this.mCodice = codice;
         this.mDescrizione = descrizione;
@@ -30,13 +30,13 @@ public class Centrale {
         this.populateExtraInfo();
     }
 
-    public Centrale(String codice, String descrizione) {
+    public Postazione(String codice, String descrizione) {
         this.mCodice = codice;
         this.mDescrizione = descrizione;
         this.populateExtraInfo();
     }
 
-    public Centrale(String mCodice) {
+    public Postazione(String mCodice) {
         this.mCodice = mCodice;
         this.populateExtraInfo();
     }

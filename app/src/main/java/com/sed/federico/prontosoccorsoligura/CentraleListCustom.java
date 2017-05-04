@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by federico.marchesi on 31/03/2017.
  */
 
-public class CentraleListCustom extends ArrayList<Centrale> {
+public class CentraleListCustom extends ArrayList<Postazione> {
 
 
     public CentraleListCustom() {
@@ -15,15 +15,15 @@ public class CentraleListCustom extends ArrayList<Centrale> {
     }
 
     @Override
-    public boolean add(Centrale centrale) {
+    public boolean add(Postazione postazione) {
 
 
-        return super.add(centrale);
+        return super.add(postazione);
     }
 
     @Override
-    public void add(int index, Centrale centrale) {
-        super.add(index, centrale);
+    public void add(int index, Postazione postazione) {
+        super.add(index, postazione);
     }
 
 

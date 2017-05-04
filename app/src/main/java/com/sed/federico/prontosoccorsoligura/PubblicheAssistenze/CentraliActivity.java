@@ -36,7 +36,7 @@ import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.sed.federico.prontosoccorsoligura.AsyncString;
-import com.sed.federico.prontosoccorsoligura.Centrale;
+import com.sed.federico.prontosoccorsoligura.Postazione;
 import com.sed.federico.prontosoccorsoligura.CentraleListCustom;
 import com.sed.federico.prontosoccorsoligura.CharlieCodeActivity;
 import com.sed.federico.prontosoccorsoligura.LegendActivity;
@@ -342,7 +342,7 @@ public class CentraliActivity extends AppCompatActivity
 
                     String url = params[0];
                     CentraleListCustom temp = QueryUtils.fetchCentrali(url);
-                    for (Centrale c :
+                    for (Postazione c :
                             temp) {
                         if (c.getCentrale().equalsIgnoreCase(mCentrale)) {
                             centrali.add(c);
@@ -371,8 +371,8 @@ public class CentraliActivity extends AppCompatActivity
 
             }
 
-            class CentraleComparator implements Comparator<Centrale> {
-                public int compare(Centrale p1, Centrale p2) {
+            class CentraleComparator implements Comparator<Postazione> {
+                public int compare(Postazione p1, Postazione p2) {
                     return p1.getDescription().compareToIgnoreCase(p2.getDescription());
                 }
             }
@@ -421,16 +421,16 @@ public class CentraliActivity extends AppCompatActivity
         public void onBindViewHolder(CentraliViewHolder holder, int position) {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
-            final Centrale centrale = mCentrali.get(position);
+            final Postazione postazione = mCentrali.get(position);
 
-            String paName = centrale.getDescription();
+            String paName = postazione.getDescription();
             holder.mPaName.setText(paName);
             holder.mCentrale.setText(mContext.getString(R.string.statistics_coming_soon));
 
 //            holder.mCross.setBackground(getDrawable(paName));
             holder.mCross.setBackground(ContextCompat.getDrawable(mContext,
-                    centrale.getCrossImage()));
-            holder.setPostazioneCode(centrale.getCodice());
+                    postazione.getCrossImage()));
+            holder.setPostazioneCode(postazione.getCodice());
 
 
             holder.setOnRecyclerViewClickListener(new CentraliViewHolder.onRecyclerViewClickListener() {
@@ -446,7 +446,7 @@ public class CentraliActivity extends AppCompatActivity
                     firebaseAnalytics = FirebaseAnalytics.getInstance(mContext);
                     Bundle bundle = new Bundle();
                     bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "PostazioneDetail");
-                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, centrale.getDescription());
+                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, postazione.getDescription());
                     firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 }
             });
@@ -477,7 +477,7 @@ public class CentraliActivity extends AppCompatActivity
         public CentraliViewHolder(View v) {
             super(v);
             mPaName = (TextView) v.findViewById(R.id.pa_label);
-            mCentrale = (TextView) v.findViewById(R.id.centrale);
+            mCentrale = (TextView) v.findViewById(R.id.postazione);
             mCross = (TextView) v.findViewById(R.id.cross_icon);
             v.setOnClickListener(this);
         }
@@ -485,7 +485,7 @@ public class CentraliActivity extends AppCompatActivity
         public CentraliViewHolder(View v, onRecyclerViewClickListener listener) {
             super(v);
             mPaName = (TextView) v.findViewById(R.id.pa_label);
-            mCentrale = (TextView) v.findViewById(R.id.centrale);
+            mCentrale = (TextView) v.findViewById(R.id.postazione);
             mCross = (TextView) v.findViewById(R.id.cross_icon);
             mListener = listener;
 
