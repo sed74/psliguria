@@ -1,7 +1,6 @@
 package com.sed.federico.prontosoccorsoligura;
 
 import android.app.ActivityOptions;
-import android.app.FragmentTransaction;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +16,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,16 +26,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.sed.federico.prontosoccorsoligura.FragmentMission.MissionFragment;
 import com.sed.federico.prontosoccorsoligura.FragmentMission.dummy.DummyContent;
 import com.sed.federico.prontosoccorsoligura.Mission.MissionActivity;
-import com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.CentraliActivity;
+import com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.Postazione;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, LoaderCallbacks<HospitalListCustom>,
         MissionFragment.OnListFragmentInteractionListener {
 
     public static final String EXTRA_HOSPITAL_NAME = "hospital_name";
+    public static final String EXTRA_CENTRALE_NAME = "centrale_name";
     public static final String EXTRA_HOSPITAL_POSITION = "hospital_position";
     public static final String DATI_PS_REQUEST_URL =
             "http://datipsge.azurewebsites.net/api/hospital/";
@@ -48,6 +56,7 @@ public class MainActivity extends AppCompatActivity
      * This really only comes into play if you're using multiple loaders.
      */
     private static final int HOSPITAL_LOADER_ID = 1;
+    private static final String TAG = MainActivity.class.getClass().getName();
     SwipeRefreshLayout mSwipeRefreshLayout;
     /**
      * Adapter for the list of earthquakes
@@ -63,6 +72,48 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+//        final Handler handler = new Handler();
+//
+//        final Runnable r = new Runnable() {
+//            public void run() {
+        FirebaseDatabase mPostazioniDB = FirebaseDatabase.getInstance();
+//        mPostazioniDB.setPersistenceEnabled(true);
+        final DatabaseReference myRef = mPostazioniDB.getReference("postazione");
+
+        // Read from the mPostazioniDB
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                ArrayList<Postazione> postazioni = new ArrayList<>();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    // TODO: handle the post
+                    Postazione lPostazione = postSnapshot.getValue(Postazione.class);
+                    postazioni.add(lPostazione);
+                    String lID = postSnapshot.getKey();
+//                    myRef.child(lID).child("descrizione").setValue(lPostazione.getDescription());
+
+                }
+//                myRef.setValue(postazioni);
+                Log.d(TAG, "Value is: " + postazioni.size());
+                Toast.makeText(MainActivity.this, "Record scaricati: " + postazioni.size(),
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+//            }
+//        };
+//
+//        handler.postDelayed(r, 10);
+
 
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
@@ -260,19 +311,19 @@ public class MainActivity extends AppCompatActivity
             Intent missionIntent = new Intent(MainActivity.this, MissionActivity.class);
             switch (id) {
                 case R.id.nav_genova:
-                    missionIntent.putExtra(EXTRA_HOSPITAL_NAME, "Genova");
+                    missionIntent.putExtra(EXTRA_CENTRALE_NAME, "Genova");
                     break;
                 case R.id.nav_imperia:
-                    missionIntent.putExtra(EXTRA_HOSPITAL_NAME, "Imperia");
+                    missionIntent.putExtra(EXTRA_CENTRALE_NAME, "Imperia");
                     break;
                 case R.id.nav_la_spezia:
-                    missionIntent.putExtra(EXTRA_HOSPITAL_NAME, "LaSpezia");
+                    missionIntent.putExtra(EXTRA_CENTRALE_NAME, "LaSpezia");
                     break;
                 case R.id.nav_lavagna:
-                    missionIntent.putExtra(EXTRA_HOSPITAL_NAME, "Lavagna");
+                    missionIntent.putExtra(EXTRA_CENTRALE_NAME, "Lavagna");
                     break;
                 case R.id.nav_savona:
-                    missionIntent.putExtra(EXTRA_HOSPITAL_NAME, "Savona");
+                    missionIntent.putExtra(EXTRA_CENTRALE_NAME, "Savona");
                     break;
             }
             View view = findViewById(R.id.list);
@@ -280,7 +331,7 @@ public class MainActivity extends AppCompatActivity
                     0, view.getWidth(), view.getHeight());
             startActivity(missionIntent, options.toBundle());
             bundle.putString(FirebaseAnalytics.Param.ITEM_ID,
-                    "Mission:" + missionIntent.getStringExtra(EXTRA_HOSPITAL_NAME));
+                    "Mission:" + missionIntent.getStringExtra(EXTRA_CENTRALE_NAME));
         }
 //                bundle.putString(FirebaseAnalytics.Param.ORIGIN, "MainActivity");
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);

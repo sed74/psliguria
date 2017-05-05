@@ -22,6 +22,7 @@ import android.util.Log;
 
 import com.sed.federico.prontosoccorsoligura.Mission.Mission;
 import com.sed.federico.prontosoccorsoligura.Mission.MissionListCustom;
+import com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.Postazione;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -118,7 +119,7 @@ public final class QueryUtils {
     /**
      * Query the USGS dataset and return a list of {@link Hospital} objects.
      */
-    public static CentraleListCustom fetchCentrali(String requestUrl) {
+    public static PostazioneListCustom fetchCentrali(String requestUrl) {
         // Create URL object
         URL url = createUrl(requestUrl);
 
@@ -131,7 +132,7 @@ public final class QueryUtils {
         }
 
         // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
-        CentraleListCustom centrali = extractCentraleFromJson(jsonResponse);
+        PostazioneListCustom centrali = extractCentraleFromJson(jsonResponse);
 
         // Return the list of {@link Earthquake}s
         return centrali;
@@ -286,14 +287,14 @@ public final class QueryUtils {
      * Return a list of {@link Hospital} objects that has been built up from
      * parsing the given JSON response.
      */
-    private static CentraleListCustom extractCentraleFromJson(String hospitalJSON) {
+    private static PostazioneListCustom extractCentraleFromJson(String hospitalJSON) {
         // If the JSON string is empty or null, then return early.
         if (TextUtils.isEmpty(hospitalJSON)) {
             return null;
         }
 
         // Create an empty ArrayList that we can start adding earthquakes to
-        CentraleListCustom centrali = new CentraleListCustom();
+        PostazioneListCustom centrali = new PostazioneListCustom();
 
         // Try to parse the JSON response string. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.

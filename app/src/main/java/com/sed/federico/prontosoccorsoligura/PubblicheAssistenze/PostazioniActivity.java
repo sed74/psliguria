@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -35,13 +36,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Transaction;
+import com.google.firebase.database.ValueEventListener;
 import com.sed.federico.prontosoccorsoligura.AsyncString;
-import com.sed.federico.prontosoccorsoligura.Postazione;
-import com.sed.federico.prontosoccorsoligura.CentraleListCustom;
 import com.sed.federico.prontosoccorsoligura.CharlieCodeActivity;
 import com.sed.federico.prontosoccorsoligura.LegendActivity;
 import com.sed.federico.prontosoccorsoligura.MainActivity;
 import com.sed.federico.prontosoccorsoligura.Mission.MissionActivity;
+import com.sed.federico.prontosoccorsoligura.PostazioneListCustom;
 import com.sed.federico.prontosoccorsoligura.QueryUtils;
 import com.sed.federico.prontosoccorsoligura.R;
 import com.sed.federico.prontosoccorsoligura.SettingsActivity;
@@ -53,14 +59,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class CentraliActivity extends AppCompatActivity
+public class PostazioniActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String URL_PA =
             "http://datipsge.azurewebsites.net/api/anagrafiche/comitato/all";
+    private static final String TAG = "PostazioniActivity";
     static ArrayList<String> mNomiCentrali;
     String mJson;
-    SparseArray<CentraleListCustom> mCacheCentrali;
+
+    SparseArray<PostazioneListCustom> mCachePostazioni;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -85,10 +93,11 @@ public class CentraliActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-        mCacheCentrali = new SparseArray<>();
+        mCachePostazioni = new SparseArray<>();
 
         mJson = getIntent().getStringExtra("centrali");
         populateTab(mJson);
@@ -101,6 +110,27 @@ public class CentraliActivity extends AppCompatActivity
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "PostazioneActivity");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID,
+                        mSectionsPagerAdapter.getPageTitle(i).toString());
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -125,7 +155,7 @@ public class CentraliActivity extends AppCompatActivity
     @Override
     protected void onStop() {
         super.onStop();
-        mCacheCentrali.clear();
+        mCachePostazioni.clear();
     }
 
     private void populateTab(String jason) {
@@ -182,19 +212,19 @@ public class CentraliActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_settings) {
             bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Settings");
-            Intent settingsActivity = new Intent(CentraliActivity.this, SettingsActivity.class);
+            Intent settingsActivity = new Intent(PostazioniActivity.this, SettingsActivity.class);
             startActivity(settingsActivity);
         } else if (id == R.id.nav_charlie_code_legend) {
             bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Charlie");
-            Intent settingsActivity = new Intent(CentraliActivity.this, CharlieCodeActivity.class);
+            Intent settingsActivity = new Intent(PostazioniActivity.this, CharlieCodeActivity.class);
             startActivity(settingsActivity);
         } else if (id == R.id.nav_emergency_code_legend) {
             bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "CodeLegend");
-            Intent settingsActivity = new Intent(CentraliActivity.this, LegendActivity.class);
+            Intent settingsActivity = new Intent(PostazioniActivity.this, LegendActivity.class);
             startActivity(settingsActivity);
         } else if (id == R.id.nav_centrali) {
             bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "PubblicheAssistenze");
-            new AsyncString(CentraliActivity.this).execute(MainActivity.URL_CENTRALI);
+            new AsyncString(PostazioniActivity.this).execute(MainActivity.URL_CENTRALI);
         } else if (id == R.id.nav_about) {
 
 //            FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -213,26 +243,26 @@ public class CentraliActivity extends AppCompatActivity
 //            startActivity(settingsActivity);
         } else if (id == R.id.nav_genova || id == R.id.nav_imperia || id == R.id.nav_la_spezia ||
                 id == R.id.nav_lavagna || id == R.id.nav_savona) {
-            Intent missionIntent = new Intent(CentraliActivity.this, MissionActivity.class);
+            Intent missionIntent = new Intent(PostazioniActivity.this, MissionActivity.class);
             switch (id) {
                 case R.id.nav_genova:
-                    missionIntent.putExtra(MainActivity.EXTRA_HOSPITAL_NAME, "Genova");
+                    missionIntent.putExtra(MainActivity.EXTRA_CENTRALE_NAME, "Genova");
                     break;
                 case R.id.nav_imperia:
-                    missionIntent.putExtra(MainActivity.EXTRA_HOSPITAL_NAME, "Imperia");
+                    missionIntent.putExtra(MainActivity.EXTRA_CENTRALE_NAME, "Imperia");
                     break;
                 case R.id.nav_la_spezia:
-                    missionIntent.putExtra(MainActivity.EXTRA_HOSPITAL_NAME, "LaSpezia");
+                    missionIntent.putExtra(MainActivity.EXTRA_CENTRALE_NAME, "LaSpezia");
                     break;
                 case R.id.nav_lavagna:
-                    missionIntent.putExtra(MainActivity.EXTRA_HOSPITAL_NAME, "Lavagna");
+                    missionIntent.putExtra(MainActivity.EXTRA_CENTRALE_NAME, "Lavagna");
                     break;
                 case R.id.nav_savona:
-                    missionIntent.putExtra(MainActivity.EXTRA_HOSPITAL_NAME, "Savona");
+                    missionIntent.putExtra(MainActivity.EXTRA_CENTRALE_NAME, "Savona");
                     break;
             }
             bundle.putString(FirebaseAnalytics.Param.ITEM_ID,
-                    "Mission:" + missionIntent.getStringExtra(MainActivity.EXTRA_HOSPITAL_NAME));
+                    "Mission:" + missionIntent.getStringExtra(MainActivity.EXTRA_CENTRALE_NAME));
             View view = findViewById(R.id.recycle_view);
             ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
                     0, view.getWidth(), view.getHeight());
@@ -254,7 +284,7 @@ public class CentraliActivity extends AppCompatActivity
          * fragment.
          */
         public static final String ARG_SECTION_NUMBER = "section_number";
-        protected static CentraleListCustom mCentrali;
+        protected static PostazioneListCustom mCentrali;
         protected RecyclerView.LayoutManager mLayoutManager;
         protected LayoutManagerType mCurrentLayoutManagerType;
         protected RecyclerView mRecyclerView;
@@ -288,7 +318,7 @@ public class CentraliActivity extends AppCompatActivity
 
             mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycle_view);
 
-            CentraliActivity mainActivity = (CentraliActivity) getActivity();
+            PostazioniActivity mainActivity = (PostazioniActivity) getActivity();
 
             mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
 
@@ -314,13 +344,13 @@ public class CentraliActivity extends AppCompatActivity
             LINEAR_LAYOUT_MANAGER
         }
 
-        public class CentraliAsyncDownloader extends AsyncTask<String, Void, CentraleListCustom> {
-            CentraliActivity mContext;
+        public class CentraliAsyncDownloader extends AsyncTask<String, Void, PostazioneListCustom> {
+            PostazioniActivity mContext;
             RecyclerView mRecyclerViewAsync;
             String mCentrale;
 
 
-            public CentraliAsyncDownloader(CentraliActivity context, RecyclerView recyclerView,
+            public CentraliAsyncDownloader(PostazioniActivity context, RecyclerView recyclerView,
                                            String centrale) {
                 mContext = context;
                 mRecyclerViewAsync = recyclerView;
@@ -328,27 +358,27 @@ public class CentraliActivity extends AppCompatActivity
             }
 
             @Override
-            protected CentraleListCustom doInBackground(String... params) {
+            protected PostazioneListCustom doInBackground(String... params) {
                 if (params.length == 0) {
                     return null;
                 }
 
                 int currentSection = Integer.valueOf(params[1]) - 1;
-                CentraleListCustom centrali;
+                PostazioneListCustom centrali;
 
-                centrali = mContext.mCacheCentrali.get(currentSection);
+                centrali = mContext.mCachePostazioni.get(currentSection);
                 if (centrali == null) {
-                    centrali = new CentraleListCustom();
+                    centrali = new PostazioneListCustom();
 
                     String url = params[0];
-                    CentraleListCustom temp = QueryUtils.fetchCentrali(url);
+                    PostazioneListCustom temp = QueryUtils.fetchCentrali(url);
                     for (Postazione c :
                             temp) {
                         if (c.getCentrale().equalsIgnoreCase(mCentrale)) {
                             centrali.add(c);
                         }
                     }
-                    mContext.mCacheCentrali.put(currentSection, centrali);
+                    mContext.mCachePostazioni.put(currentSection, centrali);
                 }
                 Collections.sort(centrali, new CentraleComparator());
                 return centrali;
@@ -362,10 +392,10 @@ public class CentraliActivity extends AppCompatActivity
             }
 
             @Override
-            protected void onPostExecute(CentraleListCustom centrali) {
+            protected void onPostExecute(PostazioneListCustom centrali) {
                 super.onPostExecute(centrali);
                 mProgressBar.setVisibility(View.GONE);
-                mRecyclerViewAsync.setAdapter(new CentraliAdapter(mContext, centrali));
+                mRecyclerViewAsync.setAdapter(new PostazioniAdapter(mContext, centrali));
 //            if (mProgressDialog.isShowing())
 //                mProgressDialog.dismiss();
 
@@ -380,12 +410,12 @@ public class CentraliActivity extends AppCompatActivity
     }
 
 
-    public static class CentraliAdapter extends RecyclerView.Adapter<CentraliViewHolder> {
-        private CentraleListCustom mCentrali;
+    public static class PostazioniAdapter extends RecyclerView.Adapter<PostazioniViewHolder> {
+        private PostazioneListCustom mCentrali;
         private Context mContext;
 
         // Provide a suitable constructor (depends on the kind of dataset)
-        public CentraliAdapter(Context context, CentraleListCustom centrali) {
+        public PostazioniAdapter(Context context, PostazioneListCustom centrali) {
 //            super();
             mCentrali = centrali;
             mContext = context;
@@ -393,15 +423,15 @@ public class CentraliActivity extends AppCompatActivity
 
         // Create new views (invoked by the layout manager)
         @Override
-        public CentraliViewHolder onCreateViewHolder(ViewGroup parent,
-                                                     int viewType) {
+        public PostazioniViewHolder onCreateViewHolder(ViewGroup parent,
+                                                       int viewType) {
             // create a new view
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.centrale_element, parent, false);
 
-            CentraliViewHolder vh = new CentraliViewHolder(v);
+            PostazioniViewHolder vh = new PostazioniViewHolder(v);
 
-//            CentraliViewHolder vh = new CentraliViewHolder(v, new CentraliViewHolder.onRecyclerViewClickListener() {
+//            PostazioniViewHolder vh = new PostazioniViewHolder(v, new PostazioniViewHolder.onRecyclerViewClickListener() {
 //                @Override
 //                public void onClick(View caller) {
 //                    Toast toast = Toast.makeText(mContext,
@@ -418,14 +448,14 @@ public class CentraliActivity extends AppCompatActivity
 
         // Replace the contents of a view (invoked by the layout manager)
         @Override
-        public void onBindViewHolder(CentraliViewHolder holder, int position) {
+        public void onBindViewHolder(PostazioniViewHolder holder, int position) {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
             final Postazione postazione = mCentrali.get(position);
 
             String paName = postazione.getDescription();
             holder.mPaName.setText(paName);
-            holder.mCentrale.setText(mContext.getString(R.string.statistics_coming_soon));
+            holder.mPostazione.setText(mContext.getString(R.string.statistics_coming_soon));
 
 //            holder.mCross.setBackground(getDrawable(paName));
             holder.mCross.setBackground(ContextCompat.getDrawable(mContext,
@@ -433,7 +463,7 @@ public class CentraliActivity extends AppCompatActivity
             holder.setPostazioneCode(postazione.getCodice());
 
 
-            holder.setOnRecyclerViewClickListener(new CentraliViewHolder.onRecyclerViewClickListener() {
+            holder.setOnRecyclerViewClickListener(new PostazioniViewHolder.onRecyclerViewClickListener() {
                 @Override
                 public void onClick(View caller) {
                     Toast toast = Toast.makeText(mContext,
@@ -464,35 +494,33 @@ public class CentraliActivity extends AppCompatActivity
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class CentraliViewHolder extends RecyclerView.ViewHolder
+    public static class PostazioniViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
         // each data item is just a string in this case
         public TextView mPaName;
         public TextView mCross;
-        public TextView mCentrale;
+        public TextView mPostazione;
         onRecyclerViewClickListener mListener;
         private String mPostazioneCode;
 
-        public CentraliViewHolder(View v) {
-            super(v);
-            mPaName = (TextView) v.findViewById(R.id.pa_label);
-            mCentrale = (TextView) v.findViewById(R.id.postazione);
-            mCross = (TextView) v.findViewById(R.id.cross_icon);
-            v.setOnClickListener(this);
+        public PostazioniViewHolder(View v) {
+            this(v, null);
         }
 
-        public CentraliViewHolder(View v, onRecyclerViewClickListener listener) {
+        public PostazioniViewHolder(View v, onRecyclerViewClickListener listener) {
             super(v);
             mPaName = (TextView) v.findViewById(R.id.pa_label);
-            mCentrale = (TextView) v.findViewById(R.id.postazione);
+            mPostazione = (TextView) v.findViewById(R.id.postazione);
             mCross = (TextView) v.findViewById(R.id.cross_icon);
-            mListener = listener;
-
             v.setOnClickListener(this);
+
+            if (listener != null) {
+                mListener = listener;
+            }
 //            mPaName.setOnClickListener(this);
 //            mCross.setOnClickListener(this);
-//            mCentrale.setOnClickListener(this);
+//            mPostazione.setOnClickListener(this);
 
         }
 

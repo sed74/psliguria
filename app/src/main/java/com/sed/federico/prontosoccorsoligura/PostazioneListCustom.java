@@ -1,15 +1,17 @@
 package com.sed.federico.prontosoccorsoligura;
 
+import com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.Postazione;
+
 import java.util.ArrayList;
 
 /**
  * Created by federico.marchesi on 31/03/2017.
  */
 
-public class CentraleListCustom extends ArrayList<Postazione> {
+public class PostazioneListCustom extends ArrayList<Postazione> {
 
 
-    public CentraleListCustom() {
+    public PostazioneListCustom() {
         super();
 
     }

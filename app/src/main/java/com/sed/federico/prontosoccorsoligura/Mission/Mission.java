@@ -2,7 +2,7 @@ package com.sed.federico.prontosoccorsoligura.Mission;
 
 import android.content.Context;
 
-import com.sed.federico.prontosoccorsoligura.Postazione;
+import com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.Postazione;
 
 /**
  * Created by federico.marchesi on 05/04/2017.

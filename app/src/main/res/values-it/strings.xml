@@ -196,4 +196,7 @@
     <string name="total_waiting">Attesa (%1$d)</string>
     <string name="total_running">Visita (%1$d)</string>
     <string name="invite">Passa parola</string>
+    <string name="search_hint">Cerca la Pubblica Assistenza</string>
+    <string name="save">Salva</string>
+    <string name="cancel">Annulla</string>
 </resources>

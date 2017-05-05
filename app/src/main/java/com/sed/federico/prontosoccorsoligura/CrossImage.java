@@ -33,4 +33,8 @@ public class CrossImage {
     public int getCrossImage() {
         return mCrossImage.get(mCrossColor);
     }
+
+    public Color getmCrossColor() {
+        return mCrossColor;
+    }
 }
