@@ -50,7 +50,7 @@ public class MissionActivity extends AppCompatActivity
      */
     private MissionAdapter mAdapter;
     private String mActualURL;
-    private String mHospitalName;
+    private String mCentraleName;
 
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -69,16 +69,16 @@ public class MissionActivity extends AppCompatActivity
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         Bundle bundle = savedInstanceState != null ? savedInstanceState : getIntent().getExtras();
-        mHospitalName = bundle.getString(MainActivity.EXTRA_HOSPITAL_NAME);
+        mCentraleName = bundle.getString(MainActivity.EXTRA_CENTRALE_NAME);
 //        if (savedInstanceState == null){
 //            Intent intent = getIntent();
-//            mHospitalName = intent.getStringExtra(MainActivity.EXTRA_HOSPITAL_NAME);
+//            mCentraleName = intent.getStringExtra(MainActivity.EXTRA_HOSPITAL_NAME);
 //        }else{
-//            mHospitalName = savedInstanceState.getString(MainActivity.EXTRA_HOSPITAL_NAME);
+//            mCentraleName = savedInstanceState.getString(MainActivity.EXTRA_HOSPITAL_NAME);
 //        }
 
-        mActualURL = MISSION_REQUEST_BASE_URL + "/" + mHospitalName;
-        this.setTitle(mHospitalName);
+        mActualURL = MISSION_REQUEST_BASE_URL + "/" + mCentraleName;
+        this.setTitle(mCentraleName);
 
         // Create a new adapter that takes an empty list of earthquakes as input
         mAdapter = new MissionAdapter(this, new MissionListCustom());
@@ -183,7 +183,7 @@ public class MissionActivity extends AppCompatActivity
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         // Save the user's current game state
-        savedInstanceState.putString(MainActivity.EXTRA_HOSPITAL_NAME, mHospitalName);
+        savedInstanceState.putString(MainActivity.EXTRA_CENTRALE_NAME, mCentraleName);
 
         // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
@@ -202,7 +202,7 @@ public class MissionActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        this.setTitle(mHospitalName);
+        this.setTitle(mCentraleName);
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_refresh) {
             refreshView(true);
