@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -36,12 +35,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Transaction;
-import com.google.firebase.database.ValueEventListener;
 import com.sed.federico.prontosoccorsoligura.AsyncString;
 import com.sed.federico.prontosoccorsoligura.CharlieCodeActivity;
 import com.sed.federico.prontosoccorsoligura.LegendActivity;
@@ -64,6 +57,9 @@ public class PostazioniActivity extends AppCompatActivity
 
     private static final String URL_PA =
             "http://datipsge.azurewebsites.net/api/anagrafiche/comitato/all";
+    private static final String URL_POSTAZIONI =
+            "http://datipsge.azurewebsites.net/api/centrali/";
+    private static final String URL_POSTAZIONI_VERSION = "v1";
     private static final String TAG = "PostazioniActivity";
     static ArrayList<String> mNomiCentrali;
     String mJson;
@@ -330,14 +326,15 @@ public class PostazioniActivity extends AppCompatActivity
 
             mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
 
-
+            String fullUrl = QueryUtils.createUrlWithVersion(URL_POSTAZIONI, URL_POSTAZIONI_VERSION);
             new CentraliAsyncDownloader(mainActivity, mRecyclerView,
-                    mNomiCentrali.get(sectionNo - 1)).execute(URL_PA, String.valueOf(sectionNo));
+                    mNomiCentrali.get(sectionNo - 1)).execute(fullUrl, String.valueOf(sectionNo));
 
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
             return rootView;
         }
+
 
         private enum LayoutManagerType {
             GRID_LAYOUT_MANAGER,
@@ -368,16 +365,8 @@ public class PostazioniActivity extends AppCompatActivity
 
                 centrali = mContext.mCachePostazioni.get(currentSection);
                 if (centrali == null) {
-                    centrali = new PostazioneListCustom();
-
-                    String url = params[0];
-                    PostazioneListCustom temp = QueryUtils.fetchCentrali(url);
-                    for (Postazione c :
-                            temp) {
-                        if (c.getCentrale().equalsIgnoreCase(mCentrale)) {
-                            centrali.add(c);
-                        }
-                    }
+                    String url = params[0] + mCentrale;
+                    centrali = QueryUtils.fetchCentrali(url);
                     mContext.mCachePostazioni.put(currentSection, centrali);
                 }
                 Collections.sort(centrali, new CentraleComparator());
@@ -404,6 +393,14 @@ public class PostazioniActivity extends AppCompatActivity
             class CentraleComparator implements Comparator<Postazione> {
                 public int compare(Postazione p1, Postazione p2) {
                     return p1.getDescription().compareToIgnoreCase(p2.getDescription());
+                }
+            }
+
+            class CentraleComparatorByMissions implements Comparator<Postazione> {
+                public int compare(Postazione p1, Postazione p2) {
+                    if (p1.getAvgMission() < p2.getAvgMission()) return -1;
+                    if (p1.getAvgMission() > p2.getAvgMission()) return 1;
+                    return 0;
                 }
             }
         }
@@ -455,7 +452,19 @@ public class PostazioniActivity extends AppCompatActivity
 
             String paName = postazione.getDescription();
             holder.mPaName.setText(paName);
-            holder.mPostazione.setText(mContext.getString(R.string.statistics_coming_soon));
+            holder.mAvgMissions.setText(String.format(mContext.getString(R.string.avg_mission_per_day),
+                    postazione.getAvgMission()));
+            holder.mTotMezzi.setText(String.format(mContext.getString(R.string.no_of_ambulances),
+                    postazione.getTotAmbulance()));
+            holder.mAvgWhite.setText(String.format(mContext.getString(R.string.avg_white_per_day),
+                    postazione.getAvgWhite()));
+            holder.mAvgGreen.setText(String.format(mContext.getString(R.string.avg_green_per_day),
+                    postazione.getAvgGreen()));
+            holder.mAvgYellow.setText(String.format(mContext.getString(R.string.avg_yellow_per_day),
+                    postazione.getAvgYellow()));
+            holder.mAvgRed.setText(String.format(mContext.getString(R.string.avg_red_per_day),
+                    postazione.getAvgRed()));
+//            holder.mPostazione.setText(mContext.getString(R.string.statistics_coming_soon));
 
 //            holder.mCross.setBackground(getDrawable(paName));
             holder.mCross.setBackground(ContextCompat.getDrawable(mContext,
@@ -501,6 +510,12 @@ public class PostazioniActivity extends AppCompatActivity
         public TextView mPaName;
         public TextView mCross;
         public TextView mPostazione;
+        public TextView mTotMezzi;
+        public TextView mAvgMissions;
+        public TextView mAvgWhite;
+        public TextView mAvgYellow;
+        public TextView mAvgGreen;
+        public TextView mAvgRed;
         onRecyclerViewClickListener mListener;
         private String mPostazioneCode;
 
@@ -511,8 +526,14 @@ public class PostazioniActivity extends AppCompatActivity
         public PostazioniViewHolder(View v, onRecyclerViewClickListener listener) {
             super(v);
             mPaName = (TextView) v.findViewById(R.id.pa_label);
-            mPostazione = (TextView) v.findViewById(R.id.postazione);
+//            mPostazione = (TextView) v.findViewById(R.id.postazione);
             mCross = (TextView) v.findViewById(R.id.cross_icon);
+            mTotMezzi = (TextView) v.findViewById(R.id.tot_ambulance);
+            mAvgMissions = (TextView) v.findViewById(R.id.avg_missions);
+            mAvgWhite = (TextView) v.findViewById(R.id.avg_white_per_day);
+            mAvgGreen = (TextView) v.findViewById(R.id.avg_green_per_day);
+            mAvgYellow = (TextView) v.findViewById(R.id.avg_yellow_per_day);
+            mAvgRed = (TextView) v.findViewById(R.id.avg_red_per_day);
             v.setOnClickListener(this);
 
             if (listener != null) {
