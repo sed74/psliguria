@@ -184,11 +184,11 @@
     <string name="centrali">Centrali</string>
     <string name="charlie_code_title">Codici Charlie</string>
     <string name="looking_for_drago">Alla ricerca di Drago...</string>
-    <string name="avg_red_per_day">Media codici rossi giornalieri: %1$d</string>
-    <string name="avg_yellow_per_day">Media codici gialli giornalieri: %1$d</string>
-    <string name="avg_green_per_day">Media codici verdi giornalieri: %1$d</string>
-    <string name="avg_white_per_day">Media codici bianchi giornalieri: %1$d</string>
-    <string name="avg_mission_per_day">Media missioni giornaliere: %1$d</string>
+    <string name="avg_red_per_day">%1$.2f</string>
+    <string name="avg_yellow_per_day">%1$.2f</string>
+    <string name="avg_green_per_day">%1$.2f</string>
+    <string name="avg_white_per_day">%1$.2f</string>
+    <string name="avg_mission_per_day">Media missioni giornaliere: %1$.2f di cui:</string>
     <string name="no_of_ambulances">Totale mezzi censiti: %1$d</string>
     <string name="retrieving_data">Caricamento dati in corso...</string>
     <string name="belong_to_centrale">Centrale di appartenenza: %1$s</string>
@@ -201,4 +201,6 @@
     <string name="search_hint">Cerca la Pubblica Assistenza</string>
     <string name="save">Salva</string>
     <string name="cancel">Annulla</string>
+    <string name="tot_mission">Numero totale missioni: %1$d</string>
+    <string name="avg_mission_per_code">Media missioni per codici d\'urgenza</string>
 </resources>

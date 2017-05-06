@@ -4,16 +4,20 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="obi">#6db6ff</color>
     <color name="white">#ffffff</color>
-    <color name="green">#009600</color>
+    <color name="green">#51af51</color>
     <color name="yellow">#ffee00</color>
-    <color name="red">#be0000</color>
+    <color name="red">#d65757</color>
     <color name="black">#000000</color>
     <color name="gray">#6c6c6c</color>
     <color name="rose">#fc9c91</color>
-    <color name="hospital_entry_bck">#d1d1d1</color>
+    <color name="hospital_entry_bck">#c3cdff</color>
     <color name="mission_list_bck">#d1d1d1</color>
-    <color name="obi">#1e8bf9</color>
+
+    <color name="postazioni_entry_bck">#c3cdff</color>
+    <color name="postazioni_list_bck">#c3cdff</color>
+
     <color name="light_blue_cross">#1e8bf9</color>
     <color name="celeste">#0066cc</color>
     <color name="light_blue">#81839b</color>

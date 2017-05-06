@@ -1,7 +1,5 @@
 package com.sed.federico.prontosoccorsoligura.PubblicheAssistenze;
 
-import android.widget.Toast;
-
 import com.sed.federico.prontosoccorsoligura.Color;
 import com.sed.federico.prontosoccorsoligura.CrossImage;
 
@@ -13,26 +11,104 @@ import com.sed.federico.prontosoccorsoligura.CrossImage;
 public class Postazione {
     private int mId;
     private String mCode;
-    private String mDescription;
+    private String mName;
     private String mCity;
     private String mCentrale;
+    private String mAddress;
+    private int mTotAmbulance;
+    private double mAvgMission;
+    private double mAvgWhite;
+    private double mAvgGreen;
+    private double mAvgYellow;
+    private double mAvgRed;
     private CrossImage mCrossImage;
+
+    public String getAddress() {
+        return mAddress;
+    }
+
+    public void setAddress(String mAddress) {
+        this.mAddress = mAddress;
+    }
+
+    public int getTotAmbulance() {
+        return mTotAmbulance;
+    }
+
+    public void setTotAmbulance(int mTotAmbulance) {
+        this.mTotAmbulance = mTotAmbulance;
+    }
+
+    public double getAvgMission() {
+        return mAvgMission;
+    }
+
+    public void setAvgMission(double avgMission) {
+        this.mAvgMission = avgMission;
+    }
+
+    public double getAvgWhite() {
+        return mAvgWhite;
+    }
+
+    public void setAvgWhite(double mAvgWhite) {
+        this.mAvgWhite = mAvgWhite;
+    }
+
+    public double getAvgGreen() {
+        return mAvgGreen;
+    }
+
+    public void setAvgGreen(double mAvgGreen) {
+        this.mAvgGreen = mAvgGreen;
+    }
+
+    public double getAvgYellow() {
+        return mAvgYellow;
+    }
+
+    public void setAvgYellow(double mAvgYellow) {
+        this.mAvgYellow = mAvgYellow;
+    }
+
+    public double getAvgRed() {
+        return mAvgRed;
+    }
+
+    public void setAvgRed(double mAvgRed) {
+        this.mAvgRed = mAvgRed;
+    }
 
 
     public Postazione(int id, String codice, String descrizione, String citta, String centrale) {
         this.mId = id;
         this.mCode = codice;
-        this.mDescription = descrizione;
+        this.mName = descrizione;
         this.mCity = citta;
         this.mCentrale = centrale;
         this.mCrossImage = new CrossImage(Color.CROSS);
         if (!codice.equalsIgnoreCase("BIA"))
             this.populateExtraInfo();
         else
-            mDescription = descrizione;
+            mName = descrizione;
     }
 
     public Postazione() {
+    }
+
+    public Postazione(int id, String code, String name, String address, int totAmbulance,
+                      double totMission, double avgWhite, double avgGreen, double avgYellow, double avgRed) {
+        this.mId = id;
+        this.mCode = code;
+        this.mName = name;
+        this.mAddress = address;
+        this.mTotAmbulance = totAmbulance;
+        this.mAvgMission = totMission;
+        this.mAvgWhite = avgWhite;
+        this.mAvgGreen = avgGreen;
+        this.mAvgYellow = avgYellow;
+        this.mAvgRed = avgRed;
+        this.populateExtraInfo();
     }
 
     public Postazione(String codice, String descrizione) {
@@ -42,6 +118,7 @@ public class Postazione {
     public Postazione(String codice) {
         this(0, codice, "", "", "");
     }
+
 
     public int getCrossImage() {
         return mCrossImage.getCrossImage();
@@ -65,11 +142,11 @@ public class Postazione {
     }
 
     public String getDescription() {
-        return mDescription;
+        return mName;
     }
 
     public void setDescrizione(String descrizione) {
-        this.mDescription = descrizione;
+        this.mName = descrizione;
     }
 
     public String getCitta() {
@@ -93,282 +170,282 @@ public class Postazione {
         int crossColor;
         switch (mCode) {
             case "CRTORR":
-                mDescription = "Croce Rossa Torriglia";
+                mName = "Croce Rossa Torriglia";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "GIALLA":
-                mDescription = "P.A. Croce Gialla";
+                mName = "P.A. Croce Gialla";
                 mCrossImage = new CrossImage(Color.YELLOW);
                 break;
             case "BGL":
-                mDescription = "P.A. Croce Verde Bogliasco";
+                mName = "P.A. Croce Verde Bogliasco";
                 mCrossImage = new CrossImage(Color.GREEN);
             case "VER":
-                mDescription = "P.A. Croce Verde Genovese";
+                mName = "P.A. Croce Verde Genovese";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "BIA":
-                mDescription = "P.A. Croce Bianca Genovese";
+                mName = "P.A. Croce Bianca Genovese";
                 mCrossImage = new CrossImage(Color.WHITE);
                 break;
             case "ISO":
-                mDescription = "P.A. Croce Verde Isoverde";
+                mName = "P.A. Croce Verde Isoverde";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "SES":
-                mDescription = "P.A. Croce Verde Sestri Ponente";
+                mName = "P.A. Croce Verde Sestri Ponente";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "PRA":
-                mDescription = "P.A. Croce Verde Praese";
+                mName = "P.A. Croce Verde Praese";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "PGL":
-                mDescription = "P.A. Croce Verde Pegliese";
+                mName = "P.A. Croce Verde Pegliese";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "QUI":
-                mDescription = "P.A. Croce Verde Quinto";
+                mName = "P.A. Croce Verde Quinto";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "ORO":
-                mDescription = "P.A. Croce D'oro Sampierdarena";
+                mName = "P.A. Croce D'oro Sampierdarena";
                 mCrossImage = new CrossImage(Color.GOLD);
                 break;
             case "PDE":
-                mDescription = "P.A. Croce Verde Pontedecimo";
+                mName = "P.A. Croce Verde Pontedecimo";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "BOL":
-                mDescription = "P.A. Croce Bianca Bolzaneto";
+                mName = "P.A. Croce Bianca Bolzaneto";
                 mCrossImage = new CrossImage(Color.WHITE);
                 break;
             case "MANESS":
-                mDescription = "P.A. Croce D'oro Manesseno";
+                mName = "P.A. Croce D'oro Manesseno";
                 mCrossImage = new CrossImage(Color.GOLD);
                 break;
             case "RIV":
-                mDescription = "P.A. Croce Rosa Rivarolo";
+                mName = "P.A. Croce Rosa Rivarolo";
                 mCrossImage = new CrossImage(Color.ROSE);
                 break;
 //            case "POS":
-//                mDescription = "P.A. Croce Verde Praese";
+//                mName = "P.A. Croce Verde Praese";
 //                mCrossImage = new CrossImage(Color.RED);
 //                break;
             case "BLU":
-                mDescription = "P.A. Croce Blu Castelletto";
+                mName = "P.A. Croce Blu Castelletto";
                 mCrossImage = new CrossImage(Color.BLUE);
                 break;
             case "ORG":
-                mDescription = "P.A. Croce Blu dist. Oregina";
+                mName = "P.A. Croce Blu dist. Oregina";
                 mCrossImage = new CrossImage(Color.BLUE);
                 break;
             case "CRMASO":
-                mDescription = "Croce Rossa Masone";
+                mName = "Croce Rossa Masone";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRCOGO":
-                mDescription = "Croce Rossa Cogoleto";
+                mName = "Croce Rossa Cogoleto";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRROSS":
-                mDescription = "Croce Rossa Rossiglione";
+                mName = "Croce Rossa Rossiglione";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRAREN":
-                mDescription = "Croce Rossa Arenzano";
+                mName = "Croce Rossa Arenzano";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRGENO":
-                mDescription = "Croce Rossa Genova";
+                mName = "Croce Rossa Genova";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRRONC":
-                mDescription = "Croce Rossa Ronco Scrivia";
+                mName = "Croce Rossa Ronco Scrivia";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRVTR":
-                mDescription = "Croce Rossa Voltri";
+                mName = "Croce Rossa Voltri";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRSORI":
-                mDescription = "Croce Rossa Sori";
+                mName = "Croce Rossa Sori";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRUSCI":
-                mDescription = "Croce Rossa Uscio";
+                mName = "Croce Rossa Uscio";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRCMOR":
-                mDescription = "Croce Rossa Campomorone";
+                mName = "Croce Rossa Campomorone";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRBARG":
-                mDescription = "Croce Rossa Bargagli";
+                mName = "Croce Rossa Bargagli";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRDAVA":
-                mDescription = "Croce Rossa Davagna";
+                mName = "Croce Rossa Davagna";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRMONT":
-                mDescription = "Croce Rossa Montoggio";
+                mName = "Croce Rossa Montoggio";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRSTUR":
-                mDescription = "Croce Rossa Sturla";
+                mName = "Croce Rossa Sturla";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRCERA":
-                mDescription = "Croce Rossa Ceranesi";
+                mName = "Croce Rossa Ceranesi";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRTERR":
-                mDescription = "Croce Rossa Ceranesi";
+                mName = "Croce Rossa Ceranesi";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRMTBRUNO":
-                mDescription = "Croce Rossa Montebruno";
+                mName = "Croce Rossa Montebruno";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRCLIG":
-                mDescription = "Croce Rossa Campo Ligure";
+                mName = "Croce Rossa Campo Ligure";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRRICC":
-                mDescription = "Croce Rossa Serra Riccò";
+                mName = "Croce Rossa Serra Riccò";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CROLCE":
-                mDescription = "Croce Rossa Sant'Olcese";
+                mName = "Croce Rossa Sant'Olcese";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "FIU":
-                mDescription = "Volontari Del Soccorso Fiumara";
+                mName = "Volontari Del Soccorso Fiumara";
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
             case "BUR":
-                mDescription = "P.A. Croce Verde San Gottardo - Sezione Burlando";
+                mName = "P.A. Croce Verde San Gottardo - Sezione Burlando";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "BUS":
-                mDescription = "P.A. Croce Verde Busallese";
+                mName = "P.A. Croce Verde Busallese";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "MOL":
-                mDescription = "P.A. Molassana";
+                mName = "P.A. Molassana";
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
             case "SGT":
-                mDescription = "P.A. Croce Verde San Gottardo";
+                mName = "P.A. Croce Verde San Gottardo";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "SQR":
-                mDescription = "P.A. Croce Rosa San Quirico";
+                mName = "P.A. Croce Rosa San Quirico";
                 mCrossImage = new CrossImage(Color.ROSE);
                 break;
             case "QUA":
-                mDescription = "P.A. Croce Verde Quarto dei Mille";
+                mName = "P.A. Croce Verde Quarto dei Mille";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "FEG":
-                mDescription = "P.A. Croce Azzurra Fegino";
+                mName = "P.A. Croce Azzurra Fegino";
                 mCrossImage = new CrossImage(Color.LIGHT_BLUE);
                 break;
             case "MEL":
-                mDescription = "P.A. Croce Verde Mele";
+                mName = "P.A. Croce Verde Mele";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "COR":
-                mDescription = "P.A. Croce Bianca Cornigliano";
+                mName = "P.A. Croce Bianca Cornigliano";
                 mCrossImage = new CrossImage(Color.WHITE);
                 break;
             case "RUT":
-                mDescription = "P.A. Volontari Del Soccorso Ruta Di Camogli";
+                mName = "P.A. Volontari Del Soccorso Ruta Di Camogli";
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
             case "NER":
-                mDescription = "P.A. Nerviese";
+                mName = "P.A. Nerviese";
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
             case "RCC":
-                mDescription = "P.A. Croce Verde Recco";
+                mName = "P.A. Croce Verde Recco";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "MISGE":
-                mDescription = "P.A. Misericordia Genova Centro";
+                mName = "P.A. Misericordia Genova Centro";
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
             case "CAS":
-                mDescription = "P.A. Croce Verde Casellese";
+                mName = "P.A. Croce Verde Casellese";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "STR":
-                mDescription = "P.A. G.A.U. Struppa";
+                mName = "P.A. G.A.U. Struppa";
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
             case "CAM":
-                mDescription = "P.A. Croce Verde Camogliese";
+                mName = "P.A. Croce Verde Camogliese";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "VAL":
-                mDescription = "P.A. Croce Bianca Valsecca";
+                mName = "P.A. Croce Bianca Valsecca";
                 mCrossImage = new CrossImage(Color.WHITE);
                 break;
             case "MIG":
-                mDescription = "P.A. Croce Bianca Mignanego";
+                mName = "P.A. Croce Bianca Mignanego";
                 mCrossImage = new CrossImage(Color.WHITE);
                 break;
             case "LUM":
-                mDescription = "P.A. Croce Verde Lumarzo";
+                mName = "P.A. Croce Verde Lumarzo";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "CEL":
-                mDescription = "P.A. Croce Celeste San Benigno";
+                mName = "P.A. Croce Celeste San Benigno";
                 mCrossImage = new CrossImage(Color.CELESTE);
                 break;
             case "BOR":
-                mDescription = "P.A. Croce Azzurra Borzoli";
+                mName = "P.A. Croce Azzurra Borzoli";
                 mCrossImage = new CrossImage(Color.LIGHT_BLUE);
                 break;
             case "CCF":
-                mDescription = "P.A. Croce Verde Crocefieschi";
+                mName = "P.A. Croce Verde Crocefieschi";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "LERCA":
-                mDescription = "P.A. Croce d'Oro Sciarborasca - Sezione Lerca";
+                mName = "P.A. Croce d'Oro Sciarborasca - Sezione Lerca";
                 mCrossImage = new CrossImage(Color.GOLD);
                 break;
             case "SCI":
-                mDescription = "P.A. Croce d'Oro Sciarborasca";
+                mName = "P.A. Croce d'Oro Sciarborasca";
                 mCrossImage = new CrossImage(Color.GOLD);
                 break;
             case "BAV":
-                mDescription = "P.A. Croce Azzurra Bavari";
+                mName = "P.A. Croce Azzurra Bavari";
                 mCrossImage = new CrossImage(Color.LIGHT_BLUE);
                 break;
             case "A.V.T.":
-                mDescription = "P.A. Volontari Del Soccorso Alta Val Trebbia";
+                mName = "P.A. Volontari Del Soccorso Alta Val Trebbia";
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
             case "TOR":
-                mDescription = "P.A. Croce Bianca Torrazza";
+                mName = "P.A. Croce Bianca Torrazza";
                 mCrossImage = new CrossImage(Color.WHITE);
                 break;
             case "CROCE TIGLIETO":
-                mDescription = "P.A. Croce Bianca Tiglieto";
+                mName = "P.A. Croce Bianca Tiglieto";
                 mCrossImage = new CrossImage(Color.WHITE);
                 break;
             case "FONGOR":
-                mDescription = "P.A. Fontanigorda";
+                mName = "P.A. Fontanigorda";
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
             case "CNSAS SOCCORSO ALPINO":
-                mDescription = "Soccorso Alpino Genova";
+                mName = "Soccorso Alpino Genova";
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
             default:
-                mDescription = mCode;
+                mName = mCode;
                 mCrossImage = new CrossImage(getDefaultCrossColor(mCode));
         }
 /*
