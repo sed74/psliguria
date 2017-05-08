@@ -13,7 +13,10 @@
     <color name="gray">#6c6c6c</color>
     <color name="rose">#fc9c91</color>
     <color name="hospital_entry_bck">#c3cdff</color>
-    <color name="mission_list_bck">#d1d1d1</color>
+    <color name="mission_list_bck">#c3cdff</color>
+
+    <color name="charlie_code_bck">#c3cdff</color>
+    <color name="emergency_code_bck">#c3cdff</color>
 
     <color name="postazioni_entry_bck">#c3cdff</color>
     <color name="postazioni_list_bck">#c3cdff</color>

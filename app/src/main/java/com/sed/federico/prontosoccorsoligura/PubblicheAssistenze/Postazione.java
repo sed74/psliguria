@@ -23,6 +23,42 @@ public class Postazione {
     private double mAvgRed;
     private CrossImage mCrossImage;
 
+    public Postazione(int id, String codice, String descrizione, String citta, String centrale) {
+        this.mId = id;
+        this.mCode = codice;
+        this.mName = descrizione;
+        this.mCity = citta;
+        this.mCentrale = centrale;
+        this.mCrossImage = new CrossImage(Color.CROSS);
+        this.populateExtraInfo();
+    }
+
+    public Postazione() {
+    }
+
+    public Postazione(int id, String code, String name, String address, int totAmbulance,
+                      double totMission, double avgWhite, double avgGreen, double avgYellow, double avgRed) {
+        this.mId = id;
+        this.mCode = code;
+        this.mName = name;
+        this.mAddress = address;
+        this.mTotAmbulance = totAmbulance;
+        this.mAvgMission = totMission;
+        this.mAvgWhite = avgWhite;
+        this.mAvgGreen = avgGreen;
+        this.mAvgYellow = avgYellow;
+        this.mAvgRed = avgRed;
+        this.populateExtraInfo();
+    }
+
+    public Postazione(String codice, String descrizione) {
+        this(0, codice, descrizione, "", "");
+    }
+
+    public Postazione(String codice) {
+        this(0, codice, "", "", "");
+    }
+
     public String getAddress() {
         return mAddress;
     }
@@ -79,47 +115,6 @@ public class Postazione {
         this.mAvgRed = mAvgRed;
     }
 
-
-    public Postazione(int id, String codice, String descrizione, String citta, String centrale) {
-        this.mId = id;
-        this.mCode = codice;
-        this.mName = descrizione;
-        this.mCity = citta;
-        this.mCentrale = centrale;
-        this.mCrossImage = new CrossImage(Color.CROSS);
-        if (!codice.equalsIgnoreCase("BIA"))
-            this.populateExtraInfo();
-        else
-            mName = descrizione;
-    }
-
-    public Postazione() {
-    }
-
-    public Postazione(int id, String code, String name, String address, int totAmbulance,
-                      double totMission, double avgWhite, double avgGreen, double avgYellow, double avgRed) {
-        this.mId = id;
-        this.mCode = code;
-        this.mName = name;
-        this.mAddress = address;
-        this.mTotAmbulance = totAmbulance;
-        this.mAvgMission = totMission;
-        this.mAvgWhite = avgWhite;
-        this.mAvgGreen = avgGreen;
-        this.mAvgYellow = avgYellow;
-        this.mAvgRed = avgRed;
-        this.populateExtraInfo();
-    }
-
-    public Postazione(String codice, String descrizione) {
-        this(0, codice, descrizione, "", "");
-    }
-
-    public Postazione(String codice) {
-        this(0, codice, "", "", "");
-    }
-
-
     public int getCrossImage() {
         return mCrossImage.getCrossImage();
     }
@@ -170,278 +165,278 @@ public class Postazione {
         int crossColor;
         switch (mCode) {
             case "CRTORR":
-                mName = "Croce Rossa Torriglia";
+                if (mName.isEmpty()) mName = "Croce Rossa Torriglia";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "GIALLA":
-                mName = "P.A. Croce Gialla";
+                if (mName.isEmpty()) mName = "P.A. Croce Gialla";
                 mCrossImage = new CrossImage(Color.YELLOW);
                 break;
             case "BGL":
-                mName = "P.A. Croce Verde Bogliasco";
+                if (mName.isEmpty()) mName = "P.A. Croce Verde Bogliasco";
                 mCrossImage = new CrossImage(Color.GREEN);
             case "VER":
-                mName = "P.A. Croce Verde Genovese";
+                if (mName.isEmpty()) mName = "P.A. Croce Verde Genovese";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "BIA":
-                mName = "P.A. Croce Bianca Genovese";
+                if (mName.isEmpty()) mName = "P.A. Croce Bianca Genovese";
                 mCrossImage = new CrossImage(Color.WHITE);
                 break;
             case "ISO":
-                mName = "P.A. Croce Verde Isoverde";
+                if (mName.isEmpty()) mName = "P.A. Croce Verde Isoverde";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "SES":
-                mName = "P.A. Croce Verde Sestri Ponente";
+                if (mName.isEmpty()) mName = "P.A. Croce Verde Sestri Ponente";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "PRA":
-                mName = "P.A. Croce Verde Praese";
+                if (mName.isEmpty()) mName = "P.A. Croce Verde Praese";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "PGL":
-                mName = "P.A. Croce Verde Pegliese";
+                if (mName.isEmpty()) mName = "P.A. Croce Verde Pegliese";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "QUI":
-                mName = "P.A. Croce Verde Quinto";
+                if (mName.isEmpty()) mName = "P.A. Croce Verde Quinto";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "ORO":
-                mName = "P.A. Croce D'oro Sampierdarena";
+                if (mName.isEmpty()) mName = "P.A. Croce D'oro Sampierdarena";
                 mCrossImage = new CrossImage(Color.GOLD);
                 break;
             case "PDE":
-                mName = "P.A. Croce Verde Pontedecimo";
+                if (mName.isEmpty()) mName = "P.A. Croce Verde Pontedecimo";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "BOL":
-                mName = "P.A. Croce Bianca Bolzaneto";
+                if (mName.isEmpty()) mName = "P.A. Croce Bianca Bolzaneto";
                 mCrossImage = new CrossImage(Color.WHITE);
                 break;
             case "MANESS":
-                mName = "P.A. Croce D'oro Manesseno";
+                if (mName.isEmpty()) mName = "P.A. Croce D'oro Manesseno";
                 mCrossImage = new CrossImage(Color.GOLD);
                 break;
             case "RIV":
-                mName = "P.A. Croce Rosa Rivarolo";
+                if (mName.isEmpty()) mName = "P.A. Croce Rosa Rivarolo";
                 mCrossImage = new CrossImage(Color.ROSE);
                 break;
 //            case "POS":
-//                mName = "P.A. Croce Verde Praese";
+//                if (mName.isEmpty()) mName = "P.A. Croce Verde Praese";
 //                mCrossImage = new CrossImage(Color.RED);
 //                break;
             case "BLU":
-                mName = "P.A. Croce Blu Castelletto";
+                if (mName.isEmpty()) mName = "P.A. Croce Blu Castelletto";
                 mCrossImage = new CrossImage(Color.BLUE);
                 break;
             case "ORG":
-                mName = "P.A. Croce Blu dist. Oregina";
+                if (mName.isEmpty()) mName = "P.A. Croce Blu dist. Oregina";
                 mCrossImage = new CrossImage(Color.BLUE);
                 break;
             case "CRMASO":
-                mName = "Croce Rossa Masone";
+                if (mName.isEmpty()) mName = "Croce Rossa Masone";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRCOGO":
-                mName = "Croce Rossa Cogoleto";
+                if (mName.isEmpty()) mName = "Croce Rossa Cogoleto";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRROSS":
-                mName = "Croce Rossa Rossiglione";
+                if (mName.isEmpty()) mName = "Croce Rossa Rossiglione";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRAREN":
-                mName = "Croce Rossa Arenzano";
+                if (mName.isEmpty()) mName = "Croce Rossa Arenzano";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRGENO":
-                mName = "Croce Rossa Genova";
+                if (mName.isEmpty()) mName = "Croce Rossa Genova";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRRONC":
-                mName = "Croce Rossa Ronco Scrivia";
+                if (mName.isEmpty()) mName = "Croce Rossa Ronco Scrivia";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRVTR":
-                mName = "Croce Rossa Voltri";
+                if (mName.isEmpty()) mName = "Croce Rossa Voltri";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRSORI":
-                mName = "Croce Rossa Sori";
+                if (mName.isEmpty()) mName = "Croce Rossa Sori";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRUSCI":
-                mName = "Croce Rossa Uscio";
+                if (mName.isEmpty()) mName = "Croce Rossa Uscio";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRCMOR":
-                mName = "Croce Rossa Campomorone";
+                if (mName.isEmpty()) mName = "Croce Rossa Campomorone";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRBARG":
-                mName = "Croce Rossa Bargagli";
+                if (mName.isEmpty()) mName = "Croce Rossa Bargagli";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRDAVA":
-                mName = "Croce Rossa Davagna";
+                if (mName.isEmpty()) mName = "Croce Rossa Davagna";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRMONT":
-                mName = "Croce Rossa Montoggio";
+                if (mName.isEmpty()) mName = "Croce Rossa Montoggio";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRSTUR":
-                mName = "Croce Rossa Sturla";
+                if (mName.isEmpty()) mName = "Croce Rossa Sturla";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRCERA":
-                mName = "Croce Rossa Ceranesi";
+                if (mName.isEmpty()) mName = "Croce Rossa Ceranesi";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRTERR":
-                mName = "Croce Rossa Ceranesi";
+                if (mName.isEmpty()) mName = mCode;
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRMTBRUNO":
-                mName = "Croce Rossa Montebruno";
+                if (mName.isEmpty()) mName = "Croce Rossa Montebruno";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRCLIG":
-                mName = "Croce Rossa Campo Ligure";
+                if (mName.isEmpty()) mName = "Croce Rossa Campo Ligure";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CRRICC":
-                mName = "Croce Rossa Serra Riccò";
+                if (mName.isEmpty()) mName = "Croce Rossa Serra Riccò";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "CROLCE":
-                mName = "Croce Rossa Sant'Olcese";
+                if (mName.isEmpty()) mName = "Croce Rossa Sant'Olcese";
                 mCrossImage = new CrossImage(Color.RED);
                 break;
             case "FIU":
-                mName = "Volontari Del Soccorso Fiumara";
+                if (mName.isEmpty()) mName = "Volontari Del Soccorso Fiumara";
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
             case "BUR":
-                mName = "P.A. Croce Verde San Gottardo - Sezione Burlando";
+                if (mName.isEmpty()) mName = "P.A. Croce Verde San Gottardo - Sezione Burlando";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "BUS":
-                mName = "P.A. Croce Verde Busallese";
+                if (mName.isEmpty()) mName = "P.A. Croce Verde Busallese";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "MOL":
-                mName = "P.A. Molassana";
+                if (mName.isEmpty()) mName = "P.A. Molassana";
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
             case "SGT":
-                mName = "P.A. Croce Verde San Gottardo";
+                if (mName.isEmpty()) mName = "P.A. Croce Verde San Gottardo";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "SQR":
-                mName = "P.A. Croce Rosa San Quirico";
+                if (mName.isEmpty()) mName = "P.A. Croce Rosa San Quirico";
                 mCrossImage = new CrossImage(Color.ROSE);
                 break;
             case "QUA":
-                mName = "P.A. Croce Verde Quarto dei Mille";
+                if (mName.isEmpty()) mName = "P.A. Croce Verde Quarto dei Mille";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "FEG":
-                mName = "P.A. Croce Azzurra Fegino";
+                if (mName.isEmpty()) mName = "P.A. Croce Azzurra Fegino";
                 mCrossImage = new CrossImage(Color.LIGHT_BLUE);
                 break;
             case "MEL":
-                mName = "P.A. Croce Verde Mele";
+                if (mName.isEmpty()) mName = "P.A. Croce Verde Mele";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "COR":
-                mName = "P.A. Croce Bianca Cornigliano";
+                if (mName.isEmpty()) mName = "P.A. Croce Bianca Cornigliano";
                 mCrossImage = new CrossImage(Color.WHITE);
                 break;
             case "RUT":
-                mName = "P.A. Volontari Del Soccorso Ruta Di Camogli";
+                if (mName.isEmpty()) mName = "P.A. Volontari Del Soccorso Ruta Di Camogli";
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
             case "NER":
-                mName = "P.A. Nerviese";
+                if (mName.isEmpty()) mName = "P.A. Nerviese";
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
             case "RCC":
-                mName = "P.A. Croce Verde Recco";
+                if (mName.isEmpty()) mName = "P.A. Croce Verde Recco";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "MISGE":
-                mName = "P.A. Misericordia Genova Centro";
+                if (mName.isEmpty()) mName = "P.A. Misericordia Genova Centro";
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
             case "CAS":
-                mName = "P.A. Croce Verde Casellese";
+                if (mName.isEmpty()) mName = "P.A. Croce Verde Casellese";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "STR":
-                mName = "P.A. G.A.U. Struppa";
+                if (mName.isEmpty()) mName = "P.A. G.A.U. Struppa";
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
             case "CAM":
-                mName = "P.A. Croce Verde Camogliese";
+                if (mName.isEmpty()) mName = "P.A. Croce Verde Camogliese";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "VAL":
-                mName = "P.A. Croce Bianca Valsecca";
+                if (mName.isEmpty()) mName = "P.A. Croce Bianca Valsecca";
                 mCrossImage = new CrossImage(Color.WHITE);
                 break;
             case "MIG":
-                mName = "P.A. Croce Bianca Mignanego";
+                if (mName.isEmpty()) mName = "P.A. Croce Bianca Mignanego";
                 mCrossImage = new CrossImage(Color.WHITE);
                 break;
             case "LUM":
-                mName = "P.A. Croce Verde Lumarzo";
+                if (mName.isEmpty()) mName = "P.A. Croce Verde Lumarzo";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "CEL":
-                mName = "P.A. Croce Celeste San Benigno";
+                if (mName.isEmpty()) mName = "P.A. Croce Celeste San Benigno";
                 mCrossImage = new CrossImage(Color.CELESTE);
                 break;
             case "BOR":
-                mName = "P.A. Croce Azzurra Borzoli";
+                if (mName.isEmpty()) mName = "P.A. Croce Azzurra Borzoli";
                 mCrossImage = new CrossImage(Color.LIGHT_BLUE);
                 break;
             case "CCF":
-                mName = "P.A. Croce Verde Crocefieschi";
+                if (mName.isEmpty()) mName = "P.A. Croce Verde Crocefieschi";
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "LERCA":
-                mName = "P.A. Croce d'Oro Sciarborasca - Sezione Lerca";
+                if (mName.isEmpty()) mName = "P.A. Croce d'Oro Sciarborasca - Sezione Lerca";
                 mCrossImage = new CrossImage(Color.GOLD);
                 break;
             case "SCI":
-                mName = "P.A. Croce d'Oro Sciarborasca";
+                if (mName.isEmpty()) mName = "P.A. Croce d'Oro Sciarborasca";
                 mCrossImage = new CrossImage(Color.GOLD);
                 break;
             case "BAV":
-                mName = "P.A. Croce Azzurra Bavari";
+                if (mName.isEmpty()) mName = "P.A. Croce Azzurra Bavari";
                 mCrossImage = new CrossImage(Color.LIGHT_BLUE);
                 break;
             case "A.V.T.":
-                mName = "P.A. Volontari Del Soccorso Alta Val Trebbia";
+                if (mName.isEmpty()) mName = "P.A. Volontari Del Soccorso Alta Val Trebbia";
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
             case "TOR":
-                mName = "P.A. Croce Bianca Torrazza";
+                if (mName.isEmpty()) mName = "P.A. Croce Bianca Torrazza";
                 mCrossImage = new CrossImage(Color.WHITE);
                 break;
             case "CROCE TIGLIETO":
-                mName = "P.A. Croce Bianca Tiglieto";
+                if (mName.isEmpty()) mName = "P.A. Croce Bianca Tiglieto";
                 mCrossImage = new CrossImage(Color.WHITE);
                 break;
             case "FONGOR":
-                mName = "P.A. Fontanigorda";
+                if (mName.isEmpty()) mName = "P.A. Fontanigorda";
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
             case "CNSAS SOCCORSO ALPINO":
-                mName = "Soccorso Alpino Genova";
+                if (mName.isEmpty()) mName = "Soccorso Alpino Genova";
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
             default:
