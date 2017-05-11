@@ -16,6 +16,15 @@ public class Postazione {
     private String mCentrale;
     private String mAddress;
     private int mTotAmbulance;
+
+    private int mTotMissions;
+    private int mTotWhite;
+    private int mTotGreen;
+    private int mTotYellow;
+    private int mTotRed;
+
+    private int mTotDays;
+
     private double mAvgMission;
     private double mAvgWhite;
     private double mAvgGreen;
@@ -23,21 +32,14 @@ public class Postazione {
     private double mAvgRed;
     private CrossImage mCrossImage;
 
-    public Postazione(int id, String codice, String descrizione, String citta, String centrale) {
-        this.mId = id;
-        this.mCode = codice;
-        this.mName = descrizione;
-        this.mCity = citta;
-        this.mCentrale = centrale;
-        this.mCrossImage = new CrossImage(Color.CROSS);
-        this.populateExtraInfo();
-    }
 
     public Postazione() {
     }
 
     public Postazione(int id, String code, String name, String address, int totAmbulance,
-                      double totMission, double avgWhite, double avgGreen, double avgYellow, double avgRed) {
+                      double totMission, double avgWhite, double avgGreen, double avgYellow,
+                      double avgRed, int totWhite, int totGreen, int totYellow, int totRed,
+                      int totDays) {
         this.mId = id;
         this.mCode = code;
         this.mName = name;
@@ -48,15 +50,75 @@ public class Postazione {
         this.mAvgGreen = avgGreen;
         this.mAvgYellow = avgYellow;
         this.mAvgRed = avgRed;
+        this.mTotDays = totDays;
+        this.mTotWhite = totWhite;
+        this.mTotGreen = totGreen;
+        this.mTotYellow = totYellow;
+        this.mTotRed = totRed;
+
+        this.updateTotal();
+
         this.populateExtraInfo();
     }
 
-    public Postazione(String codice, String descrizione) {
-        this(0, codice, descrizione, "", "");
+    public Postazione(String code) {
+        this(0, code, "", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     }
 
-    public Postazione(String codice) {
-        this(0, codice, "", "", "");
+    private void updateTotal() {
+        this.mTotMissions = mTotWhite + mTotGreen + mTotYellow + mTotRed;
+    }
+
+    public int getTotDays() {
+        return mTotDays;
+    }
+
+    public void setTotDays(int totDays) {
+        this.mTotDays = totDays;
+    }
+
+    public int getTotMissions() {
+        return mTotMissions;
+    }
+
+    public void setmTotMissions(int totMissions) {
+        this.mTotMissions = totMissions;
+    }
+
+    public int getTotWhite() {
+        return mTotWhite;
+    }
+
+    public void setTotWhite(int totWhite) {
+        this.mTotWhite = totWhite;
+        this.updateTotal();
+    }
+
+    public int getTotGreen() {
+        return mTotGreen;
+    }
+
+    public void setTotGreen(int totGreen) {
+        this.mTotGreen = totGreen;
+        this.updateTotal();
+    }
+
+    public int getTotYellow() {
+        return mTotYellow;
+    }
+
+    public void setTotYellow(int totYellow) {
+        this.mTotYellow = totYellow;
+        this.updateTotal();
+    }
+
+    public int getTotRed() {
+        return mTotRed;
+    }
+
+    public void setTotRed(int totRed) {
+        this.mTotRed = totRed;
+        this.updateTotal();
     }
 
     public String getAddress() {
@@ -224,8 +286,8 @@ public class Postazione {
                 mCrossImage = new CrossImage(Color.ROSE);
                 break;
 //            case "POS":
-//                if (mName.isEmpty()) mName = "P.A. Croce Verde Praese";
-//                mCrossImage = new CrossImage(Color.RED);
+//                if (mName.isEmpty()) mName = "Ponente Soccorso";
+//                mCrossImage = new CrossImage(Color.CROSS);
 //                break;
             case "BLU":
                 if (mName.isEmpty()) mName = "P.A. Croce Blu Castelletto";
@@ -440,7 +502,7 @@ public class Postazione {
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
             default:
-                mName = mCode;
+                if (mName.isEmpty()) mName = mCode;
                 mCrossImage = new CrossImage(getDefaultCrossColor(mCode));
         }
 /*
