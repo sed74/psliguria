@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.PostazioniActivity">
+    <item
+        android:id="@+id/sort_by_missions"
+        android:orderInCategory="100"
+        android:title="@string/sort_by_missions"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/sort_by_white_code"
+        android:orderInCategory="100"
+        android:title="@string/sort_by_white_code"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/sort_by_green_code"
+        android:orderInCategory="100"
+        android:title="@string/sort_by_green_code"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/sort_by_yellow_code"
+        android:orderInCategory="100"
+        android:title="@string/sort_by_yellow_code"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/sort_by_red_code"
+        android:orderInCategory="100"
+        android:title="@string/sort_by_red_code"
+        app:showAsAction="never" />
+</menu>

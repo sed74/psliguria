@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/pa_label"
+            android:id="@+id/pa_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -72,7 +72,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toRightOf="@+id/view2"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pa_label" />
+            app:layout_constraintTop_toBottomOf="@+id/pa_name" />
     </android.support.design.widget.TextInputLayout>
 
     <View

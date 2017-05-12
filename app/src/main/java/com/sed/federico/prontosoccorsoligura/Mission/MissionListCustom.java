@@ -9,8 +9,6 @@ import java.util.Collection;
 
 public class MissionListCustom extends ArrayList<Mission> {
     private static final String DRAGO_POSTAZIONE = "elisoccorso";
-    private static final String DRAGO_POSTAZIONE_1 = "bia";
-
 
     private boolean mIsDragoWorking = false;
     private String mWhereIsDrago;
@@ -21,25 +19,53 @@ public class MissionListCustom extends ArrayList<Mission> {
     }
 
     @Override
-    public void add(int index, Mission element) {
-        super.add(index, element);
-        checkForDrago(element);
+    public boolean add(Mission mission) {
+        doChecks(mission);
+        return super.add(mission);
+    }
+
+    @Override
+    public void add(int index, Mission mission) {
+        super.add(index, mission);
+//        doChecks(mission);
+        checkForDrago(mission);
+    }
+
+    private void doChecks(Mission mission) {
+        checkForDrago(mission);
+        isMissionTerminated(mission);
     }
 
     @Override
     public boolean addAll(Collection<? extends Mission> c) {
         for (Mission t :
                 c) {
-            checkForDrago(t);
+            doChecks(t);
         }
         return super.addAll(c);
     }
-    private void checkForDrago(Mission mission){
-        if (mission.getmPostazione().equalsIgnoreCase(DRAGO_POSTAZIONE)){
+
+    private void checkForDrago(Mission mission) {
+        if (mission.getmPostazione().equalsIgnoreCase(DRAGO_POSTAZIONE)) {
             mIsDragoWorking = true;
             mWhereIsDrago = mission.getLocation();
             mWhereIsDragoCentrale = mission.getCentrale();
         }
+    }
+
+    private void isMissionTerminated(Mission element) {
+        for (Mission mission :
+                this) {
+            if (mission.getAmbulanceNo().equalsIgnoreCase(element.getAmbulanceNo())) {
+                if (Double.parseDouble(mission.getMissionNo()) >
+                        Double.parseDouble(element.getMissionNo())) {
+                    element.setIsMissionTerminated(true);
+                } else {
+                    mission.setIsMissionTerminated(true);
+                }
+            }
+        }
+
     }
 
     public boolean isIsDragoWorking() {

@@ -55,10 +55,9 @@ import java.util.Comparator;
 public class PostazioniActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String URL_PA =
-            "http://datipsge.azurewebsites.net/api/anagrafiche/comitato/all";
     private static final String URL_POSTAZIONI =
             "http://datipsge.azurewebsites.net/api/centrali/";
+
     private static final String URL_POSTAZIONI_VERSION = "v1";
     private static final String TAG = "PostazioniActivity";
     static ArrayList<String> mNomiCentrali;
@@ -179,7 +178,7 @@ public class PostazioniActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_centrali, menu);
+//        getMenuInflater().inflate(R.menu.menu_postazioni, menu);
         return true;
     }
 
@@ -190,10 +189,31 @@ public class PostazioniActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+//        int pageNo = mViewPager.getCurrentItem();
+//        PlaceholderFragment page = (PlaceholderFragment)
+//                getSupportFragmentManager().findFragmentByTag("android:switcher:" +
+//                        R.id.container + ":" + String.valueOf(pageNo));
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.sort_by_missions:
+
+                break;
+            case R.id.sort_by_white_code:
+
+                break;
+            case R.id.sort_by_green_code:
+
+                break;
+            case R.id.sort_by_yellow_code:
+
+                break;
+            case R.id.sort_by_red_code:
+
+                break;
+
         }
+//        page.mRecyclerView.swapAdapter(new PostazioniAdapter(this, page.mCentrali), false);
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -271,6 +291,16 @@ public class PostazioniActivity extends AppCompatActivity
         return true;
     }
 
+
+    private enum SortBy {
+        NAME,
+        MISSIONS,
+        WHITE,
+        GREEN,
+        YELLOW,
+        RED
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -297,6 +327,7 @@ public class PostazioniActivity extends AppCompatActivity
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+
             fragment.setArguments(args);
             return fragment;
         }
@@ -305,6 +336,7 @@ public class PostazioniActivity extends AppCompatActivity
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             int temp = getArguments().getInt(ARG_SECTION_NUMBER);
+
         }
 
         @Override
@@ -327,18 +359,26 @@ public class PostazioniActivity extends AppCompatActivity
             mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
 
             String fullUrl = QueryUtils.createUrlWithVersion(URL_POSTAZIONI, URL_POSTAZIONI_VERSION);
+
             new CentraliAsyncDownloader(mainActivity, mRecyclerView,
-                    mNomiCentrali.get(sectionNo - 1)).execute(fullUrl, String.valueOf(sectionNo));
+                    mNomiCentrali.get(sectionNo)).execute(fullUrl, String.valueOf(sectionNo));
 
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
             return rootView;
         }
 
-
         private enum LayoutManagerType {
             GRID_LAYOUT_MANAGER,
             LINEAR_LAYOUT_MANAGER
+        }
+
+        class PostazioneComparatorByWhite implements Comparator<Postazione> {
+            public int compare(Postazione p1, Postazione p2) {
+                if (p1.getTotWhite() < p2.getTotWhite()) return 1;
+                if (p1.getTotWhite() > p2.getTotWhite()) return -1;
+                return 0;
+            }
         }
 
         public class CentraliAsyncDownloader extends AsyncTask<String, Void, PostazioneListCustom> {
@@ -369,7 +409,8 @@ public class PostazioniActivity extends AppCompatActivity
                     centrali = QueryUtils.fetchCentrali(url);
                     mContext.mCachePostazioni.put(currentSection, centrali);
                 }
-                Collections.sort(centrali, new CentraleComparator());
+                Collections.sort(centrali, new PostazioneComparator());
+                mCentrali = centrali;
                 return centrali;
             }
 
@@ -385,27 +426,17 @@ public class PostazioniActivity extends AppCompatActivity
                 super.onPostExecute(centrali);
                 mProgressBar.setVisibility(View.GONE);
                 mRecyclerViewAsync.setAdapter(new PostazioniAdapter(mContext, centrali));
-//            if (mProgressDialog.isShowing())
-//                mProgressDialog.dismiss();
 
             }
 
-            class CentraleComparator implements Comparator<Postazione> {
+            class PostazioneComparator implements Comparator<Postazione> {
                 public int compare(Postazione p1, Postazione p2) {
-                    return p1.getDescription().compareToIgnoreCase(p2.getDescription());
-                }
-            }
-
-            class CentraleComparatorByMissions implements Comparator<Postazione> {
-                public int compare(Postazione p1, Postazione p2) {
-                    if (p1.getAvgMission() < p2.getAvgMission()) return -1;
-                    if (p1.getAvgMission() > p2.getAvgMission()) return 1;
-                    return 0;
+                    return p1.getName().compareToIgnoreCase(p2.getName());
                 }
             }
         }
-    }
 
+    }
 
     public static class PostazioniAdapter extends RecyclerView.Adapter<PostazioniViewHolder> {
         private PostazioneListCustom mCentrali;
@@ -428,7 +459,7 @@ public class PostazioniActivity extends AppCompatActivity
 
             PostazioniViewHolder vh = new PostazioniViewHolder(v);
 
-//            PostazioniViewHolder vh = new PostazioniViewHolder(v, new PostazioniViewHolder.onRecyclerViewClickListener() {
+//            MezziViewHolder vh = new MezziViewHolder(v, new MezziViewHolder.onRecyclerViewClickListener() {
 //                @Override
 //                public void onClick(View caller) {
 //                    Toast toast = Toast.makeText(mContext,
@@ -450,27 +481,52 @@ public class PostazioniActivity extends AppCompatActivity
             // - replace the contents of the view with that element
             final Postazione postazione = mCentrali.get(position);
 
-            String paName = postazione.getDescription();
+            String paName = postazione.getName();
             holder.mPaName.setText(paName);
-            holder.mAvgMissions.setText(String.format(mContext.getString(R.string.avg_mission_per_day),
-                    postazione.getAvgMission()));
+            holder.mTotMissions.setText(String.format(mContext.getString(R.string.tot_missions),
+                    postazione.getTotMissions(), postazione.getAvgMission()));
             holder.mTotMezzi.setText(String.format(mContext.getString(R.string.no_of_ambulances),
                     postazione.getTotAmbulance()));
-            holder.mAvgWhite.setText(String.format(mContext.getString(R.string.avg_white_per_day),
+            holder.mAvgWhite.setText(String.format(mContext.getString(R.string.avg_white_per_day), postazione.getTotWhite(),
                     postazione.getAvgWhite()));
-            holder.mAvgGreen.setText(String.format(mContext.getString(R.string.avg_green_per_day),
+            holder.mAvgGreen.setText(String.format(mContext.getString(R.string.avg_green_per_day), postazione.getTotGreen(),
                     postazione.getAvgGreen()));
-            holder.mAvgYellow.setText(String.format(mContext.getString(R.string.avg_yellow_per_day),
+            holder.mAvgYellow.setText(String.format(mContext.getString(R.string.avg_yellow_per_day), postazione.getTotYellow(),
                     postazione.getAvgYellow()));
-            holder.mAvgRed.setText(String.format(mContext.getString(R.string.avg_red_per_day),
+            holder.mAvgRed.setText(String.format(mContext.getString(R.string.avg_red_per_day), postazione.getTotRed(),
                     postazione.getAvgRed()));
 //            holder.mPostazione.setText(mContext.getString(R.string.statistics_coming_soon));
 
 //            holder.mCross.setBackground(getDrawable(paName));
             holder.mCross.setBackground(ContextCompat.getDrawable(mContext,
                     postazione.getCrossImage()));
-            holder.setPostazioneCode(postazione.getCodice());
+            holder.setPostazioneCode(postazione.getCode());
 
+            View.OnClickListener onClickListener = (new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (v.getId()) {
+                        case R.id.tot_white:
+                            Collections.sort(mCentrali, new PostazioneComparatorByWhite());
+                            break;
+                        case R.id.tot_green:
+                            Collections.sort(mCentrali, new PostazioneComparatorByGreen());
+                            break;
+                        case R.id.tot_yellow:
+                            Collections.sort(mCentrali, new PostazioneComparatorByYellow());
+                            break;
+                        case R.id.tot_red:
+                            Collections.sort(mCentrali, new PostazioneComparatorByRed());
+                            break;
+                    }
+                    sortList();
+                }
+            });
+
+            holder.mAvgWhite.setOnClickListener(onClickListener);
+            holder.mAvgGreen.setOnClickListener(onClickListener);
+            holder.mAvgYellow.setOnClickListener(onClickListener);
+            holder.mAvgRed.setOnClickListener(onClickListener);
 
             holder.setOnRecyclerViewClickListener(new PostazioniViewHolder.onRecyclerViewClickListener() {
                 @Override
@@ -481,15 +537,22 @@ public class PostazioniActivity extends AppCompatActivity
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
 
+                    sortList();
                     FirebaseAnalytics firebaseAnalytics;
                     firebaseAnalytics = FirebaseAnalytics.getInstance(mContext);
                     Bundle bundle = new Bundle();
                     bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "PostazioneDetail");
-                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, postazione.getDescription());
+                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, postazione.getName());
                     firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 }
             });
 
+        }
+
+        public void sortList() {
+            this.notifyDataSetChanged();
+            Toast.makeText(mContext, mContext.getString(R.string.sorting_done),
+                    Toast.LENGTH_SHORT).show();
         }
 
         // Return the size of your dataset (invoked by the layout manager)
@@ -498,6 +561,45 @@ public class PostazioniActivity extends AppCompatActivity
             return mCentrali.size();
         }
 
+        class PostazioneComparatorByMissions implements Comparator<Postazione> {
+            public int compare(Postazione p1, Postazione p2) {
+                if (p1.getTotMissions() < p2.getTotMissions()) return 1;
+                if (p1.getTotMissions() > p2.getTotMissions()) return -1;
+                return 0;
+            }
+        }
+
+        class PostazioneComparatorByRed implements Comparator<Postazione> {
+            public int compare(Postazione p1, Postazione p2) {
+                if (p1.getTotRed() < p2.getTotRed()) return 1;
+                if (p1.getTotRed() > p2.getTotRed()) return -1;
+                return 0;
+            }
+        }
+
+        class PostazioneComparatorByYellow implements Comparator<Postazione> {
+            public int compare(Postazione p1, Postazione p2) {
+                if (p1.getTotYellow() < p2.getTotYellow()) return 1;
+                if (p1.getTotYellow() > p2.getTotYellow()) return -1;
+                return 0;
+            }
+        }
+
+        class PostazioneComparatorByGreen implements Comparator<Postazione> {
+            public int compare(Postazione p1, Postazione p2) {
+                if (p1.getTotGreen() < p2.getTotGreen()) return 1;
+                if (p1.getTotGreen() > p2.getTotGreen()) return -1;
+                return 0;
+            }
+        }
+
+        class PostazioneComparatorByWhite implements Comparator<Postazione> {
+            public int compare(Postazione p1, Postazione p2) {
+                if (p1.getTotWhite() < p2.getTotWhite()) return 1;
+                if (p1.getTotWhite() > p2.getTotWhite()) return -1;
+                return 0;
+            }
+        }
     }
 
     // Provide a reference to the views for each data item
@@ -511,11 +613,12 @@ public class PostazioniActivity extends AppCompatActivity
         public TextView mCross;
         public TextView mPostazione;
         public TextView mTotMezzi;
-        public TextView mAvgMissions;
+        public TextView mTotMissions;
         public TextView mAvgWhite;
         public TextView mAvgYellow;
         public TextView mAvgGreen;
         public TextView mAvgRed;
+
         onRecyclerViewClickListener mListener;
         private String mPostazioneCode;
 
@@ -525,15 +628,15 @@ public class PostazioniActivity extends AppCompatActivity
 
         public PostazioniViewHolder(View v, onRecyclerViewClickListener listener) {
             super(v);
-            mPaName = (TextView) v.findViewById(R.id.pa_label);
+            mPaName = (TextView) v.findViewById(R.id.pa_name);
 //            mPostazione = (TextView) v.findViewById(R.id.postazione);
             mCross = (TextView) v.findViewById(R.id.cross_icon);
             mTotMezzi = (TextView) v.findViewById(R.id.tot_ambulance);
-            mAvgMissions = (TextView) v.findViewById(R.id.avg_missions);
-            mAvgWhite = (TextView) v.findViewById(R.id.avg_white_per_day);
-            mAvgGreen = (TextView) v.findViewById(R.id.avg_green_per_day);
-            mAvgYellow = (TextView) v.findViewById(R.id.avg_yellow_per_day);
-            mAvgRed = (TextView) v.findViewById(R.id.avg_red_per_day);
+            mTotMissions = (TextView) v.findViewById(R.id.tot_missions);
+            mAvgWhite = (TextView) v.findViewById(R.id.tot_white);
+            mAvgGreen = (TextView) v.findViewById(R.id.tot_green);
+            mAvgYellow = (TextView) v.findViewById(R.id.tot_yellow);
+            mAvgRed = (TextView) v.findViewById(R.id.tot_red);
             v.setOnClickListener(this);
 
             if (listener != null) {
@@ -584,7 +687,7 @@ public class PostazioniActivity extends AppCompatActivity
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
 
-            return PlaceholderFragment.newInstance(position + 1);
+            return PlaceholderFragment.newInstance(position);
         }
 
         @Override
@@ -598,6 +701,7 @@ public class PostazioniActivity extends AppCompatActivity
 
             return mNomiCentrali.get(position);
         }
+
     }
 
 }

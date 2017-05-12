@@ -3,7 +3,11 @@ package com.sed.federico.prontosoccorsoligura;
 import android.app.ActivityOptions;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -14,9 +18,9 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,17 +30,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.sed.federico.prontosoccorsoligura.FragmentMission.MissionFragment;
 import com.sed.federico.prontosoccorsoligura.FragmentMission.dummy.DummyContent;
 import com.sed.federico.prontosoccorsoligura.Mission.MissionActivity;
-import com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.Postazione;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, LoaderCallbacks<HospitalListCustom>,
@@ -73,6 +69,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+//        ViewFlipper vf = (ViewFlipper)findViewById(R.id.vf);
+//        vf.setDisplayedChild(1);
 
 //        final Handler handler = new Handler();
 //
@@ -94,7 +92,7 @@ public class MainActivity extends AppCompatActivity
 //                    Postazione lPostazione = postSnapshot.getValue(Postazione.class);
 //                    postazioni.add(lPostazione);
 //                    String lID = postSnapshot.getKey();
-////                    myRef.child(lID).child("descrizione").setValue(lPostazione.getDescription());
+////                    myRef.child(lID).child("descrizione").setValue(lPostazione.getName());
 //
 //                }
 ////                myRef.setValue(postazioni);
@@ -113,7 +111,6 @@ public class MainActivity extends AppCompatActivity
 //        };
 //
 //        handler.postDelayed(r, 10);
-
 
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
@@ -209,6 +206,45 @@ public class MainActivity extends AppCompatActivity
                 refreshView();
             }
         });
+
+        showWhatsNew();
+    }
+
+    private void showWhatsNew() {
+        final SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        PackageInfo pInfo = null;
+        try {
+            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        int verCode = pInfo.versionCode;
+        final String whatsnewPref = getString(R.string.show_whatsnew_pa, String.valueOf(verCode));
+        long showWhatsNew = sharedPref.getInt(whatsnewPref, 0);
+        if (showWhatsNew == 0) {
+            // 1. Instantiate an AlertDialog.Builder with its constructor
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            // 2. Chain together various setter methods to set the dialog characteristics
+            builder.setMessage(R.string.whats_new)
+                    .setTitle(R.string.whats_new_title);
+            builder.setPositiveButton(R.string.dont_show, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt(whatsnewPref, 1);
+                    editor.commit();
+                }
+            });
+            builder.setNeutralButton(R.string.close, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User clicked OK button
+                }
+            });
+
+            // 3. Get the AlertDialog from create()
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
 
     }
 

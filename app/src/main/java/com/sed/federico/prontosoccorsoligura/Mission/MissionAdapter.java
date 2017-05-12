@@ -21,6 +21,8 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -71,7 +73,7 @@ public class MissionAdapter extends ArrayAdapter<Mission> {
                     R.layout.mission_list_clickable, parent, false);
         }
 
-        // Find the earthquake at the given position in the list of earthquakes
+        // Find the Mission at the given position in the list of earthquakes
         Mission currentMission = getItem(position);
 
         // Find the TextView with view ID magnitude
@@ -112,6 +114,10 @@ public class MissionAdapter extends ArrayAdapter<Mission> {
 
         TextView hospital = (TextView) listItemView.findViewById(R.id.hospital);
         hospital.setText(currentMission.getDestination());
+
+        TextView missionTerminated = (TextView) listItemView.findViewById(R.id.mission_terminated);
+
+        missionTerminated.setVisibility(currentMission.isMissionTerminated() ? View.VISIBLE : View.GONE);
 
         listItemView.setTag(false);
 

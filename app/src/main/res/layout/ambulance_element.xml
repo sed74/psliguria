@@ -2,46 +2,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginTop="8dp"
+    android:layout_height="match_parent"
     android:background="@color/postazioni_entry_bck"
     android:clickable="true"
     android:elevation="8dp"
     android:focusable="true"
     android:paddingBottom="8dp"
     tools:context="com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.PostazioniActivity$PlaceholderFragment"
-    tools:layout_editor_absoluteX="8dp"
-    tools:layout_editor_absoluteY="89dp">
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
 
     <TextView
         android:id="@+id/pa_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textAlignment="viewStart"
-        android:textColor="@color/black"
+        android:text="@string/ambulance"
+        android:textAlignment="center"
         android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/view2"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="P.A. Croce Bianca Genovese" />
+        tools:text="@string/ambulance" />
 
     <TextView
         android:id="@+id/tot_red"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:background="@color/red"
         android:text="@string/avg_red_per_day"
         android:textAlignment="center"
@@ -49,13 +41,13 @@
         android:visibility="visible"
         app:layout_constraintLeft_toRightOf="@+id/tot_yellow"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView30" />
+        app:layout_constraintTop_toBottomOf="@+id/tot_missions" />
 
     <TextView
         android:id="@+id/tot_yellow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:background="@color/yellow"
         android:text="@string/avg_yellow_per_day"
         android:textAlignment="center"
@@ -63,13 +55,13 @@
         android:visibility="visible"
         app:layout_constraintLeft_toRightOf="@+id/tot_green"
         app:layout_constraintRight_toLeftOf="@+id/tot_red"
-        app:layout_constraintTop_toBottomOf="@+id/textView30" />
+        app:layout_constraintTop_toBottomOf="@+id/tot_missions" />
 
     <TextView
         android:id="@+id/tot_green"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:background="@color/green"
         android:text="@string/avg_green_per_day"
         android:textAlignment="center"
@@ -77,39 +69,35 @@
         android:visibility="visible"
         app:layout_constraintLeft_toRightOf="@+id/tot_white"
         app:layout_constraintRight_toLeftOf="@+id/tot_yellow"
-        app:layout_constraintTop_toBottomOf="@+id/textView30" />
+        app:layout_constraintTop_toBottomOf="@+id/tot_missions" />
 
     <TextView
         android:id="@+id/tot_white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="8dp"
         android:background="@color/white"
         android:text="@string/avg_white_per_day"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:visibility="visible"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/tot_missions"
         app:layout_constraintRight_toLeftOf="@+id/tot_green"
-        app:layout_constraintTop_toBottomOf="@+id/textView30" />
+        app:layout_constraintTop_toBottomOf="@+id/tot_missions" />
 
     <TextView
-        android:id="@+id/tot_ambulance"
+        android:id="@+id/textView26"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/no_of_ambulances"
-        android:textColor="@color/black"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/view2"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pa_name" />
+        android:layout_marginTop="7dp"
+        android:text="TextView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView29"
+        tools:text="Tot Missioni:" />
 
     <TextView
         android:id="@+id/tot_missions"
@@ -119,56 +107,98 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:text="@string/tot_missions"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
         android:textColor="@color/black"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/view2"
+        app:layout_constraintLeft_toRightOf="@+id/textView26"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tot_ambulance" />
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="1dp"
-        android:layout_height="0dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintBottom_toBottomOf="@+id/cross_icon"
-        app:layout_constraintLeft_toRightOf="@+id/cross_icon"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/real_days"
+        tools:text="120" />
 
     <TextView
-        android:id="@+id/cross_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/cross"
-        android:paddingBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tot_missions"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView30"
+        android:id="@+id/textView28"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="6dp"
-        android:text="@string/missions_stats"
-        android:textAlignment="center"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
         android:textColor="@color/black"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/pa_name"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tot_missions"
-        tools:text="Statistiche Missioni (media giornaliera)" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/worked_days"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pa_name"
+        tools:text="Giorni lavorati:" />
+
+    <TextView
+        android:id="@+id/worked_days"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toRightOf="@+id/textView29"
+        app:layout_constraintTop_toBottomOf="@+id/textView28"
+        tools:text="10" />
+
+    <TextView
+        android:id="@+id/real_days"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toRightOf="@+id/textView31"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView28"
+        tools:text="25" />
+
+    <TextView
+        android:id="@+id/textView31"
+        android:layout_width="15dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/su"
+        android:textAlignment="viewStart"
+        app:layout_constraintLeft_toRightOf="@+id/worked_days"
+        app:layout_constraintTop_toBottomOf="@+id/textView28"
+        tools:text="su" />
+
+    <TextView
+        android:id="@+id/textView33"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/di_cui"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/textView26"
+        app:layout_constraintTop_toBottomOf="@+id/textView26"
+        tools:text="di cui" />
 
 </android.support.constraint.ConstraintLayout>
