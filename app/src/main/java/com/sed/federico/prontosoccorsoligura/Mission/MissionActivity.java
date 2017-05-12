@@ -384,7 +384,7 @@ class PostazioneComparator implements Comparator<Mission> {
 
 class MissionComparator implements Comparator<Mission> {
     public int compare(Mission p1, Mission p2) {
-        return p1.getMissionNo().compareToIgnoreCase(p2.getMissionNo());
+        return p2.getMissionNo().compareToIgnoreCase(p1.getMissionNo());
     }
 }
 

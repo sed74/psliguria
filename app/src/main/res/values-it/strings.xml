@@ -181,18 +181,14 @@
     <string name="title_activity_centrali">Pubbliche Assistenze</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="charlie_code_title">Codici Charlie</string>
-    <string name="looking_for_drago">Alla ricerca di Drago...</string>
-    <string name="avg_red_per_day">%1$.2f</string>
-    <string name="avg_yellow_per_day">%1$.2f</string>
-    <string name="avg_green_per_day">%1$.2f</string>
-    <string name="avg_white_per_day">%1$.2f</string>
+    <string name="looking_for_drago">Alla ricerca di Drago&#8230;</string>
     <string name="avg_mission_per_day">Media missioni giornaliere: %1$.2f di cui:</string>
     <string name="no_of_ambulances">Totale mezzi censiti: %1$d</string>
-    <string name="retrieving_data">Caricamento dati in corso...</string>
+    <string name="retrieving_data">Caricamento dati in corso&#8230;</string>
     <string name="belong_to_centrale">Centrale di appartenenza: %1$s</string>
     <string name="pa_label_nav">Pubbliche Assistenze</string>
     <string name="statistics_to_be_implemented">Statistische disponibili a breve\n\n* Media interventi per P.A\n* Media interventi per mezzo\n* Interventi totali per P.A\n* Interventi totali per mezzo\n\nIl tutto suddiviso per codice di urgenza.</string>
-    <string name="statistics_coming_soon">Statistiche disponibili a breve...</string>
+    <string name="statistics_coming_soon">Statistiche disponibili a breve&#8230;</string>
     <string name="total_waiting">Attesa (%1$d)</string>
     <string name="total_running">Visita (%1$d)</string>
     <string name="invite">Passa parola</string>
@@ -201,4 +197,24 @@
     <string name="cancel">Annulla</string>
     <string name="tot_mission">Numero totale missioni: %1$d</string>
     <string name="avg_mission_per_code">Media missioni per codici d\'urgenza</string>
+    <string name="postazioni_disclaimer">Le statistiche sono aggiornate una volta al giorno e si riferisco a dati raccolti a partire dal 14/04/2017.</string>
+    <string name="sort_by_red_code">Ordina per media rossi</string>
+    <string name="sort_by_missions">Ordina per media missioni</string>
+    <string name="sort_by_white_code">Ordina per media bianchi</string>
+    <string name="sort_by_yellow_code">Ordina per media gialli</string>
+    <string name="sort_by_green_code">Ordina per media verdi</string>
+    <string name="ambulance">Ambulanza:</string>
+    <string name="tot_missions">Missioni: %1$d (%2$.2f al giorno)</string>
+    <string name="worked_days">Giorni lavorati:</string>
+    <string name="su">su</string>
+    <string name="di_cui">di cui</string>
+    <string name="missions_stats">Totale Missioni (media giornaliera)</string>
+    <string name="whats_new_title">Novità</string>
+    <string name="whats_new">PUBBLICHE ASSISTENZE\n* Aggiunti i totali e le medie di intervento suddivise per codice di urgenza.\n*
+        È ora possibile ordinare per codice di urgenza cliccando su qualsiasi rettangolo colorato.\n\n
+    MISSIONI\n* Aggiunta la scritta "Missione Terminata" per le missioni terminate ma ancora presenti a sistema.</string>
+    <string name="dont_show">Non mostrare più</string>
+    <string name="close">Chiudi</string>
+    <string name="sorting_done">Ordinamento effettuato.</string>
+    <string name="mission_terminated">Missione Terminata</string>
 </resources>

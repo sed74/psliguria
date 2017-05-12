@@ -9,6 +9,8 @@ import com.sed.federico.prontosoccorsoligura.CrossImage;
 
 
 public class Postazione {
+
+    private String mUsableCode;
     private int mId;
     private String mCode;
     private String mName;
@@ -40,7 +42,9 @@ public class Postazione {
                       double totMission, double avgWhite, double avgGreen, double avgYellow,
                       double avgRed, int totWhite, int totGreen, int totYellow, int totRed,
                       int totDays) {
+
         this.mId = id;
+        this.mUsableCode = code.replaceAll("\\.", "");
         this.mCode = code;
         this.mName = name;
         this.mAddress = address;
@@ -189,20 +193,25 @@ public class Postazione {
         this.mId = id;
     }
 
-    public String getCodice() {
+    public String getCode() {
         return mCode;
     }
 
-    public void setCodice(String codice) {
+    public void setCode(String codice) {
         this.mCode = codice;
+        this.mUsableCode = codice.replaceAll("/.", "");
         this.populateExtraInfo();
     }
 
-    public String getDescription() {
+    public String getUsableCode() {
+        return mUsableCode;
+    }
+
+    public String getName() {
         return mName;
     }
 
-    public void setDescrizione(String descrizione) {
+    public void setName(String descrizione) {
         this.mName = descrizione;
     }
 
@@ -285,10 +294,10 @@ public class Postazione {
                 if (mName.isEmpty()) mName = "P.A. Croce Rosa Rivarolo";
                 mCrossImage = new CrossImage(Color.ROSE);
                 break;
-//            case "POS":
-//                if (mName.isEmpty()) mName = "Ponente Soccorso";
-//                mCrossImage = new CrossImage(Color.CROSS);
-//                break;
+            case "POS":
+                if (mName.isEmpty()) mName = "Ponente Soccorso";
+                mCrossImage = new CrossImage(Color.CROSS);
+                break;
             case "BLU":
                 if (mName.isEmpty()) mName = "P.A. Croce Blu Castelletto";
                 mCrossImage = new CrossImage(Color.BLUE);

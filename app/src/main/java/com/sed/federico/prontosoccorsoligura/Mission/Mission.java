@@ -1,8 +1,16 @@
 package com.sed.federico.prontosoccorsoligura.Mission;
 
+import android.app.Activity;
 import android.content.Context;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.Postazione;
+
+import java.util.ArrayList;
 
 /**
  * Created by federico.marchesi on 05/04/2017.
@@ -23,6 +31,7 @@ public class Mission {
     private String mAsl;
     private String mCentrale;
     private Postazione mPostazioneObj;
+    private boolean mIsMissionTerminated = false;
 
     public Mission(Context context) {
         this.mContext = context;
@@ -30,24 +39,8 @@ public class Mission {
 
     public Mission(Context context, String missionNo, String ambulanceNo,
                    String pubblicaAssitenza, String code, String location,
-                   String synthesis, String destination, String asl) {
-        this.mContext = context;
-        this.mMissionNo = missionNo;
-        this.mAmbulanceNo = ambulanceNo;
-        this.mPostazione = pubblicaAssitenza;
-        this.mCode = code;
-        this.mLocation = location;
-        this.mSynthesis = synthesis;
-        this.mMissionSynthesis = new MissionSynthesis(mContext, mSynthesis);
-        this.mDestination = destination;
-        this.mAsl = asl;
-        this.mPostazioneObj = new Postazione(code);
-
-    }
-
-    public Mission(Context context, String missionNo, String ambulanceNo,
-                   String pubblicaAssitenza, String code, String location,
                    String synthesis, String destination, String asl, String centrale) {
+
         this.mContext = context;
         this.mMissionNo = missionNo;
         this.mAmbulanceNo = ambulanceNo;
@@ -56,6 +49,8 @@ public class Mission {
         this.mLocation = location;
         this.mSynthesis = synthesis;
         this.mMissionSynthesis = new MissionSynthesis(mContext, mSynthesis);
+        if (destination.substring(1, 4).equalsIgnoreCase(" h "))
+            destination = destination.substring(4);
         this.mDestination = destination;
         this.mAsl = asl;
         this.mCentrale = centrale;
@@ -79,6 +74,7 @@ public class Mission {
     public String getFullMissionNo() {
         return mMissionNo;
     }
+
     public String getMissionNo() {
         return mMissionNo.substring(2);
     }
@@ -104,7 +100,7 @@ public class Mission {
     }
 
     public String getPubblicaAssistenza() {
-        return mPostazioneObj.getDescription();
+        return mPostazioneObj.getName();
 //        String pubblicaAssistenza = mPubblicaAssistenza.get(mPostazione);
 //        if (pubblicaAssistenza == null) pubblicaAssistenza = mPostazione;
 //        return pubblicaAssistenza;
@@ -160,5 +156,13 @@ public class Mission {
 
     public String getEmergencyCode() {
         return mMissionSynthesis.getEmergencyCode();
+    }
+
+    public boolean isMissionTerminated() {
+        return mIsMissionTerminated;
+    }
+
+    public void setIsMissionTerminated(boolean isMissionTerminated) {
+        this.mIsMissionTerminated = isMissionTerminated;
     }
 }
