@@ -51,9 +51,9 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 
-public class PostazioniActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class PostazioniActivity extends AppCompatActivity {
 
     private static final String URL_POSTAZIONI =
             "http://datipsge.azurewebsites.net/api/centrali/";
@@ -80,14 +80,11 @@ public class PostazioniActivity extends AppCompatActivity
 
     private ViewPager mViewPager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_centrali);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
 
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
@@ -124,24 +121,6 @@ public class PostazioniActivity extends AppCompatActivity
             @Override
             public void onPageScrollStateChanged(int i) {
 
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
 
@@ -189,6 +168,10 @@ public class PostazioniActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        int index = mViewPager.getCurrentItem();
+        SectionsPagerAdapter adapter = ((SectionsPagerAdapter) mViewPager.getAdapter());
+        PlaceholderFragment fragment = adapter.getFragment(index);
+
 //        int pageNo = mViewPager.getCurrentItem();
 //        PlaceholderFragment page = (PlaceholderFragment)
 //                getSupportFragmentManager().findFragmentByTag("android:switcher:" +
@@ -218,80 +201,6 @@ public class PostazioniActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "ActivityOpenedFromDrawer");
-        if (id == R.id.ps_activity) {
-            // Handle the camera action
-        } else if (id == R.id.nav_settings) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Settings");
-            Intent settingsActivity = new Intent(PostazioniActivity.this, SettingsActivity.class);
-            startActivity(settingsActivity);
-        } else if (id == R.id.nav_charlie_code_legend) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Charlie");
-            Intent settingsActivity = new Intent(PostazioniActivity.this, CharlieCodeActivity.class);
-            startActivity(settingsActivity);
-        } else if (id == R.id.nav_emergency_code_legend) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "CodeLegend");
-            Intent settingsActivity = new Intent(PostazioniActivity.this, LegendActivity.class);
-            startActivity(settingsActivity);
-        } else if (id == R.id.nav_centrali) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "PubblicheAssistenze");
-            new AsyncString(PostazioniActivity.this).execute(MainActivity.URL_CENTRALI);
-        } else if (id == R.id.nav_about) {
-
-//            FragmentTransaction ft = getFragmentManager().beginTransaction();
-//            ft.add(new MissionFragment(), null);
-//            ft.commit();
-
-//            android.app.Fragment newFragment;
-//            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//            newFragment = new MissionFragment();
-//            transaction.add(newFragment, null);
-////            transaction.replace(R.id.activity_main, newFragment);
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-
-//            Intent settingsActivity = new Intent(MainActivity.this, SettingsActivity.class);
-//            startActivity(settingsActivity);
-        } else if (id == R.id.nav_genova || id == R.id.nav_imperia || id == R.id.nav_la_spezia ||
-                id == R.id.nav_lavagna || id == R.id.nav_savona) {
-            Intent missionIntent = new Intent(PostazioniActivity.this, MissionActivity.class);
-            switch (id) {
-                case R.id.nav_genova:
-                    missionIntent.putExtra(MainActivity.EXTRA_CENTRALE_NAME, "Genova");
-                    break;
-                case R.id.nav_imperia:
-                    missionIntent.putExtra(MainActivity.EXTRA_CENTRALE_NAME, "Imperia");
-                    break;
-                case R.id.nav_la_spezia:
-                    missionIntent.putExtra(MainActivity.EXTRA_CENTRALE_NAME, "LaSpezia");
-                    break;
-                case R.id.nav_lavagna:
-                    missionIntent.putExtra(MainActivity.EXTRA_CENTRALE_NAME, "Lavagna");
-                    break;
-                case R.id.nav_savona:
-                    missionIntent.putExtra(MainActivity.EXTRA_CENTRALE_NAME, "Savona");
-                    break;
-            }
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID,
-                    "Mission:" + missionIntent.getStringExtra(MainActivity.EXTRA_CENTRALE_NAME));
-            View view = findViewById(R.id.recycle_view);
-            ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
-                    0, view.getWidth(), view.getHeight());
-            startActivity(missionIntent, options.toBundle());
-        }
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-
     private enum SortBy {
         NAME,
         MISSIONS,
@@ -310,13 +219,14 @@ public class PostazioniActivity extends AppCompatActivity
          * fragment.
          */
         public static final String ARG_SECTION_NUMBER = "section_number";
-        protected static PostazioneListCustom mCentrali;
+        public static PostazioneListCustom mCentrali;
         protected RecyclerView.LayoutManager mLayoutManager;
         protected LayoutManagerType mCurrentLayoutManagerType;
         protected RecyclerView mRecyclerView;
         private ProgressBar mProgressBar;
 
         public PlaceholderFragment() {
+
         }
 
         /**
@@ -330,6 +240,10 @@ public class PostazioniActivity extends AppCompatActivity
 
             fragment.setArguments(args);
             return fragment;
+        }
+
+        public void sortByWhite() {
+            Collections.sort(mCentrali, new PostazioneComparatorByWhite());
         }
 
         @Override
@@ -410,6 +324,7 @@ public class PostazioniActivity extends AppCompatActivity
                     mContext.mCachePostazioni.put(currentSection, centrali);
                 }
                 Collections.sort(centrali, new PostazioneComparator());
+
                 mCentrali = centrali;
                 return centrali;
             }
@@ -426,7 +341,6 @@ public class PostazioniActivity extends AppCompatActivity
                 super.onPostExecute(centrali);
                 mProgressBar.setVisibility(View.GONE);
                 mRecyclerViewAsync.setAdapter(new PostazioniAdapter(mContext, centrali));
-
             }
 
             class PostazioneComparator implements Comparator<Postazione> {
@@ -487,8 +401,8 @@ public class PostazioniActivity extends AppCompatActivity
                     postazione.getTotMissions(), postazione.getAvgMission()));
             holder.mTotMezzi.setText(String.format(mContext.getString(R.string.no_of_ambulances),
                     postazione.getTotAmbulance()));
-            holder.mAvgWhite.setText(String.format(mContext.getString(R.string.avg_white_per_day), postazione.getTotWhite(),
-                    postazione.getAvgWhite()));
+            holder.mAvgWhite.setText(String.format(mContext.getString(R.string.avg_white_per_day),
+                    postazione.getTotWhite(), postazione.getAvgWhite()));
             holder.mAvgGreen.setText(String.format(mContext.getString(R.string.avg_green_per_day), postazione.getTotGreen(),
                     postazione.getAvgGreen()));
             holder.mAvgYellow.setText(String.format(mContext.getString(R.string.avg_yellow_per_day), postazione.getTotYellow(),
@@ -518,6 +432,12 @@ public class PostazioniActivity extends AppCompatActivity
                         case R.id.tot_red:
                             Collections.sort(mCentrali, new PostazioneComparatorByRed());
                             break;
+                        case R.id.tot_missions:
+                            Collections.sort(mCentrali, new PostazioneComparatorByMissions());
+                            break;
+                        case R.id.pa_name:
+                            Collections.sort(mCentrali, new PostazioneComparatorByName());
+                            break;
                     }
                     sortList();
                 }
@@ -527,23 +447,25 @@ public class PostazioniActivity extends AppCompatActivity
             holder.mAvgGreen.setOnClickListener(onClickListener);
             holder.mAvgYellow.setOnClickListener(onClickListener);
             holder.mAvgRed.setOnClickListener(onClickListener);
+            holder.mPaName.setOnClickListener(onClickListener);
+            holder.mTotMissions.setOnClickListener(onClickListener);
 
             holder.setOnRecyclerViewClickListener(new PostazioniViewHolder.onRecyclerViewClickListener() {
                 @Override
                 public void onClick(View caller) {
-                    Toast toast = Toast.makeText(mContext,
-                            mContext.getString(R.string.statistics_to_be_implemented),
-                            Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
-
-                    sortList();
-                    FirebaseAnalytics firebaseAnalytics;
-                    firebaseAnalytics = FirebaseAnalytics.getInstance(mContext);
-                    Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "PostazioneDetail");
-                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, postazione.getName());
-                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+//                    Toast toast = Toast.makeText(mContext,
+//                            mContext.getString(R.string.statistics_to_be_implemented),
+//                            Toast.LENGTH_LONG);
+//                    toast.setGravity(Gravity.CENTER, 0, 0);
+//                    toast.show();
+//
+//                    sortList();
+//                    FirebaseAnalytics firebaseAnalytics;
+//                    firebaseAnalytics = FirebaseAnalytics.getInstance(mContext);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "PostazioneDetail");
+//                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, postazione.getName());
+//                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 }
             });
 
@@ -551,8 +473,8 @@ public class PostazioniActivity extends AppCompatActivity
 
         public void sortList() {
             this.notifyDataSetChanged();
-            Toast.makeText(mContext, mContext.getString(R.string.sorting_done),
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext, mContext.getString(R.string.sorting_done),
+//                    Toast.LENGTH_SHORT).show();
         }
 
         // Return the size of your dataset (invoked by the layout manager)
@@ -566,6 +488,12 @@ public class PostazioniActivity extends AppCompatActivity
                 if (p1.getTotMissions() < p2.getTotMissions()) return 1;
                 if (p1.getTotMissions() > p2.getTotMissions()) return -1;
                 return 0;
+            }
+        }
+
+        class PostazioneComparatorByName implements Comparator<Postazione> {
+            public int compare(Postazione p1, Postazione p2) {
+                return p1.getName().compareToIgnoreCase(p2.getName());
             }
         }
 
@@ -677,17 +605,32 @@ public class PostazioniActivity extends AppCompatActivity
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        public HashMap<Integer, PlaceholderFragment> mPageReferenceMap;
+
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
+            mPageReferenceMap = new HashMap<>();
         }
+
 
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
+            PlaceholderFragment myFragment = PlaceholderFragment.newInstance(position);
+            mPageReferenceMap.put(position, myFragment);
+            return myFragment;//PlaceholderFragment.newInstance(position);
+        }
 
-            return PlaceholderFragment.newInstance(position);
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            super.destroyItem(container, position, object);
+            mPageReferenceMap.remove(position);
+        }
+
+        public PlaceholderFragment getFragment(int key) {
+            return mPageReferenceMap.get(key);
         }
 
         @Override

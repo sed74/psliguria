@@ -69,11 +69,10 @@
         <activity
             android:name=".PubblicheAssistenze.PostazioniActivity"
             android:label="@string/title_activity_centrali"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".Mission.MissionActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".Mission.MissionActivity" />
         </activity>
         <activity android:name=".PostazioniDetails.PostazioniDetailsActivity"></activity>
     </application>

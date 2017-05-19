@@ -149,20 +149,20 @@
     <string name="location_label">Località: %1s</string>
     <string name="not_implemented_yet">Funzionalità non ancora implementata.</string>
     <string name="sort_by_postazione">Ordina per P.A.</string>
-    <string name="sort_by_mission">Ordina per numero missione</string>
+    <string name="sort_by_mission">Ordina per numero ospedalizzazione</string>
     <string name="total_people">Tot. %1$d</string>
     <string name="charlie_code">Charlie:</string>
     <string name="charlie_code_text">Codice Charlie: %1$s</string>
     <string name="destination_hospital">Ospedale destinazione:</string>
     <string name="destination_hospital_text">Ospedale destinazione: %1$s</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="india_code">Codice india:</string>
-    <string name="india_code_text">Codice india: %1$s</string>
+    <string name="india_code">Codice di uscita:</string>
+    <string name="india_code_text">Codice di uscita: %1$s</string>
     <string name="invalid_synthesis_code">Codice sintesi invalido: %1$s</string>
     <string name="pickup_location">Luogo di intervento:</string>
     <string name="pickup_location_text">Luogo di intervento: %1$s</string>
-    <string name="title_mission_detail">Dettaglio Missione</string>
-    <string name="get_all_missions">Visualizza tutte le missioni</string>
+    <string name="title_mission_detail">Dettaglio ospedalizzazione</string>
+    <string name="get_all_missions">Visualizza tutte le ospedalizzazioni</string>
     <string name="where_is_drago">Dov\'è Drago?</string>
     <string name="drago_is">Drago è a %1$s</string>
     <string name="drago_is_not_working">Drago non è operativo in questo momento</string>
@@ -182,7 +182,7 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="charlie_code_title">Codici Charlie</string>
     <string name="looking_for_drago">Alla ricerca di Drago&#8230;</string>
-    <string name="avg_mission_per_day">Media missioni giornaliere: %1$.2f di cui:</string>
+    <string name="avg_mission_per_day">Media ospedalizzazioni giornaliere: %1$.2f di cui:</string>
     <string name="no_of_ambulances">Totale mezzi censiti: %1$d</string>
     <string name="retrieving_data">Caricamento dati in corso&#8230;</string>
     <string name="belong_to_centrale">Centrale di appartenenza: %1$s</string>
@@ -195,26 +195,26 @@
     <string name="search_hint">Cerca la Pubblica Assistenza</string>
     <string name="save">Salva</string>
     <string name="cancel">Annulla</string>
-    <string name="tot_mission">Numero totale missioni: %1$d</string>
-    <string name="avg_mission_per_code">Media missioni per codici d\'urgenza</string>
+    <string name="tot_mission">Numero totale ospedalizzazioni: %1$d</string>
+    <string name="avg_mission_per_code">Media ospedalizzazioni per codici d\'urgenza</string>
     <string name="postazioni_disclaimer">Le statistiche sono aggiornate una volta al giorno e si riferisco a dati raccolti a partire dal 14/04/2017.</string>
     <string name="sort_by_red_code">Ordina per media rossi</string>
-    <string name="sort_by_missions">Ordina per media missioni</string>
+    <string name="sort_by_missions">Ordina per media ospedalizzazioni</string>
     <string name="sort_by_white_code">Ordina per media bianchi</string>
     <string name="sort_by_yellow_code">Ordina per media gialli</string>
     <string name="sort_by_green_code">Ordina per media verdi</string>
     <string name="ambulance">Ambulanza:</string>
-    <string name="tot_missions">Missioni: %1$d (%2$.2f al giorno)</string>
+    <string name="tot_missions">Ospedalizzazioni: %1$d (%2$.2f al giorno)</string>
     <string name="worked_days">Giorni lavorati:</string>
     <string name="su">su</string>
     <string name="di_cui">di cui</string>
-    <string name="missions_stats">Totale Missioni (media giornaliera)</string>
+    <string name="missions_stats">Totale ospedalizzazioni (media giornaliera)</string>
     <string name="whats_new_title">Novità</string>
     <string name="whats_new">PUBBLICHE ASSISTENZE\n* Aggiunti i totali e le medie di intervento suddivise per codice di urgenza.\n*
-        È ora possibile ordinare per codice di urgenza cliccando su qualsiasi rettangolo colorato.\n\n
+        È ora possibile ordinare per codice di urgenza cliccando su qualsiasi rettangolo colorato, sul nome della P.A o sul numero di missioni.\n\n
     MISSIONI\n* Aggiunta la scritta "Missione Terminata" per le missioni terminate ma ancora presenti a sistema.</string>
     <string name="dont_show">Non mostrare più</string>
     <string name="close">Chiudi</string>
     <string name="sorting_done">Ordinamento effettuato.</string>
-    <string name="mission_terminated">Missione Terminata</string>
+    <string name="mission_terminated">Terminata</string>
 </resources>

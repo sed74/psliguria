@@ -149,36 +149,34 @@
     <string name="location_label">Località: %1s</string>
     <string name="not_implemented_yet">Funzionalità non ancora implementata.</string>
     <string name="sort_by_postazione">Ordina per P.A.</string>
-    <string name="sort_by_mission">Ordina per numero missione</string>
+    <string name="sort_by_mission">Ordina per numero ospedalizzazione</string>
+    <string name="total_people">Tot. %1$d</string>
+    <string name="charlie_code">Charlie:</string>
+    <string name="charlie_code_text">Codice Charlie: %1$s</string>
+    <string name="destination_hospital">Ospedale destinazione:</string>
+    <string name="destination_hospital_text">Ospedale destinazione: %1$s</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="india_code">Codice di uscita:</string>
+    <string name="india_code_text">Codice di uscita: %1$s</string>
+    <string name="invalid_synthesis_code">Codice sintesi invalido: %1$s</string>
     <string name="pickup_location">Luogo di intervento:</string>
     <string name="pickup_location_text">Luogo di intervento: %1$s</string>
-    <string name="charlie_code">Charlie:</string>
-    <string name="india_code_text">Codice india: %1$s</string>
-    <string name="india_code">Codice india:</string>
-    <string name="destination_hospital_text">Ospedale destinazione: %1$s</string>
-    <string name="destination_hospital">Ospedale destinazione:</string>
-    <string name="title_mission_detail">Dettaglio Missione</string>
-    <string name="total_people">Tot. %1$d</string>
-    <string name="charlie_code_text">Codice Charlie: %1$s</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="invalid_synthesis_code">Codice sintesi invalido: %1$s</string>
-    <string name="get_all_missions">Visualizza tutte le missioni</string>
+    <string name="title_mission_detail">Dettaglio ospedalizzazione</string>
+    <string name="get_all_missions">Visualizza tutte le ospedalizzazioni</string>
     <string name="where_is_drago">Dov\'è Drago?</string>
     <string name="drago_is">Drago è a %1$s</string>
     <string name="drago_is_not_working">Drago non è operativo in questo momento</string>
     <string name="code_white_label">Codice Bianco</string>
+    <string name="emergency_code">Codice emergenza</string>
     <string name="white_description">Viene assegnato ai casi senza caratteristiche di gravità.\nI pazienti vengono assistiti solo dopo aver fronteggiato le situazioni più urgenti.\nIn OSPEDALE: Queste prestazioni sono soggette al pagamento del ticket.\nVisita NON urgente, attesa indeterminata.\nPaziente non grave, dopo i codici rossi, gialli e verdi.</string>
     <string name="green_description">Viene assegnato quando il paziente non è in pericolo di vita.\nL\'assistenza viene prestata con rapidità ma dopo aver risposto ai casi più urgenti.\nIn OSPEDALE: Queste prestazioni sono talvolta soggette al pagamento del ticket.\nVisita NON urgente, di norma entro 2 ore.\nPaziente non grave, dopo i codici rossi e gialli.</string>
     <string name="red_description">Viene assegnato ai pazienti più gravi con pericolo immediato di vita.\nIn OSPEDALE: Il Pronto Soccorso si mobilita dando priorità assoluta al caso, in termini sia di personale sanitario che delle tecnologie a disposizione.\nVisita IMMEDIATA\nPaziente in apparente pericolo di vita.</string>
     <string name="yellow_description">Viene assegnato ai pazienti con lesioni gravi, o serie alterazioni di una delle funzioni vitali (respiratoria, cardiocircolatoria, nervosa).\nIn OSPEDALE: Il personale sanitario si adopera per assicurare la massima rapidità di intervento.\nVisita URGENTE, di norma entro 20 minuti.\nPaziente grave, ma NON in apparente pericolo di vita.</string>
-    <string name="emergency_code">Codice emergenza</string>
-    <string name="help">Aiuto</string>
-    <string name="emergency_code_legend">Codici emergenza</string>
-    <string name="charlie_code_legend">Codici Charlie</string>
-    <string name="about">Info</string>
     <string name="legend">Legenda</string>
+    <string name="charlie_code_legend">Codici Charlie</string>
+    <string name="emergency_code_legend">Codici emergenza</string>
+    <string name="about">Info</string>
+    <string name="help">Aiuto</string>
     <string name="title_activity_centrali">Pubbliche Assistenze</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="centrali">Centrali</string>
@@ -193,7 +191,7 @@
     <string name="retrieving_data">Caricamento dati in corso&#8230;</string>
     <string name="belong_to_centrale">Centrale di appartenenza: %1$s</string>
     <string name="pa_label_nav">Pubbliche Assistenze</string>
-    <string name="statistics_to_be_implemented">Statistische disponibili a breve\n\n* Interventi Totali per mezzo\n* Dettaglio mezzi per PA\n* Interventi totali per mezzo\n\nIl tutto suddiviso per codice di urgenza.</string>
+    <string name="statistics_to_be_implemented">Statistische disponibili a breve\n\n* Media interventi per P.A\n* Media interventi per mezzo\n* Interventi totali per P.A\n* Interventi totali per mezzo\n\nIl tutto suddiviso per codice di urgenza.</string>
     <string name="statistics_coming_soon">Statistiche disponibili a breve&#8230;</string>
     <string name="total_waiting">Attesa (%1$d)</string>
     <string name="total_running">Visita (%1$d)</string>
@@ -205,7 +203,7 @@
     <string name="avg_mission_per_code">Media ospedalizzazioni per codici d\'urgenza</string>
     <string name="postazioni_disclaimer">Le statistiche sono aggiornate una volta al giorno e si riferisco a dati raccolti a partire dal 14/04/2017.</string>
     <string name="sort_by_red_code">Ordina per media rossi</string>
-    <string name="sort_by_missions">Ordina per media missioni</string>
+    <string name="sort_by_missions">Ordina per media ospedalizzazioni</string>
     <string name="sort_by_white_code">Ordina per media bianchi</string>
     <string name="sort_by_yellow_code">Ordina per media gialli</string>
     <string name="sort_by_green_code">Ordina per media verdi</string>
@@ -217,11 +215,11 @@
     <string name="missions_stats">Totale ospedalizzazioni (media giornaliera)</string>
     <string name="whats_new_title">Novità</string>
     <string name="whats_new">PUBBLICHE ASSISTENZE\n* Aggiunti i totali e le medie di intervento suddivise per codice di urgenza.\n*
-        È ora possibile ordinare per codice di urgenza cliccando su qualsiasi rettangolo colorato.\n\n
+        È ora possibile ordinare per codice di urgenza cliccando su qualsiasi rettangolo colorato, sul nome della P.A o sul numero di missioni.\n\n
     MISSIONI\n* Aggiunta la scritta "Missione Terminata" per le missioni terminate ma ancora presenti a sistema.</string>
     <string name="dont_show">Non mostrare più</string>
     <string name="close">Chiudi</string>
     <string name="show_whatsnew_pa" translatable="false">show_whatsnew_pa_%1$s</string>
     <string name="sorting_done">Ordinamento effettuato.</string>
-    <string name="mission_terminated">Missione Terminata</string>
+    <string name="mission_terminated">Terminata</string>
 </resources>
