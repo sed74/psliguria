@@ -3,6 +3,7 @@ package com.sed.federico.prontosoccorsoligura;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
@@ -18,7 +19,7 @@ import com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.Postazione;
  * Created by federico.marchesi on 05/05/2017.
  */
 
-public class MyApplication extends Application {
+public class MyApplication extends MultiDexApplication {
 
     private SparseArray<Postazione> globalPostazioni;
 
@@ -49,8 +50,8 @@ public class MyApplication extends Application {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     // TODO: handle the post
                     Postazione lPostazione = postSnapshot.getValue(Postazione.class);
-                    int lID = Integer.valueOf(postSnapshot.getKey());
-                    globalPostazioni.put(lID, lPostazione);
+//                    int lID = Integer.valueOf(postSnapshot.getKey());
+//                    globalPostazioni.put(lID, lPostazione);
 //                    myRef.child(lID).child("descrizione").setValue(lPostazione.getName());
 
                 }
