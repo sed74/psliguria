@@ -150,6 +150,10 @@ public class Mission {
         return mMissionSynthesis.getPickUpLocation();
     }
 
+    public String getIndiaCode() {
+        return mMissionSynthesis.getEmergencyCode();
+    }
+
     public String getCharlie() {
         return mMissionSynthesis.getCharlieCode() + " - " + mMissionSynthesis.getPatologia();
     }

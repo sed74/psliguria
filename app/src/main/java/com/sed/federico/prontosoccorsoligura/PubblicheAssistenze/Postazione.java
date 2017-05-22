@@ -275,7 +275,7 @@ public class Postazione {
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "ORO":
-                if (mName.isEmpty()) mName = "P.A. Croce D'oro Sampierdarena";
+                if (mName.isEmpty()) mName = "P.A. Croce D'Oro Sampierdarena";
                 mCrossImage = new CrossImage(Color.GOLD);
                 break;
             case "PDE":
@@ -287,7 +287,7 @@ public class Postazione {
                 mCrossImage = new CrossImage(Color.WHITE);
                 break;
             case "MANESS":
-                if (mName.isEmpty()) mName = "P.A. Croce D'oro Manesseno";
+                if (mName.isEmpty()) mName = "P.A. Croce D'Oro Manesseno";
                 mCrossImage = new CrossImage(Color.GOLD);
                 break;
             case "RIV":
@@ -480,6 +480,7 @@ public class Postazione {
                 break;
             case "LERCA":
                 if (mName.isEmpty()) mName = "P.A. Croce d'Oro Sciarborasca - Sezione Lerca";
+                if (mName.isEmpty()) mName = "P.A. Croce d'Oro Sciarborasca - Sezione Lerca";
                 mCrossImage = new CrossImage(Color.GOLD);
                 break;
             case "SCI":
@@ -510,6 +511,10 @@ public class Postazione {
                 if (mName.isEmpty()) mName = "Soccorso Alpino Genova";
                 mCrossImage = new CrossImage(Color.CROSS);
                 break;
+            case "DES":
+                if (mName.isEmpty()) mName = "P.A. Croce Bianca San Desiderio";
+                mCrossImage = new CrossImage(Color.WHITE);
+                break;
             default:
                 if (mName.isEmpty()) mName = mCode;
                 mCrossImage = new CrossImage(getDefaultCrossColor(mCode));
@@ -518,9 +523,8 @@ public class Postazione {
 "Associazione Cinofili Da Soccorso \"Il Branco\" Onlus"
 "Medicina E Progresso"
 "P.A. Croce Bianca Rapallese"
-"P.A. Croce Bianca San Desiderio"
-"P.A. Croce D'oro Fascia"
-"P.A. Croce D'oro Sciarborasca"
+"P.A. Croce D'Oro Fascia"
+"P.A. Croce D'Oro Sciarborasca"
 "P.A. Croce Rosa Di Trensasco"
 "P.A. Croce Verde Isoverde"
 "P.A. Croce Verde Quarto"
@@ -550,7 +554,7 @@ public class Postazione {
 "P.A. Croce Bianca Pontinvrea"
 "P.A. Croce Bianca Savona"
 "P.A. Croce Bianca Spotorno"
-"P.A. Croce D'oro Albissola Marina"
+"P.A. Croce D'Oro Albissola Marina"
 "P.A. Croce Rosa Cellese"
 "P.A. Croce Verde Albisola Superiore"
 "P.A. Croce Verde Bardineto"
@@ -560,7 +564,7 @@ public class Postazione {
         Imperia
 "P.A. Croce Bianca Imperia Onlus"
 "P.A. Croce Bianca Pornassio"
-"P.A. Croce D'oro Cervo"
+"P.A. Croce D'Oro Cervo"
 
         La Spezia
 "P.A. \"Humanitas\" Romito Magra"
@@ -572,7 +576,7 @@ public class Postazione {
 "P.A. Croce Bianca Portovenere"
 "P.A. Croce Bianca Riomaggiore"
 "P.A. Croce Bianca Santo Stefano Magra"
-"P.A. Croce D'oro Deivese"
+"P.A. Croce D'Oro Deivese"
 "P.A. Croce Gialla"
 "P.A. Croce Rosso-Bianca Lerici"
 "P.A. Croce Verde Arcola"
