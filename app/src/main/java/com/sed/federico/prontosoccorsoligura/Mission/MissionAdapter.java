@@ -106,11 +106,8 @@ public class MissionAdapter extends ArrayAdapter<Mission> {
         TextView charlieCode = (TextView) listItemView.findViewById(R.id.charlie_code);
         charlieCode.setText(currentMission.getCharlie());
 
-        String indiaCodeText = currentMission.getCode().substring(0, 1).toUpperCase() +
-                currentMission.getCode().substring(1).toLowerCase();
-
         TextView indiaCode = (TextView) listItemView.findViewById(R.id.india_code);
-        indiaCode.setText(indiaCodeText);
+        indiaCode.setText(currentMission.getIndiaCode());
 
         TextView hospital = (TextView) listItemView.findViewById(R.id.hospital);
         hospital.setText(currentMission.getDestination());
