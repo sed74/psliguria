@@ -21,6 +21,8 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -71,7 +73,7 @@ public class MissionAdapter extends ArrayAdapter<Mission> {
                     R.layout.mission_list_clickable, parent, false);
         }
 
-        // Find the earthquake at the given position in the list of earthquakes
+        // Find the Mission at the given position in the list of earthquakes
         Mission currentMission = getItem(position);
 
         // Find the TextView with view ID magnitude
@@ -80,11 +82,11 @@ public class MissionAdapter extends ArrayAdapter<Mission> {
 
         // Set the proper background color on the magnitude circle.
         // Fetch the background from the TextView, which is a GradientDrawable.
-        GradientDrawable magnitudeCircle = (GradientDrawable) ambulance.getBackground();
+        GradientDrawable ambulanceCircle = (GradientDrawable) ambulance.getBackground();
         // Get the appropriate background color based on the current earthquake magnitude
         int magnitudeColor = getCodeColor(currentMission.getCode());
         // Set the color on the magnitude circle
-        magnitudeCircle.setColor(magnitudeColor);
+        ambulanceCircle.setColor(magnitudeColor);
 
         TextView croceName = (TextView) listItemView.findViewById(R.id.pa_name);
         croceName.setText(currentMission.getPubblicaAssistenza());
@@ -104,14 +106,15 @@ public class MissionAdapter extends ArrayAdapter<Mission> {
         TextView charlieCode = (TextView) listItemView.findViewById(R.id.charlie_code);
         charlieCode.setText(currentMission.getCharlie());
 
-        String indiaCodeText = currentMission.getCode().substring(0, 1).toUpperCase() +
-                currentMission.getCode().substring(1).toLowerCase();
-
         TextView indiaCode = (TextView) listItemView.findViewById(R.id.india_code);
-        indiaCode.setText(indiaCodeText);
+        indiaCode.setText(currentMission.getIndiaCode());
 
         TextView hospital = (TextView) listItemView.findViewById(R.id.hospital);
         hospital.setText(currentMission.getDestination());
+
+        TextView missionTerminated = (TextView) listItemView.findViewById(R.id.mission_terminated);
+
+        missionTerminated.setVisibility(currentMission.isMissionTerminated() ? View.VISIBLE : View.GONE);
 
         listItemView.setTag(false);
 

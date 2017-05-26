@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/circle_solid" />
+            <size
+                android:width="@dimen/cross_circle_radius"
+                android:height="@dimen/cross_circle_radius" />
+            <stroke
+                android:width="@dimen/circle_border_width"
+                android:color="@color/circle_border" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="line">
+            <stroke
+                android:width="@dimen/cross_width"
+                android:color="@color/yellow" />
+        </shape>
+    </item>
+    <item>
+        <rotate
+            android:fromDegrees="90"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:toDegrees="-90">
+            <shape android:shape="line">
+                <stroke
+                    android:width="@dimen/cross_width"
+                    android:color="@color/yellow" />
+            </shape>
+        </rotate>
+    </item>
+</layer-list>

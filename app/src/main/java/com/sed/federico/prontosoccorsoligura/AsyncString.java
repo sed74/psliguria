@@ -7,7 +7,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.CentraliActivity;
+import com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.PostazioniActivity;
 
 import org.json.JSONException;
 
@@ -97,7 +97,7 @@ public class AsyncString extends AsyncTask<String, String, String> {
         if (mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
         }
-        Intent i = new Intent(mContext, CentraliActivity.class);
+        Intent i = new Intent(mContext, PostazioniActivity.class);
         i.putExtra("centrali", result);
         mContext.startActivity(i);
     }

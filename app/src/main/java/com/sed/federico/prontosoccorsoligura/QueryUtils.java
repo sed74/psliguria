@@ -20,8 +20,11 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.sed.federico.prontosoccorsoligura.AmbulanceDetails.AmbulanceDetail;
 import com.sed.federico.prontosoccorsoligura.Mission.Mission;
 import com.sed.federico.prontosoccorsoligura.Mission.MissionListCustom;
+import com.sed.federico.prontosoccorsoligura.AmbulanceDetails.AmbulanceDetailsListCustom;
+import com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.Postazione;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +43,14 @@ import java.nio.charset.Charset;
  * Helper methods related to requesting and receiving earthquake data from USGS.
  */
 public final class QueryUtils {
+
+    /**
+     * Firebase Constants
+     */
+    public static final String FBASE_AMBULANCE_NO = "ambulance_no";
     public static final int TABLET_MIN_WIDTH = 720;
+    public static final int PHONE_ORIZONTAL_WIDTH = 600;
+
     public static final String HOSPITAL_NAME = "name";
     public static final String WHITE_WAITING = "whiteWaiting";
     public static final String GREEN_WAITING = "greenWaiting";
@@ -64,12 +74,35 @@ public final class QueryUtils {
     public static final String ASL = "asl";
     public static final String CENTRALE = "centrale";
 
-    public static final String CENTRALE_ID = "id";
-    public static final String CENTRALE_CODE = "code";
-    public static final String CENTRALE_DESCRIZIONE = "descrizione";
-    public static final String CENTRALE_CITTA = "citta";
-    public static final String CENTRALE_CENTRALE = "centrale";
+    public static final String POSTAZIONE_ID = "id";
+    public static final String POSTAZIONE_CODE = "code";
+    public static final String POSTAZIONE_NAME = "name";
+    public static final String POSTAZIONE_ADDRESS = "address";
+    public static final String POSTAZIONE_TOT_AMBULANCE = "no_mezzi_censiti";
+    public static final String POSTAZIONE_AVG_MISSION = "average_mission_per_day";
+    public static final String POSTAZIONE_AVG_WHITE = "average_white_per_day";
+    public static final String POSTAZIONE_AVG_GREEN = "average_green_per_day";
+    public static final String POSTAZIONE_AVG_YELLOW = "average_yellow_per_day";
+    public static final String POSTAZIONE_AVG_RED = "average_red_per_day";
+    public static final String POSTAZIONE_TOT_WHITE = "tot_white";
+    public static final String POSTAZIONE_TOT_GREEN = "tot_green";
+    public static final String POSTAZIONE_TOT_YELLOW = "tot_yellow";
+    public static final String POSTAZIONE_TOT_RED = "tot_red";
+    public static final String POSTAZIONE_TOT_DAYS = "tot_days";
+
+    public static final String MEZZO_POSTAZIONE = "postazione";
+    public static final String MEZZO_AMBULANZA = "code_ambulance";
+    public static final String MEZZO_TOT_MISSION = "tot_mission";
+    public static final String MEZZO_TOT_WHITE = "tot_white";
+    public static final String MEZZO_TOT_GREEN = "tot_green";
+    public static final String MEZZO_TOT_YELLOW = "tot_yellow";
+    public static final String MEZZO_TOT_RED = "tot_red";
+    public static final String MEZZO_FROM_DATE = "from_date";
+    public static final String MEZZO_TO_DATE = "to_date";
+    public static final String MEZZO_TOT_DAYS = "tot_days";
+    public static final String MEZZO_REAL_DAYS = "tot_real_days";
     /**
+     * /**
      * Tag for the log messages
      */
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
@@ -84,6 +117,7 @@ public final class QueryUtils {
      */
     private QueryUtils() {
     }
+
 
     /**
      * Query the USGS dataset and return a list of {@link Hospital} objects.
@@ -110,7 +144,7 @@ public final class QueryUtils {
     /**
      * Query the USGS dataset and return a list of {@link Hospital} objects.
      */
-    public static CentraleListCustom fetchCentrali(String requestUrl) {
+    public static PostazioneListCustom fetchCentrali(String requestUrl) {
         // Create URL object
         URL url = createUrl(requestUrl);
 
@@ -123,7 +157,26 @@ public final class QueryUtils {
         }
 
         // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
-        CentraleListCustom centrali = extractCentraleFromJson(jsonResponse);
+        PostazioneListCustom centrali = extractPostazioneFromJson(jsonResponse);
+
+        // Return the list of {@link Earthquake}s
+        return centrali;
+    }
+
+    public static AmbulanceDetailsListCustom fetchMezzi(String requestUrl) {
+        // Create URL object
+        URL url = createUrl(requestUrl);
+
+        // Perform HTTP request to the URL and receive a JSON response back
+        String jsonResponse = null;
+        try {
+            jsonResponse = makeHttpRequest(url);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Problem making the HTTP request.", e);
+        }
+
+        // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
+        AmbulanceDetailsListCustom centrali = extractMezziFromJson(jsonResponse);
 
         // Return the list of {@link Earthquake}s
         return centrali;
@@ -278,36 +331,51 @@ public final class QueryUtils {
      * Return a list of {@link Hospital} objects that has been built up from
      * parsing the given JSON response.
      */
-    private static CentraleListCustom extractCentraleFromJson(String hospitalJSON) {
+    private static PostazioneListCustom extractPostazioneFromJson(String postazioneJSON) {
         // If the JSON string is empty or null, then return early.
-        if (TextUtils.isEmpty(hospitalJSON)) {
+        if (TextUtils.isEmpty(postazioneJSON)) {
             return null;
         }
 
         // Create an empty ArrayList that we can start adding earthquakes to
-        CentraleListCustom centrali = new CentraleListCustom();
+        PostazioneListCustom postazioni = new PostazioneListCustom();
+
 
         // Try to parse the JSON response string. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.
         // Catch the exception so the app doesn't crash, and print the error message to the logs.
         try {
 
-            JSONArray centraliArray = new JSONArray(hospitalJSON);
+            JSONArray centraliArray = new JSONArray(postazioneJSON);
 
             // For each earthquake in the earthquakeArray, create an {@link Earthquake} object
             for (int i = 0; i < centraliArray.length(); i++) {
                 JSONObject hospitalJSONObj = centraliArray.getJSONObject(i);
 
-                int id = hospitalJSONObj.getInt(CENTRALE_ID);
-                String code = hospitalJSONObj.getString(CENTRALE_CODE);
-                String descr = hospitalJSONObj.getString(CENTRALE_DESCRIZIONE);
-                String city = hospitalJSONObj.getString(CENTRALE_CITTA);
-                String centrale = hospitalJSONObj.getString(CENTRALE_CENTRALE);
+                int id = hospitalJSONObj.getInt(POSTAZIONE_ID);
+                String code = hospitalJSONObj.getString(POSTAZIONE_CODE);
+                String descr = hospitalJSONObj.getString(POSTAZIONE_NAME);
+                String address = hospitalJSONObj.getString(POSTAZIONE_ADDRESS);
+                int totAmbulance = hospitalJSONObj.getInt(POSTAZIONE_TOT_AMBULANCE);
+                double totMission = hospitalJSONObj.getDouble(POSTAZIONE_AVG_MISSION);
+                double avgWhite = hospitalJSONObj.getDouble(POSTAZIONE_AVG_WHITE);
+                double avgGreen = hospitalJSONObj.getDouble(POSTAZIONE_AVG_GREEN);
+                double avgYellow = hospitalJSONObj.getDouble(POSTAZIONE_AVG_YELLOW);
+                double avgRed = hospitalJSONObj.getDouble(POSTAZIONE_AVG_RED);
 
-                Centrale c = new Centrale(id, code, descr, city, centrale);
+                int totWhite = hospitalJSONObj.getInt(POSTAZIONE_TOT_WHITE);
+                int totGreen = hospitalJSONObj.getInt(POSTAZIONE_TOT_GREEN);
+                int totYellow = hospitalJSONObj.getInt(POSTAZIONE_TOT_YELLOW);
+                int totRed = hospitalJSONObj.getInt(POSTAZIONE_TOT_RED);
+                int totDays = hospitalJSONObj.getInt(POSTAZIONE_TOT_DAYS);
+
+//                Postazione c = new Postazione(id, code, descr, city, centrale);
+                Postazione c = new Postazione(id, code, descr, address, totAmbulance, totMission,
+                        avgWhite, avgGreen, avgYellow, avgRed, totWhite, totGreen, totYellow,
+                        totRed, totDays);
 
                 // Add the new {@link Earthquake} to the list of earthquakes.
-                centrali.add(c);
+                postazioni.add(c);
             }
 
         } catch (JSONException e) {
@@ -318,7 +386,58 @@ public final class QueryUtils {
         }
 
         // Return the list of earthquakes
-        return centrali;
+        return postazioni;
+    }
+
+    private static AmbulanceDetailsListCustom extractMezziFromJson(String postazioneJSON) {
+        // If the JSON string is empty or null, then return early.
+        if (TextUtils.isEmpty(postazioneJSON)) {
+            return null;
+        }
+
+        // Create an empty ArrayList that we can start adding earthquakes to
+        AmbulanceDetailsListCustom mezzi = new AmbulanceDetailsListCustom();
+
+        // Try to parse the JSON response string. If there's a problem with the way the JSON
+        // is formatted, a JSONException exception object will be thrown.
+        // Catch the exception so the app doesn't crash, and print the error message to the logs.
+        try {
+
+            JSONArray mezziArray = new JSONArray(postazioneJSON);
+
+            // For each earthquake in the earthquakeArray, create an {@link Earthquake} object
+            for (int i = 0; i < mezziArray.length(); i++) {
+                JSONObject mezziJSONObj = mezziArray.getJSONObject(i);
+
+                String codePostazione = mezziJSONObj.getString(MEZZO_POSTAZIONE);
+                String ambulanceCode = mezziJSONObj.getString(MEZZO_AMBULANZA);
+                int totMissions = mezziJSONObj.getInt(MEZZO_TOT_MISSION);
+                int totWhite = mezziJSONObj.getInt(MEZZO_TOT_WHITE);
+                int totGreen = mezziJSONObj.getInt(MEZZO_TOT_GREEN);
+                int totYellow = mezziJSONObj.getInt(MEZZO_TOT_YELLOW);
+                int totRed = mezziJSONObj.getInt(MEZZO_TOT_RED);
+                String fromDate = mezziJSONObj.getString(MEZZO_FROM_DATE);
+                String toDAte = mezziJSONObj.getString(MEZZO_TO_DATE);
+                int totDays = mezziJSONObj.getInt(MEZZO_TOT_DAYS);
+                int realDAys = mezziJSONObj.getInt(MEZZO_REAL_DAYS);
+
+//                Postazione c = new Postazione(id, code, descr, city, centrale);
+                AmbulanceDetail c = new AmbulanceDetail(codePostazione, ambulanceCode, totMissions,
+                        totWhite, totGreen, totYellow, totRed, totDays, realDAys);
+
+                // Add the new {@link Earthquake} to the list of earthquakes.
+                mezzi.add(c);
+            }
+
+        } catch (JSONException e) {
+            // If an error is thrown when executing any of the above statements in the "try" block,
+            // catch the exception here, so the app doesn't crash. Print a log message
+            // with the message from the exception.
+            Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
+        }
+
+        // Return the list of earthquakes
+        return mezzi;
     }
 
     public static void callWebAPI(String requestUrl) {
@@ -416,6 +535,15 @@ public final class QueryUtils {
         return missions;
     }
 
+    public static String createUrlWithVersion(String url, String version) {
+        if (!url.endsWith("/"))
+            url += ("/");
+        url += version + "/";
+
+        return url;
+
+    }
+
     public static class callWebApi extends AsyncTask<String, Integer, Long> {
 
         private Exception exception;
@@ -456,5 +584,4 @@ public final class QueryUtils {
             return 0l;
         }
     }
-
 }

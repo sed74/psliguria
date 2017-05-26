@@ -105,14 +105,19 @@ public class HospitalAdapter extends ArrayAdapter<Hospital> {
         TextView total = (TextView) listItemView.findViewById(R.id.total_people);
         total.setText(mContext.getString(R.string.total_people, currentHospital.getTotal()));
 
+        TextView waitLabel = (TextView) listItemView.findViewById(R.id.waiting_label);
+        waitLabel.setText(mContext.getString(R.string.total_waiting, currentHospital.getTotalWaiting()));
+
+        TextView runLabel = (TextView) listItemView.findViewById(R.id.running_label);
+        runLabel.setText(mContext.getString(R.string.total_running, currentHospital.getTotalRunning()));
 
         TextView obi = (TextView) listItemView.findViewById(R.id.obi);
         if (currentHospital.getHasOBI()) {
             obi.setText(String.valueOf(currentHospital.getObi()));
         } else {
             TextView obiLabel = (TextView) listItemView.findViewById(R.id.obi_label);
-            obi.setVisibility(View.GONE);
             obiLabel.setVisibility(View.GONE);
+            obi.setVisibility(View.GONE);
             TextView text1 = (TextView) listItemView.findViewById(R.id.textView6);
             text1.setVisibility(View.GONE);
         }

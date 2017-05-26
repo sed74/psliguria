@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
+    android:background="@color/charlie_code_bck"
     tools:context="com.sed.federico.prontosoccorsoligura.CharlieCodeActivity">
 
     <TextView
