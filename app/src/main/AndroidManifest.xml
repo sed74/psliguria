@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -66,9 +67,21 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".PubblicheAssistenze.CentraliActivity"
+            android:name=".PubblicheAssistenze.PostazioniActivity"
             android:label="@string/title_activity_centrali"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:parentActivityName=".Mission.MissionActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Mission.MissionActivity" />
+        </activity>
+        <activity
+            android:name=".AmbulanceDetails.AmbulanceDetailsActivity"
+            android:parentActivityName=".PubblicheAssistenze.PostazioniActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".PubblicheAssistenze.PostazioniActivity" />
+        </activity>
     </application>
 
 </manifest>

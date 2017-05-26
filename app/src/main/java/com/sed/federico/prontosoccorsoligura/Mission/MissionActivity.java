@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.sed.federico.prontosoccorsoligura.AsyncDownloader;
 import com.sed.federico.prontosoccorsoligura.MainActivity;
 import com.sed.federico.prontosoccorsoligura.QueryUtils;
@@ -49,7 +50,9 @@ public class MissionActivity extends AppCompatActivity
      */
     private MissionAdapter mAdapter;
     private String mActualURL;
-    private String mHospitalName;
+    private String mCentraleName;
+
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public static MissionListCustom getHospitals() {
         return mMissions;
@@ -63,17 +66,19 @@ public class MissionActivity extends AppCompatActivity
         // Find a reference to the {@link ListView} in the layout
         final ListView missionListView = (ListView) findViewById(R.id.list);
 
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         Bundle bundle = savedInstanceState != null ? savedInstanceState : getIntent().getExtras();
-        mHospitalName = bundle.getString(MainActivity.EXTRA_HOSPITAL_NAME);
+        mCentraleName = bundle.getString(MainActivity.EXTRA_CENTRALE_NAME);
 //        if (savedInstanceState == null){
 //            Intent intent = getIntent();
-//            mHospitalName = intent.getStringExtra(MainActivity.EXTRA_HOSPITAL_NAME);
+//            mCentraleName = intent.getStringExtra(MainActivity.EXTRA_HOSPITAL_NAME);
 //        }else{
-//            mHospitalName = savedInstanceState.getString(MainActivity.EXTRA_HOSPITAL_NAME);
+//            mCentraleName = savedInstanceState.getString(MainActivity.EXTRA_HOSPITAL_NAME);
 //        }
 
-        mActualURL = MISSION_REQUEST_BASE_URL + "/" + mHospitalName;
-        this.setTitle(mHospitalName);
+        mActualURL = MISSION_REQUEST_BASE_URL + "/" + mCentraleName;
+        this.setTitle(mCentraleName);
 
         // Create a new adapter that takes an empty list of earthquakes as input
         mAdapter = new MissionAdapter(this, new MissionListCustom());
@@ -114,7 +119,7 @@ public class MissionActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if (getResources().getConfiguration().screenWidthDp < QueryUtils.TABLET_MIN_WIDTH) {
+                if (getResources().getConfiguration().screenWidthDp < 600/*QueryUtils.TABLET_MIN_WIDTH*/) {
 
                     boolean isSelected = (boolean) view.getTag();
 
@@ -127,6 +132,16 @@ public class MissionActivity extends AppCompatActivity
                     }
                     setVisibility(view, !isSelected);
                 }
+                Bundle bundle = new Bundle();
+//                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID,
+                        mMissions.get(position).getPubblicaAssistenza());
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "MissionDetail:" +
+                        mMissions.get(position).getCentrale());
+                bundle.putString(QueryUtils.FBASE_AMBULANCE_NO,
+                        mMissions.get(position).getAmbulanceNo());
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
             }
         });
 
@@ -168,7 +183,7 @@ public class MissionActivity extends AppCompatActivity
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         // Save the user's current game state
-        savedInstanceState.putString(MainActivity.EXTRA_HOSPITAL_NAME, mHospitalName);
+        savedInstanceState.putString(MainActivity.EXTRA_CENTRALE_NAME, mCentraleName);
 
         // Always call the superclass so it can save the view hierarchy state
         super.onSaveInstanceState(savedInstanceState);
@@ -186,9 +201,9 @@ public class MissionActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        this.setTitle(mHospitalName);
+        this.setTitle(mCentraleName);
         //noinspection SimplifiableIfStatement
+        int id = item.getItemId();
         if (id == R.id.action_refresh) {
             refreshView(true);
 
@@ -265,7 +280,12 @@ public class MissionActivity extends AppCompatActivity
         mProgressDialog.setMessage(getString(R.string.looking_for_drago));
         mProgressDialog.setCancelable(false);
         mProgressDialog.show();
-//        AsyncTask<String, Void, MissionListCustom> temp =
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, MissionActivity.class.getName());
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Look 4 Drago");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
         new AsyncDownloader(getBaseContext(), this).execute(MISSION_REQUEST_BASE_URL + "Genova",
                 MISSION_REQUEST_BASE_URL + "Savona", MISSION_REQUEST_BASE_URL + "LaSpezia",
                 MISSION_REQUEST_BASE_URL + "Lavagna", MISSION_REQUEST_BASE_URL + "Imperia");
@@ -364,7 +384,7 @@ class PostazioneComparator implements Comparator<Mission> {
 
 class MissionComparator implements Comparator<Mission> {
     public int compare(Mission p1, Mission p2) {
-        return p1.getMissionNo().compareToIgnoreCase(p2.getMissionNo());
+        return p2.getMissionNo().compareToIgnoreCase(p1.getMissionNo());
     }
 }
 
