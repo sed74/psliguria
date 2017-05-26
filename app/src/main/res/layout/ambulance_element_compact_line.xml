@@ -1,0 +1,200 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:background="@color/postazioni_list_bck"
+    android:clickable="true"
+    android:elevation="8dp"
+    android:focusable="true"
+
+    tools:layout_editor_absoluteX="8dp"
+    tools:layout_editor_absoluteY="85dp">
+
+    <TextView
+        android:id="@+id/tot_missions"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="9999" />
+
+    <TextView
+        android:id="@+id/ambulance_no"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:text="@string/worked_days"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ambulance_no"
+        tools:text="Giorni lavorati:" />
+
+    <TextView
+        android:id="@+id/worked_days"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toRightOf="@+id/textView29"
+        app:layout_constraintTop_toBottomOf="@+id/ambulance_no"
+        tools:text="10" />
+
+    <TextView
+        android:id="@+id/real_days"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toRightOf="@+id/textView31"
+        app:layout_constraintTop_toBottomOf="@+id/ambulance_no"
+        tools:text="25" />
+
+    <TextView
+        android:id="@+id/textView31"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
+        android:text="@string/su"
+        android:textAlignment="viewStart"
+        app:layout_constraintLeft_toRightOf="@+id/worked_days"
+        app:layout_constraintTop_toBottomOf="@+id/ambulance_no"
+        tools:text="su" />
+
+    <TextView
+        android:id="@+id/tot_red"
+        android:layout_width="31dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="@color/red"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/tot_missions"
+        app:layout_constraintRight_toLeftOf="@+id/tot_missions"
+        app:layout_constraintTop_toTopOf="@+id/tot_missions"
+        tools:text="999" />
+
+    <TextView
+        android:id="@+id/tot_yellow"
+        android:layout_width="31dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="@color/yellow"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/tot_red"
+        app:layout_constraintRight_toLeftOf="@+id/tot_red"
+        app:layout_constraintTop_toTopOf="@+id/tot_red"
+        tools:text="999" />
+
+    <TextView
+        android:id="@+id/tot_green"
+        android:layout_width="31dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="@color/green"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/tot_yellow"
+        app:layout_constraintRight_toLeftOf="@+id/tot_yellow"
+        app:layout_constraintTop_toTopOf="@+id/tot_yellow"
+        tools:text="999" />
+
+    <TextView
+        android:id="@+id/tot_white"
+        android:layout_width="31dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/tot_green"
+        app:layout_constraintRight_toLeftOf="@+id/tot_green"
+        app:layout_constraintTop_toTopOf="@+id/tot_green"
+        tools:text="999" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/textView29"
+        app:layout_constraintRight_toLeftOf="@+id/tot_white"
+        app:layout_constraintTop_toTopOf="@+id/ambulance_no"
+        app:layout_constraintVertical_bias="0.497" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="2dp"
+        android:text="@string/ospedalizzazioni"
+        app:layout_constraintLeft_toLeftOf="@+id/view"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tot_missions" />
+
+</android.support.constraint.ConstraintLayout>

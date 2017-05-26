@@ -1,27 +1,19 @@
 package com.sed.federico.prontosoccorsoligura.PubblicheAssistenze;
 
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Gravity;
@@ -35,15 +27,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.sed.federico.prontosoccorsoligura.AsyncString;
-import com.sed.federico.prontosoccorsoligura.CharlieCodeActivity;
-import com.sed.federico.prontosoccorsoligura.LegendActivity;
-import com.sed.federico.prontosoccorsoligura.MainActivity;
-import com.sed.federico.prontosoccorsoligura.Mission.MissionActivity;
+import com.sed.federico.prontosoccorsoligura.AmbulanceDetails.AmbulanceDetailsActivity;
 import com.sed.federico.prontosoccorsoligura.PostazioneListCustom;
 import com.sed.federico.prontosoccorsoligura.QueryUtils;
 import com.sed.federico.prontosoccorsoligura.R;
-import com.sed.federico.prontosoccorsoligura.SettingsActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,14 +42,14 @@ import java.util.HashMap;
 
 public class PostazioniActivity extends AppCompatActivity {
 
+    public static final String PA_CODE = "pa_code";
+    public static final String PA_NAME = "pa_name";
     private static final String URL_POSTAZIONI =
             "http://datipsge.azurewebsites.net/api/centrali/";
-
     private static final String URL_POSTAZIONI_VERSION = "v1";
     private static final String TAG = "PostazioniActivity";
     static ArrayList<String> mNomiCentrali;
     String mJson;
-
     SparseArray<PostazioneListCustom> mCachePostazioni;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -77,9 +64,7 @@ public class PostazioniActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private FirebaseAnalytics mFirebaseAnalytics;
-
     private ViewPager mViewPager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +76,19 @@ public class PostazioniActivity extends AppCompatActivity {
 
         mCachePostazioni = new SparseArray<>();
 
-        mJson = getIntent().getStringExtra("centrali");
+        if (savedInstanceState != null) {
+            // No intent is available, try getting data from savedInstance
+            mJson = savedInstanceState.getString("centrali");
+        } else if (getIntent() != null) {
+            // Activity was started and got an Intent with data
+            mJson = getIntent().getStringExtra("centrali");
+        }
+        if (mJson == null) {
+            mJson = "";
+        }
+
         populateTab(mJson);
+
         // Create the adapter that will return a fragment for each of the sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -127,15 +123,25 @@ public class PostazioniActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            savedInstanceState.putString("centrali", mJson);
+
+        }
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         mCachePostazioni.clear();
     }
 
-    private void populateTab(String jason) {
+    private void populateTab(String json) {
+        if (json.isEmpty()) return;
         mNomiCentrali = new ArrayList<>();
         try {
-            JSONArray jsonArray = new JSONArray(jason);
+            JSONArray jsonArray = new JSONArray(json);
             for (int i = 0; i < jsonArray.length(); i++) {
                 String name = jsonArray.getString(i).replaceAll("(\\p{Ll})(\\p{Lu})", "$1 $2");
                 ;
@@ -153,11 +159,10 @@ public class PostazioniActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_postazioni, menu);
+        getMenuInflater().inflate(R.menu.menu_postazioni, menu);
         return true;
     }
 
@@ -166,42 +171,41 @@ public class PostazioniActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        int index = mViewPager.getCurrentItem();
-        SectionsPagerAdapter adapter = ((SectionsPagerAdapter) mViewPager.getAdapter());
-        PlaceholderFragment fragment = adapter.getFragment(index);
-
-//        int pageNo = mViewPager.getCurrentItem();
-//        PlaceholderFragment page = (PlaceholderFragment)
-//                getSupportFragmentManager().findFragmentByTag("android:switcher:" +
-//                        R.id.container + ":" + String.valueOf(pageNo));
-        //noinspection SimplifiableIfStatement
+        PlaceholderFragment page = (PlaceholderFragment)
+                getSupportFragmentManager().findFragmentByTag("android:switcher:" +
+                        R.id.container + ":" + String.valueOf(mViewPager.getCurrentItem()));
+        PostazioniAdapter adapter = (PostazioniAdapter) page.mRecyclerView.getAdapter();
+        SORTBY sortBy;
         switch (item.getItemId()) {
-            case R.id.sort_by_missions:
-
+            case R.id.action_sort:
+                return super.onOptionsItemSelected(item);
+            case R.id.sort_by_name:
+                sortBy = SORTBY.NAME;
                 break;
             case R.id.sort_by_white_code:
-
+                sortBy = SORTBY.WHITE;
                 break;
             case R.id.sort_by_green_code:
-
+                sortBy = SORTBY.GREEN;
                 break;
             case R.id.sort_by_yellow_code:
-
+                sortBy = SORTBY.YELLOW;
                 break;
             case R.id.sort_by_red_code:
-
+                sortBy = SORTBY.RED;
                 break;
-
+            default:
+                sortBy = SORTBY.MISSIONS;
+                break;
         }
-//        page.mRecyclerView.swapAdapter(new PostazioniAdapter(this, page.mCentrali), false);
+        adapter.sortList(sortBy);
 
 
         return super.onOptionsItemSelected(item);
     }
 
-    private enum SortBy {
+    public enum SORTBY {
         NAME,
         MISSIONS,
         WHITE,
@@ -313,7 +317,6 @@ public class PostazioniActivity extends AppCompatActivity {
                 if (params.length == 0) {
                     return null;
                 }
-
                 int currentSection = Integer.valueOf(params[1]) - 1;
                 PostazioneListCustom centrali;
 
@@ -333,7 +336,6 @@ public class PostazioniActivity extends AppCompatActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
                 mProgressBar.setVisibility(View.VISIBLE);
-
             }
 
             @Override
@@ -371,20 +373,18 @@ public class PostazioniActivity extends AppCompatActivity {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.centrale_element, parent, false);
 
-            PostazioniViewHolder vh = new PostazioniViewHolder(v);
+//            PostazioniViewHolder vh = new PostazioniViewHolder(v);
 
-//            MezziViewHolder vh = new MezziViewHolder(v, new MezziViewHolder.onRecyclerViewClickListener() {
-//                @Override
-//                public void onClick(View caller) {
-//                    Toast toast = Toast.makeText(mContext,
-//                            mContext.getString(R.string.statistics_to_be_implemented),
-//                            Toast.LENGTH_LONG);
-//                    toast.setGravity(Gravity.CENTER, 0, 0);
-//                    toast.show();
-//
-//
-//                }
-//            });
+            PostazioniViewHolder vh = new PostazioniViewHolder(v, new PostazioniViewHolder.onRecyclerViewClickListener() {
+                @Override
+                public void onClick(View caller) {
+                    Toast toast = Toast.makeText(mContext,
+                            mContext.getString(R.string.statistics_to_be_implemented),
+                            Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
+            });
             return vh;
         }
 
@@ -409,61 +409,23 @@ public class PostazioniActivity extends AppCompatActivity {
                     postazione.getAvgYellow()));
             holder.mAvgRed.setText(String.format(mContext.getString(R.string.avg_red_per_day), postazione.getTotRed(),
                     postazione.getAvgRed()));
-//            holder.mPostazione.setText(mContext.getString(R.string.statistics_coming_soon));
 
-//            holder.mCross.setBackground(getDrawable(paName));
             holder.mCross.setBackground(ContextCompat.getDrawable(mContext,
                     postazione.getCrossImage()));
             holder.setPostazioneCode(postazione.getCode());
 
-            View.OnClickListener onClickListener = (new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    switch (v.getId()) {
-                        case R.id.tot_white:
-                            Collections.sort(mCentrali, new PostazioneComparatorByWhite());
-                            break;
-                        case R.id.tot_green:
-                            Collections.sort(mCentrali, new PostazioneComparatorByGreen());
-                            break;
-                        case R.id.tot_yellow:
-                            Collections.sort(mCentrali, new PostazioneComparatorByYellow());
-                            break;
-                        case R.id.tot_red:
-                            Collections.sort(mCentrali, new PostazioneComparatorByRed());
-                            break;
-                        case R.id.tot_missions:
-                            Collections.sort(mCentrali, new PostazioneComparatorByMissions());
-                            break;
-                        case R.id.pa_name:
-                            Collections.sort(mCentrali, new PostazioneComparatorByName());
-                            break;
-                    }
-                    sortList();
-                }
-            });
-
-            holder.mAvgWhite.setOnClickListener(onClickListener);
-            holder.mAvgGreen.setOnClickListener(onClickListener);
-            holder.mAvgYellow.setOnClickListener(onClickListener);
-            holder.mAvgRed.setOnClickListener(onClickListener);
-            holder.mPaName.setOnClickListener(onClickListener);
-            holder.mTotMissions.setOnClickListener(onClickListener);
-
             holder.setOnRecyclerViewClickListener(new PostazioniViewHolder.onRecyclerViewClickListener() {
                 @Override
                 public void onClick(View caller) {
-//                    Toast toast = Toast.makeText(mContext,
-//                            mContext.getString(R.string.statistics_to_be_implemented),
-//                            Toast.LENGTH_LONG);
-//                    toast.setGravity(Gravity.CENTER, 0, 0);
-//                    toast.show();
-//
+                    Intent intent = new Intent(mContext, AmbulanceDetailsActivity.class);
+                    intent.putExtra(PA_CODE, postazione.getCode());
+                    intent.putExtra(PA_NAME, postazione.getName());
+                    mContext.startActivity(intent);
 //                    sortList();
 //                    FirebaseAnalytics firebaseAnalytics;
 //                    firebaseAnalytics = FirebaseAnalytics.getInstance(mContext);
 //                    Bundle bundle = new Bundle();
-//                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "PostazioneDetail");
+//                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "AmbulanceDetail");
 //                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, postazione.getName());
 //                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 }
@@ -471,7 +433,28 @@ public class PostazioniActivity extends AppCompatActivity {
 
         }
 
-        public void sortList() {
+        public void sortList(SORTBY sortBy) {
+            Comparator comparator;
+            switch (sortBy) {
+                case WHITE:
+                    comparator = new SortByWhite();
+                    break;
+                case GREEN:
+                    comparator = new SortByGreen();
+                    break;
+                case YELLOW:
+                    comparator = new SortByYellow();
+                    break;
+                case RED:
+                    comparator = new SortByRed();
+                    break;
+                case MISSIONS:
+                    comparator = new SortByMissions();
+                    break;
+                default:
+                    comparator = new SortByName();
+            }
+            Collections.sort(mCentrali, comparator);
             this.notifyDataSetChanged();
 //            Toast.makeText(mContext, mContext.getString(R.string.sorting_done),
 //                    Toast.LENGTH_SHORT).show();
@@ -483,7 +466,7 @@ public class PostazioniActivity extends AppCompatActivity {
             return mCentrali.size();
         }
 
-        class PostazioneComparatorByMissions implements Comparator<Postazione> {
+        class SortByMissions implements Comparator<Postazione> {
             public int compare(Postazione p1, Postazione p2) {
                 if (p1.getTotMissions() < p2.getTotMissions()) return 1;
                 if (p1.getTotMissions() > p2.getTotMissions()) return -1;
@@ -491,13 +474,13 @@ public class PostazioniActivity extends AppCompatActivity {
             }
         }
 
-        class PostazioneComparatorByName implements Comparator<Postazione> {
+        class SortByName implements Comparator<Postazione> {
             public int compare(Postazione p1, Postazione p2) {
                 return p1.getName().compareToIgnoreCase(p2.getName());
             }
         }
 
-        class PostazioneComparatorByRed implements Comparator<Postazione> {
+        class SortByRed implements Comparator<Postazione> {
             public int compare(Postazione p1, Postazione p2) {
                 if (p1.getTotRed() < p2.getTotRed()) return 1;
                 if (p1.getTotRed() > p2.getTotRed()) return -1;
@@ -505,7 +488,7 @@ public class PostazioniActivity extends AppCompatActivity {
             }
         }
 
-        class PostazioneComparatorByYellow implements Comparator<Postazione> {
+        class SortByYellow implements Comparator<Postazione> {
             public int compare(Postazione p1, Postazione p2) {
                 if (p1.getTotYellow() < p2.getTotYellow()) return 1;
                 if (p1.getTotYellow() > p2.getTotYellow()) return -1;
@@ -513,7 +496,7 @@ public class PostazioniActivity extends AppCompatActivity {
             }
         }
 
-        class PostazioneComparatorByGreen implements Comparator<Postazione> {
+        class SortByGreen implements Comparator<Postazione> {
             public int compare(Postazione p1, Postazione p2) {
                 if (p1.getTotGreen() < p2.getTotGreen()) return 1;
                 if (p1.getTotGreen() > p2.getTotGreen()) return -1;
@@ -521,7 +504,7 @@ public class PostazioniActivity extends AppCompatActivity {
             }
         }
 
-        class PostazioneComparatorByWhite implements Comparator<Postazione> {
+        class SortByWhite implements Comparator<Postazione> {
             public int compare(Postazione p1, Postazione p2) {
                 if (p1.getTotWhite() < p2.getTotWhite()) return 1;
                 if (p1.getTotWhite() > p2.getTotWhite()) return -1;

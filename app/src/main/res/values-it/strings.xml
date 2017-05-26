@@ -106,7 +106,7 @@
     <string name="running_label">Pazienti in visita (tot. %1$d + %2$d OBI)</string>
     <string name="total_label">Tot. %1$d</string>
     <string name="croce_name">Croce:</string>
-    <string name="mezzo">Mezzo:</string>
+    <string name="mezzo">Mezzo</string>
     <string name="location">Località:</string>
     <string name="sintesi">Sintesi:</string>
     <string name="mission_no">Missione No.:</string>
@@ -207,14 +207,36 @@
     <string name="tot_missions">Ospedalizzazioni: %1$d (%2$.2f al giorno)</string>
     <string name="worked_days">Giorni lavorati:</string>
     <string name="su">su</string>
-    <string name="di_cui">di cui</string>
+    <string name="di_cui">di cui (media)</string>
     <string name="missions_stats">Totale ospedalizzazioni (media giornaliera)</string>
     <string name="whats_new_title">Novità</string>
-    <string name="whats_new">PUBBLICHE ASSISTENZE\n* Aggiunti i totali e le medie di intervento suddivise per codice di urgenza.\n*
-        È ora possibile ordinare per codice di urgenza cliccando su qualsiasi rettangolo colorato, sul nome della P.A o sul numero di missioni.\n\n
-    MISSIONI\n* Aggiunta la scritta "Missione Terminata" per le missioni terminate ma ancora presenti a sistema.</string>
+    <string name="whats_new">PUBBLICHE ASSISTENZE\n
+        "* Aggiunta la possibilità di ordinare per numero di interventi per ogni codice.\n"
+        "* Cliccando su una Pubblica Assistenza si apre il dettaglio di tutti i suoi mezzi che hanno"
+        " lavorato con i numeri di ospedalizzazioni suddivise per codice di urgenza.\n\n"
+        "AMBULANZE\n"
+        "* Aggiunti i dettagli per ogni mezzo che abbia fatto almeno un'urgenza."
+        </string>
     <string name="dont_show">Non mostrare più</string>
     <string name="close">Chiudi</string>
     <string name="sorting_done">Ordinamento effettuato.</string>
     <string name="mission_terminated">Terminata</string>
+    <string name="missions">Ospedalizzazioni:</string>
+    <string name="ambulance_no">Ambulanza %1$s</string>
+    <string name="selettiva">Selettiva</string>
+    <string name="green">V</string>
+    <string name="red">R</string>
+    <string name="totals">Totali</string>
+    <string name="yellow">G</string>
+    <string name="white">B</string>
+    <string name="total">Totale</string>
+    <string name="worked_real_days">Operativo %1$d gg. su %2$d</string>
+    <string name="action_sort">Ordina</string>
+    <string name="sort_by_white">Ordina per bianchi</string>
+    <string name="sort_by_green">Ordina per verdi</string>
+    <string name="sort_by_yellow">Ordina per gialli</string>
+    <string name="sort_by_red">Ordina per rossi</string>
+    <string name="sort_by_ambulance">Ordina per mezzo</string>
+    <string name="sort_by_totals">Ordina per missioni</string>
+    <string name="sort_by_name">Ordina per nome</string>
 </resources>
