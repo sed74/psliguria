@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,6 +27,8 @@ import com.sed.federico.prontosoccorsoligura.R;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AmbulanceDetailsActivity extends AppCompatActivity {
     private static final String AMBULANCE_URL = "http://datipsge.azurewebsites.net/api/centrali/mezzi/";
@@ -104,40 +107,21 @@ public class AmbulanceDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         MezziAdapter adapter = (MezziAdapter) mRecyclerView.getAdapter();
-        SORT_TYPE sortType;
+
         switch (item.getItemId()) {
             case R.id.sort_by_white:
-                sortType = SORT_TYPE.WHITE;
-                break;
             case R.id.sort_by_green:
-                sortType = SORT_TYPE.GREEN;
-                break;
             case R.id.sort_by_yellow:
-                sortType = SORT_TYPE.YELLOW;
-                break;
             case R.id.sort_by_red:
-                sortType = SORT_TYPE.RED;
-                break;
             case R.id.sort_by_ambulance:
-                sortType = SORT_TYPE.AMBULANCE_NO;
-                break;
             case R.id.sort_by_totals:
-                sortType = SORT_TYPE.MISSIONS;
+                adapter.sortList(item.getItemId());
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
-        adapter.sortList(sortType);
-        return super.onOptionsItemSelected(item);
-    }
 
-    private enum SORT_TYPE {
-        WHITE,
-        GREEN,
-        YELLOW,
-        RED,
-        AMBULANCE_NO,
-        MISSIONS
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -145,40 +129,24 @@ public class AmbulanceDetailsActivity extends AppCompatActivity {
      */
 
     public static class MezziAdapter extends RecyclerView.Adapter<MezziViewHolder> {
+        SparseArray<Comparator> comparator = new SparseArray<>();
         private AmbulanceDetailsListCustom mPostazioneDetails;
         private Context mContext;
+
+        {
+            comparator.put(R.id.sort_by_white, new ComparatorByWhite());
+            comparator.put(R.id.sort_by_green, new ComparatorByGreen());
+            comparator.put(R.id.sort_by_yellow, new ComparatorByYellow());
+            comparator.put(R.id.sort_by_red, new ComparatorByRed());
+            comparator.put(R.id.sort_by_missions, new ComparatorByMissions());
+            comparator.put(R.id.sort_by_ambulance, new ComparatorByAmbulanceNo());
+        }
 
         // Provide a suitable constructor (depends on the kind of dataset)
         public MezziAdapter(Context context, AmbulanceDetailsListCustom centrali) {
 //            super();
             mPostazioneDetails = centrali;
             mContext = context;
-        }
-
-        public void sortList(SORT_TYPE sortType) {
-            Comparator comparator;
-            switch (sortType) {
-                case WHITE:
-                    comparator = new ComparatorByWhite();
-                    break;
-                case GREEN:
-                    comparator = new ComparatorByGreen();
-                    break;
-                case YELLOW:
-                    comparator = new ComparatorByYellow();
-                    break;
-                case RED:
-                    comparator = new ComparatorByRed();
-                    break;
-                case MISSIONS:
-                    comparator = new ComparatorByMissions();
-                    break;
-                default:
-                    comparator = new ComparatorByAmbulanceNo();
-                    break;
-            }
-            Collections.sort(mPostazioneDetails, comparator);
-            notifyDataSetChanged();
         }
 
         // Create new views (invoked by the layout manager)
@@ -236,6 +204,11 @@ public class AmbulanceDetailsActivity extends AppCompatActivity {
         @Override
         public int getItemCount() {
             return mPostazioneDetails.size();
+        }
+
+        public void sortList(int menuId) {
+            Collections.sort(mPostazioneDetails, comparator.get(menuId));
+            notifyDataSetChanged();
         }
 
         class ComparatorByWhite implements Comparator<AmbulanceDetail> {
