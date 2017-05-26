@@ -8,8 +8,8 @@ android {
         applicationId "com.sed.federico.prontosoccorsoligura"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 31
-        versionName "0.93"
+        versionCode 35
+        versionName "1.00"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
