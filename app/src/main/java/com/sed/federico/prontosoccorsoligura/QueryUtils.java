@@ -20,15 +20,10 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.sed.federico.prontosoccorsoligura.AmbulanceDetails.AmbulanceDetail;
 import com.sed.federico.prontosoccorsoligura.Mission.Mission;
 import com.sed.federico.prontosoccorsoligura.Mission.MissionListCustom;
-import com.sed.federico.prontosoccorsoligura.PostazioniDetails.PostazioneDetail;
-import com.sed.federico.prontosoccorsoligura.PostazioniDetails.PostazioneDetailsListCustom;
+import com.sed.federico.prontosoccorsoligura.AmbulanceDetails.AmbulanceDetailsListCustom;
 import com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.Postazione;
 
 import org.json.JSONArray;
@@ -43,7 +38,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 
 /**
  * Helper methods related to requesting and receiving earthquake data from USGS.
@@ -169,7 +163,7 @@ public final class QueryUtils {
         return centrali;
     }
 
-    public static PostazioneDetailsListCustom fetchMezzi(String requestUrl) {
+    public static AmbulanceDetailsListCustom fetchMezzi(String requestUrl) {
         // Create URL object
         URL url = createUrl(requestUrl);
 
@@ -182,7 +176,7 @@ public final class QueryUtils {
         }
 
         // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
-        PostazioneDetailsListCustom centrali = extractMezziFromJson(jsonResponse);
+        AmbulanceDetailsListCustom centrali = extractMezziFromJson(jsonResponse);
 
         // Return the list of {@link Earthquake}s
         return centrali;
@@ -395,14 +389,14 @@ public final class QueryUtils {
         return postazioni;
     }
 
-    private static PostazioneDetailsListCustom extractMezziFromJson(String postazioneJSON) {
+    private static AmbulanceDetailsListCustom extractMezziFromJson(String postazioneJSON) {
         // If the JSON string is empty or null, then return early.
         if (TextUtils.isEmpty(postazioneJSON)) {
             return null;
         }
 
         // Create an empty ArrayList that we can start adding earthquakes to
-        PostazioneDetailsListCustom mezzi = new PostazioneDetailsListCustom();
+        AmbulanceDetailsListCustom mezzi = new AmbulanceDetailsListCustom();
 
         // Try to parse the JSON response string. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.
@@ -428,7 +422,7 @@ public final class QueryUtils {
                 int realDAys = mezziJSONObj.getInt(MEZZO_REAL_DAYS);
 
 //                Postazione c = new Postazione(id, code, descr, city, centrale);
-                PostazioneDetail c = new PostazioneDetail(codePostazione, ambulanceCode, totMissions,
+                AmbulanceDetail c = new AmbulanceDetail(codePostazione, ambulanceCode, totMissions,
                         totWhite, totGreen, totYellow, totRed, totDays, realDAys);
 
                 // Add the new {@link Earthquake} to the list of earthquakes.

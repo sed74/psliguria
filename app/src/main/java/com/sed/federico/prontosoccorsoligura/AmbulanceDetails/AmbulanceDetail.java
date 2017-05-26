@@ -1,25 +1,34 @@
-package com.sed.federico.prontosoccorsoligura.PostazioniDetails;
+package com.sed.federico.prontosoccorsoligura.AmbulanceDetails;
 
 /**
  * Created by federico.marchesi on 08/05/2017.
  */
 
-public class PostazioneDetail {
+public class AmbulanceDetail {
     private String mCodeAmbulance;
+
     private int mTotMissions;
+
     private int mTotWhite;
     private int mTotGreen;
     private int mTotYellow;
     private int mTotRed;
+
+    private float mAvgWhite;
+    private float mAvgGreen;
+    private float mAvgYellow;
+    private float mAvgRed;
+
     private int mTotDays;
-    private int mTotRealDays;
+    private int mTotWorkedDays;
+
     private String mFromDate;
     private String mToDate;
     private String mCodePostazione;
 
 
-    public PostazioneDetail(String codePostaione, String codeAmbulance, int totMissions, int totWhite, int totGreen,
-                            int totYellow, int totRed, String fromDate, String toDate, int totDays, int totRealDays) {
+    public AmbulanceDetail(String codePostaione, String codeAmbulance, int totMissions, int totWhite, int totGreen,
+                           int totYellow, int totRed, String fromDate, String toDate, int totDays, int totWorkedDays) {
 
         this.mCodePostazione = codePostaione;
         this.mCodeAmbulance = codeAmbulance;
@@ -31,14 +40,18 @@ public class PostazioneDetail {
         this.mToDate = toDate;
         this.mTotRed = totRed;
         this.mTotDays = totDays;
-        this.mTotRealDays = totRealDays;
+        this.mTotWorkedDays = totWorkedDays;
+        this.mAvgWhite = (float) mTotWhite / mTotDays;
+        this.mAvgGreen = (float) mTotGreen / mTotDays;
+        this.mAvgYellow = (float) mTotYellow / mTotDays;
+        this.mAvgRed = (float) mTotRed / mTotDays;
 
     }
 
-    public PostazioneDetail(String codePostaione, String codeAmbulance, int totMissions, int totWhite, int totGreen,
-                            int totYellow, int totRed, int totDays, int totRealDays) {
+    public AmbulanceDetail(String codePostaione, String codeAmbulance, int totMissions, int totWhite, int totGreen,
+                           int totYellow, int totRed, int totDays, int totWorkedDays) {
 
-        this(codePostaione, codeAmbulance, totMissions, totWhite, totGreen, totYellow, totRed, "", "", totDays, totRealDays);
+        this(codePostaione, codeAmbulance, totMissions, totWhite, totGreen, totYellow, totRed, "", "", totDays, totWorkedDays);
     }
 
     public String getCodeAmbulance() {
@@ -97,12 +110,12 @@ public class PostazioneDetail {
         this.mTotDays = totDays;
     }
 
-    public int getTotRealDays() {
-        return mTotRealDays;
+    public int getTotWorkedDays() {
+        return mTotWorkedDays;
     }
 
-    public void setTotRealDays(int totRealDays) {
-        this.mTotRealDays = totRealDays;
+    public void setTotWorkedDays(int totWorkedDays) {
+        this.mTotWorkedDays = totWorkedDays;
     }
 
     public String getFromDate() {
@@ -127,5 +140,21 @@ public class PostazioneDetail {
 
     public void setCodePostazione(String codePostazione) {
         this.mCodePostazione = codePostazione;
+    }
+
+    public float getAvgWhite() {
+        return mAvgWhite;
+    }
+
+    public float getAvgGreen() {
+        return mAvgGreen;
+    }
+
+    public float getAvgYellow() {
+        return mAvgYellow;
+    }
+
+    public float getAvgRed() {
+        return mAvgRed;
     }
 }
