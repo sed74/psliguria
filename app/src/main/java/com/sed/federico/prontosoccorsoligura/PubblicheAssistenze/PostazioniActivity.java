@@ -175,44 +175,24 @@ public class PostazioniActivity extends AppCompatActivity {
         PlaceholderFragment page = (PlaceholderFragment)
                 getSupportFragmentManager().findFragmentByTag("android:switcher:" +
                         R.id.container + ":" + String.valueOf(mViewPager.getCurrentItem()));
+
         PostazioniAdapter adapter = (PostazioniAdapter) page.mRecyclerView.getAdapter();
-        SORTBY sortBy;
+
         switch (item.getItemId()) {
             case R.id.action_sort:
                 return super.onOptionsItemSelected(item);
             case R.id.sort_by_name:
-                sortBy = SORTBY.NAME;
-                break;
             case R.id.sort_by_white_code:
-                sortBy = SORTBY.WHITE;
-                break;
             case R.id.sort_by_green_code:
-                sortBy = SORTBY.GREEN;
-                break;
             case R.id.sort_by_yellow_code:
-                sortBy = SORTBY.YELLOW;
-                break;
             case R.id.sort_by_red_code:
-                sortBy = SORTBY.RED;
-                break;
-            default:
-                sortBy = SORTBY.MISSIONS;
+            case R.id.sort_by_missions:
+                adapter.sortList(item.getItemId());
                 break;
         }
-        adapter.sortList(sortBy);
-
-
         return super.onOptionsItemSelected(item);
     }
 
-    public enum SORTBY {
-        NAME,
-        MISSIONS,
-        WHITE,
-        GREEN,
-        YELLOW,
-        RED
-    }
 
     /**
      * A placeholder fragment containing a simple view.
@@ -355,13 +335,23 @@ public class PostazioniActivity extends AppCompatActivity {
     }
 
     public static class PostazioniAdapter extends RecyclerView.Adapter<PostazioniViewHolder> {
-        private PostazioneListCustom mCentrali;
+        SparseArray<Comparator> comparator = new SparseArray<>();
+        private PostazioneListCustom mPostazioni;
         private Context mContext;
 
+        {
+            comparator.put(R.id.sort_by_name, new SortByName());
+            comparator.put(R.id.sort_by_white_code, new SortByWhite());
+            comparator.put(R.id.sort_by_green_code, new SortByGreen());
+            comparator.put(R.id.sort_by_yellow_code, new SortByYellow());
+            comparator.put(R.id.sort_by_red_code, new SortByRed());
+            comparator.put(R.id.sort_by_missions, new SortByMissions());
+        }
+
         // Provide a suitable constructor (depends on the kind of dataset)
-        public PostazioniAdapter(Context context, PostazioneListCustom centrali) {
+        public PostazioniAdapter(Context context, PostazioneListCustom postazioni) {
 //            super();
-            mCentrali = centrali;
+            mPostazioni = postazioni;
             mContext = context;
         }
 
@@ -393,7 +383,7 @@ public class PostazioniActivity extends AppCompatActivity {
         public void onBindViewHolder(PostazioniViewHolder holder, int position) {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
-            final Postazione postazione = mCentrali.get(position);
+            final Postazione postazione = mPostazioni.get(position);
 
             String paName = postazione.getName();
             holder.mPaName.setText(paName);
@@ -433,37 +423,16 @@ public class PostazioniActivity extends AppCompatActivity {
 
         }
 
-        public void sortList(SORTBY sortBy) {
-            Comparator comparator;
-            switch (sortBy) {
-                case WHITE:
-                    comparator = new SortByWhite();
-                    break;
-                case GREEN:
-                    comparator = new SortByGreen();
-                    break;
-                case YELLOW:
-                    comparator = new SortByYellow();
-                    break;
-                case RED:
-                    comparator = new SortByRed();
-                    break;
-                case MISSIONS:
-                    comparator = new SortByMissions();
-                    break;
-                default:
-                    comparator = new SortByName();
-            }
-            Collections.sort(mCentrali, comparator);
+        public void sortList(int menuId) {
+            Collections.sort(mPostazioni, comparator.get(menuId));
             this.notifyDataSetChanged();
 //            Toast.makeText(mContext, mContext.getString(R.string.sorting_done),
 //                    Toast.LENGTH_SHORT).show();
         }
-
         // Return the size of your dataset (invoked by the layout manager)
         @Override
         public int getItemCount() {
-            return mCentrali.size();
+            return mPostazioni.size();
         }
 
         class SortByMissions implements Comparator<Postazione> {
