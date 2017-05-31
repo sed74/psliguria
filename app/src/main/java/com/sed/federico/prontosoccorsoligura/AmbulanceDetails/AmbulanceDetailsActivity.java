@@ -129,16 +129,15 @@ public class AmbulanceDetailsActivity extends AppCompatActivity {
      */
 
     public static class MezziAdapter extends RecyclerView.Adapter<MezziViewHolder> {
-        SparseArray<Comparator> comparator = new SparseArray<>();
         private AmbulanceDetailsListCustom mPostazioneDetails;
         private Context mContext;
-
+        SparseArray<Comparator> comparator = new SparseArray<>();
         {
             comparator.put(R.id.sort_by_white, new ComparatorByWhite());
             comparator.put(R.id.sort_by_green, new ComparatorByGreen());
             comparator.put(R.id.sort_by_yellow, new ComparatorByYellow());
             comparator.put(R.id.sort_by_red, new ComparatorByRed());
-            comparator.put(R.id.sort_by_missions, new ComparatorByMissions());
+            comparator.put(R.id.sort_by_totals, new ComparatorByMissions());
             comparator.put(R.id.sort_by_ambulance, new ComparatorByAmbulanceNo());
         }
 
