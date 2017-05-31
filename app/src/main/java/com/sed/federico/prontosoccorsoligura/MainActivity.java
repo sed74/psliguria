@@ -305,6 +305,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "ActivityOpenedFromDrawer");
+        item.setChecked(true);
         if (id == R.id.ps_activity) {
             // Handle the camera action
         } else if (id == R.id.nav_invite) {
