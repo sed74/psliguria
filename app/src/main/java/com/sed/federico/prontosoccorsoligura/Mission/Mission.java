@@ -40,22 +40,27 @@ public class Mission {
     public Mission(Context context, String missionNo, String ambulanceNo,
                    String pubblicaAssitenza, String code, String location,
                    String synthesis, String destination, String asl, String centrale) {
+        try {
 
-        this.mContext = context;
-        this.mMissionNo = missionNo;
-        this.mAmbulanceNo = ambulanceNo;
-        this.mPostazione = pubblicaAssitenza;
-        this.mCode = code;
-        this.mLocation = location;
-        this.mSynthesis = synthesis;
-        this.mMissionSynthesis = new MissionSynthesis(mContext, mSynthesis);
-        if (destination.substring(1, 4).equalsIgnoreCase(" h "))
-            destination = destination.substring(4);
-        this.mDestination = destination;
-        this.mAsl = asl;
-        this.mCentrale = centrale;
-        this.mPostazioneObj = new Postazione(pubblicaAssitenza);
-
+            this.mContext = context;
+            this.mMissionNo = missionNo;
+            this.mAmbulanceNo = ambulanceNo;
+            this.mPostazione = pubblicaAssitenza;
+            this.mCode = code;
+            this.mLocation = location;
+            this.mSynthesis = synthesis;
+            this.mMissionSynthesis = new MissionSynthesis(mContext, mSynthesis);
+            if (destination.length() > 4) {
+                if (destination.substring(1, 4).equalsIgnoreCase(" h "))
+                    destination = destination.substring(4);
+            }
+            this.mDestination = destination;
+            this.mAsl = asl;
+            this.mCentrale = centrale;
+            this.mPostazioneObj = new Postazione(pubblicaAssitenza);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getCentrale() {

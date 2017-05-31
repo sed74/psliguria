@@ -8,7 +8,7 @@ android {
         applicationId "com.sed.federico.prontosoccorsoligura"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 34
+        versionCode 36
         versionName "1.00"
         vectorDrawables.useSupportLibrary = true
     }
@@ -27,6 +27,12 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    // Using JCenter
+//    compile 'eu.davidea:flexible-adapter:5.0.0-rc1'
+
+    // Using MavenSnapshots repository for continuous updates from my development
+//    compile 'eu.davidea:flexible-adapter:5.0.0-SNAPSHOT'
+
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'

@@ -183,7 +183,6 @@
     <string name="charlie_code_title">Codici Charlie</string>
     <string name="looking_for_drago">Alla ricerca di Drago&#8230;</string>
     <string name="avg_mission_per_day">Media ospedalizzazioni giornaliere: %1$.2f di cui:</string>
-    <string name="no_of_ambulances">Totale mezzi censiti: %1$d</string>
     <string name="retrieving_data">Caricamento dati in corso&#8230;</string>
     <string name="belong_to_centrale">Centrale di appartenenza: %1$s</string>
     <string name="pa_label_nav">Pubbliche Assistenze</string>
@@ -196,6 +195,7 @@
     <string name="save">Salva</string>
     <string name="cancel">Annulla</string>
     <string name="tot_mission">Numero totale ospedalizzazioni: %1$d</string>
+    <string name="tot_missions">Ospedalizzazioni: %1$d (%2$.2f al giorno)</string>
     <string name="avg_mission_per_code">Media ospedalizzazioni per codici d\'urgenza</string>
     <string name="postazioni_disclaimer">Le statistiche sono aggiornate una volta al giorno e si riferisco a dati raccolti a partire dal 14/04/2017.</string>
     <string name="sort_by_red_code">Ordina per media rossi</string>
@@ -204,7 +204,6 @@
     <string name="sort_by_yellow_code">Ordina per media gialli</string>
     <string name="sort_by_green_code">Ordina per media verdi</string>
     <string name="ambulance">Ambulanza:</string>
-    <string name="tot_missions">Ospedalizzazioni: %1$d (%2$.2f al giorno)</string>
     <string name="worked_days">Giorni lavorati:</string>
     <string name="su">su</string>
     <string name="di_cui">di cui (media)</string>
@@ -239,4 +238,5 @@
     <string name="sort_by_ambulance">Ordina per mezzo</string>
     <string name="sort_by_totals">Ordina per missioni</string>
     <string name="sort_by_name">Ordina per nome</string>
+    <string name="no_of_ambulances">Totale mezzi censiti: %1$d</string>
 </resources>
