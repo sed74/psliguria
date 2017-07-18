@@ -14,6 +14,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.SpannedString;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Gravity;
@@ -387,9 +390,11 @@ public class PostazioniActivity extends AppCompatActivity {
 
             String paName = postazione.getName();
             holder.mPaName.setText(paName);
-            holder.mTotMissions.setText(String.format(mContext.getString(R.string.tot_missions),
+
+            holder.mTotMissions.setText(QueryUtils.getText(mContext, R.string.tot_missions,
                     postazione.getTotMissions(), postazione.getAvgMission()));
-            holder.mTotMezzi.setText(String.format(mContext.getString(R.string.no_of_ambulances),
+
+            holder.mTotMezzi.setText(QueryUtils.getText(mContext, R.string.no_of_ambulances,
                     postazione.getTotAmbulance()));
             holder.mAvgWhite.setText(String.format(mContext.getString(R.string.avg_white_per_day),
                     postazione.getTotWhite(), postazione.getAvgWhite()));
@@ -429,6 +434,7 @@ public class PostazioniActivity extends AppCompatActivity {
 //            Toast.makeText(mContext, mContext.getString(R.string.sorting_done),
 //                    Toast.LENGTH_SHORT).show();
         }
+
         // Return the size of your dataset (invoked by the layout manager)
         @Override
         public int getItemCount() {

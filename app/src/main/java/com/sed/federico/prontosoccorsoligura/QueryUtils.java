@@ -17,6 +17,8 @@ package com.sed.federico.prontosoccorsoligura;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.text.Html;
+import android.text.SpannedString;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -544,6 +546,60 @@ public final class QueryUtils {
 
     }
 
+    /**
+     * Function to combine the HTML tag <b>formatting</b> and the PlaceHolder functionality provided
+     * by Android.<br>With this function strings can be formatted using HTML TAGS directly in the
+     * Resource file, even if you plan to use PlaceHolders
+     *
+     * @param context: the Context
+     * @param id:      id of the String you want to use, usually in the format of R.String....
+     * @param args:    comma separated values to be used in place of their placeholders
+     * @return the formatted string, to be used, i.e., with the SetText method
+     */
+    public static CharSequence getText(Context context, int id, Object... args) {
+        for (int i = 0; i < args.length; ++i)
+            args[i] = args[i] instanceof String ? TextUtils.htmlEncode((String) args[i]) : args[i];
+        CharSequence formattedString;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            formattedString = Html.fromHtml(String.format(Html.toHtml(new
+                            SpannedString(context.getText(id)), Html.FROM_HTML_MODE_COMPACT), args),
+                    Html.FROM_HTML_MODE_COMPACT);
+        } else {
+            formattedString = Html.fromHtml(String.format(Html.toHtml(new
+                    SpannedString(context.getText(id))), args));
+        }
+        return trimTrailingWhitespace(formattedString);
+
+    }
+
+    /**
+     * Trims trailing whitespace. Removes any of these characters:
+     * 0009, HORIZONTAL TABULATION
+     * 000A, LINE FEED
+     * 000B, VERTICAL TABULATION
+     * 000C, FORM FEED
+     * 000D, CARRIAGE RETURN
+     * 001C, FILE SEPARATOR
+     * 001D, GROUP SEPARATOR
+     * 001E, RECORD SEPARATOR
+     * 001F, UNIT SEPARATOR
+     *
+     * @return "" if source is null, otherwise string with all trailing whitespace removed
+     */
+    public static CharSequence trimTrailingWhitespace(CharSequence source) {
+
+        if (source == null)
+            return "";
+
+        int i = source.length();
+
+        // loop back to the first non-whitespace character
+        while (--i >= 0 && Character.isWhitespace(source.charAt(i))) {
+        }
+
+        return source.subSequence(0, i + 1);
+    }
+
     public static class callWebApi extends AsyncTask<String, Integer, Long> {
 
         private Exception exception;
@@ -579,7 +635,6 @@ public final class QueryUtils {
                     urlConnection.disconnect();
                     return 1l;
                 }
-
             }
             return 0l;
         }

@@ -195,7 +195,7 @@
     <string name="save">Salva</string>
     <string name="cancel">Annulla</string>
     <string name="tot_mission">Numero totale ospedalizzazioni: %1$d</string>
-    <string name="tot_missions">Ospedalizzazioni: %1$d (%2$.2f al giorno)</string>
+    <string name="tot_missions">Ospedalizzazioni: <b>%1$d</b> (<b>%2$.2f</b> al giorno)</string>
     <string name="avg_mission_per_code">Media ospedalizzazioni per codici d\'urgenza</string>
     <string name="postazioni_disclaimer">Le statistiche sono aggiornate una volta al giorno e si riferisco a dati raccolti a partire dal 14/04/2017.</string>
     <string name="sort_by_red_code">Ordina per media rossi</string>
@@ -238,5 +238,5 @@
     <string name="sort_by_ambulance">Ordina per mezzo</string>
     <string name="sort_by_totals">Ordina per missioni</string>
     <string name="sort_by_name">Ordina per nome</string>
-    <string name="no_of_ambulances">Totale mezzi censiti: %1$d</string>
+    <string name="no_of_ambulances">Totale mezzi censiti: <b>%1$d</b></string>
 </resources>
