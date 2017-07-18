@@ -479,12 +479,11 @@ public class Postazione {
                 mCrossImage = new CrossImage(Color.GREEN);
                 break;
             case "LERCA":
-                if (mName.isEmpty()) mName = "P.A. Croce d'Oro Sciarborasca - Sezione Lerca";
-                if (mName.isEmpty()) mName = "P.A. Croce d'Oro Sciarborasca - Sezione Lerca";
+                if (mName.isEmpty()) mName = "V.P.S. Croce d'Oro Sciarborasca - Sezione Lerca";
                 mCrossImage = new CrossImage(Color.GOLD);
                 break;
             case "SCI":
-                if (mName.isEmpty()) mName = "P.A. Croce d'Oro Sciarborasca";
+                if (mName.isEmpty()) mName = "V.P.S. Croce d'Oro Sciarborasca";
                 mCrossImage = new CrossImage(Color.GOLD);
                 break;
             case "BAV":
