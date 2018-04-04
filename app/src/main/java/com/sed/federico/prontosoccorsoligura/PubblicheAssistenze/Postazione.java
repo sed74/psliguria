@@ -254,6 +254,10 @@ public class Postazione {
                 if (mName.isEmpty()) mName = "P.A. Croce Bianca Genovese";
                 mCrossImage = new CrossImage(Color.WHITE);
                 break;
+            case "CAR":
+                if (mName.isEmpty()) mName = "P.A. CBG - Distaccamento Carignano";
+                mCrossImage = new CrossImage(Color.WHITE);
+                break;
             case "ISO":
                 if (mName.isEmpty()) mName = "P.A. Croce Verde Isoverde";
                 mCrossImage = new CrossImage(Color.GREEN);
