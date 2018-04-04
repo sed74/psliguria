@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pronto Soccorso Ligura</string>
+    <string name="app_name">Pronto Soccorso Liguria</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -335,4 +335,5 @@
     <string name="sort_by_ambulance">Ordina per mezzo</string>
     <string name="sort_by_totals">Ordina per missioni</string>
     <string name="sort_by_name">Ordina per nome</string>
+    <string name="email_address" translatable="false">app.danised@gmail.com</string>
 </resources>
