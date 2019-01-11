@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:667627282809:android:42cd483b5b8190e3",
+        "mobilesdk_app_id": "1:667627282809:android:8314e3abadcec826",
         "android_client_info": {
-          "package_name": "com.sed.federico.prontosoccorsoligura"
+          "package_name": "com.dani.sed.liguriasoccorso"
         }
       },
       "oauth_client": [
@@ -31,6 +31,58 @@
         "appinvite_service": {
           "status": 1,
           "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667627282809:android:42cd483b5b8190e3",
+        "android_client_info": {
+          "package_name": "com.sed.federico.prontosoccorsoligura"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "667627282809-etrkve95lhjt21ilvd16k6v877lut2k9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sed.federico.prontosoccorsoligura",
+            "certificate_hash": "7bb39b04c7e6f9503ca3da6538ed391154e78b4f"
+          }
+        },
+        {
+          "client_id": "667627282809-qha1v547pku5dtgifs1m9e223gbfpgv9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sed.federico.prontosoccorsoligura",
+            "certificate_hash": "ae5d99f38b8485e4497caddafa5cc4395fe2bded"
+          }
+        },
+        {
+          "client_id": "667627282809-doi22l5cis5eq220pnjma9i54t5q3f5g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8q4YU8SKFIVQ9JCOEqJ4mI5WI7l7uNHg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "667627282809-doi22l5cis5eq220pnjma9i54t5q3f5g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
