@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="5dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.sed.federico.prontosoccorsoligura.MainActivity"
+    tools:context="com.dani.sed.liguriasoccorso.MainActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 

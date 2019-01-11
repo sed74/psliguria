@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sed.federico.prontosoccorsoligura">
+    package="com.dani.sed.liguriasoccorso">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".MyApplication"
+        android:name="com.dani.sed.liguriasoccorso.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity
-            android:name=".MainActivity"
+            android:name="com.dani.sed.liguriasoccorso.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -23,64 +24,64 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HospitalActivity">
+        <activity android:name="com.dani.sed.liguriasoccorso.HospitalActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="com.dani.sed.liguriasoccorso.MainActivity" />
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name="com.dani.sed.liguriasoccorso.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName="com.dani.sed.liguriasoccorso.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="com.dani.sed.liguriasoccorso.MainActivity" />
         </activity>
         <activity
-            android:name=".Mission.MissionActivity"
+            android:name="com.dani.sed.liguriasoccorso.Mission.MissionActivity"
             android:label="@string/title_mission_activity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName="com.dani.sed.liguriasoccorso.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="com.dani.sed.liguriasoccorso.MainActivity" />
         </activity>
         <activity
-            android:name=".Mission.MissionDetail"
+            android:name="com.dani.sed.liguriasoccorso.Mission.MissionDetail"
             android:label="@string/title_mission_detail"
-            android:parentActivityName=".Mission.MissionActivity">
+            android:parentActivityName="com.dani.sed.liguriasoccorso.Mission.MissionActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Mission.MissionActivity" />
+                android:value="com.dani.sed.liguriasoccorso.Mission.MissionActivity" />
         </activity>
         <activity
-            android:name=".LegendActivity"
-            android:parentActivityName=".MainActivity">
+            android:name="com.dani.sed.liguriasoccorso.LegendActivity"
+            android:parentActivityName="com.dani.sed.liguriasoccorso.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="com.dani.sed.liguriasoccorso.MainActivity" />
         </activity>
         <activity
-            android:name=".CharlieCodeActivity"
-            android:parentActivityName=".MainActivity">
+            android:name="com.dani.sed.liguriasoccorso.CharlieCodeActivity"
+            android:parentActivityName="com.dani.sed.liguriasoccorso.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="com.dani.sed.liguriasoccorso.MainActivity" />
         </activity>
         <activity
-            android:name=".PubblicheAssistenze.PostazioniActivity"
+            android:name="com.dani.sed.liguriasoccorso.PubblicheAssistenze.PostazioniActivity"
             android:label="@string/title_activity_centrali"
-            android:parentActivityName=".Mission.MissionActivity"
+            android:parentActivityName="com.dani.sed.liguriasoccorso.Mission.MissionActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Mission.MissionActivity" />
+                android:value="com.dani.sed.liguriasoccorso.Mission.MissionActivity" />
         </activity>
         <activity
-            android:name=".AmbulanceDetails.AmbulanceDetailsActivity"
-            android:parentActivityName=".PubblicheAssistenze.PostazioniActivity">
+            android:name="com.dani.sed.liguriasoccorso.AmbulanceDetails.AmbulanceDetailsActivity"
+            android:parentActivityName="com.dani.sed.liguriasoccorso.PubblicheAssistenze.PostazioniActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".PubblicheAssistenze.PostazioniActivity" />
+                android:value="com.dani.sed.liguriasoccorso.PubblicheAssistenze.PostazioniActivity" />
         </activity>
     </application>
 

@@ -11,7 +11,7 @@
     android:elevation="8dp"
     android:focusable="true"
     android:paddingBottom="8dp"
-    tools:context="com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.PostazioniActivity$PlaceholderFragment"
+    tools:context="com.dani.sed.liguriasoccorso.PubblicheAssistenze.PostazioniActivity$PlaceholderFragment"
     tools:layout_editor_absoluteX="8dp"
     tools:layout_editor_absoluteY="89dp">
 

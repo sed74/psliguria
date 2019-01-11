@@ -1,0 +1,750 @@
+---
+swagger: '2.0'
+info:
+  description: "Infoschedule configuration API"
+  version: "0.0.5"
+  title: "MMS Infomobility Configuration Infoschedule API"
+  contact:
+    name: "tbd"
+host: "10.121.204.69:8082"
+basePath: "/mms/InfomobilityConfiguration/api"
+tags:
+- name: "Infoschedule"
+  description: Operations about Infoschedules
+schemes:
+- "http"
+paths:
+  '/api/hospitalization/{nomeDistretto}':
+    get:
+      tags:
+      - "Infoschedule"
+      summary: "Get an OnGroundInfoschedule"
+      description: > 
+        Return the OnGroundInfoschedule.
+        of a Network.
+      operationId: "getOnGroundInfoschedule"
+      produces:
+        - "application/json"
+      parameters:
+      - name: "nomeDistretto"
+        in: "path"
+        description: "Il nome del distretto"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/Missions"
+        400:
+          $ref: '#/responses/400BadRequest'
+        401:
+          $ref: '#/responses/401Unauthorized'
+        403:
+          $ref: '#/responses/403Forbidden'
+        404:
+          $ref: '#/responses/404NotFound'
+        500:
+          $ref: '#/responses/500InternalServerError'
+        503:
+          $ref: '#/responses/503ServiceUnavailable'
+responses:
+  204Deleted:
+    description: The resource was deleted successfully.
+  304NotModified:
+    description: The resource has not been modified.
+    headers:
+      Date:
+        description:
+          "the date and time at which the message was originated. The field value is an HTTP-date; it MUST be sent in RFC 1123 [8]-date format.\n\nExample: 'Date: Tue, 15 Nov 1994 08:12:31 GMT'"
+        type: string
+        format: http-date
+      Last-Modified:
+        description:
+          "Indicates the date and time at which the origin server believes the variant was last modified.\n\nExample: 'Last-Modified: Tue, 15 Nov 1994 12:45:26 GMT'"
+        type: string
+        format: http-date
+      ETag:
+        description: ETag value to identify the current version of the resource.
+        type: string
+  400BadRequest:
+    description: The request was invalid or cannot be otherwise served.
+    schema:
+      $ref: '#/definitions/Errors'
+  401Unauthorized:
+    description: Authentication credentials were missing or incorrect.
+    schema:
+      $ref: '#/definitions/Errors'
+  403Forbidden:
+    description: >-
+      The request is understood, but it has been refused or access is not
+      allowed.
+    schema:
+      $ref: '#/definitions/Errors'
+  404NotFound:
+    description: The URI requested is invalid or the resource requested does not exists.
+    schema:
+      $ref: '#/definitions/Errors'
+  406NotAcceptable:
+    description: >-
+      The resource identified by the request is only capable of generating
+      response entities which have content characteristics not acceptable
+      according to the accept headers sent in the request.
+    schema:
+      $ref: '#/definitions/Errors'
+  500InternalServerError:
+    description: Something is broken.
+    schema:
+      $ref: '#/definitions/Errors'
+  503ServiceUnavailable:
+    description: 'The server is up, but overloaded with requests. Try again later.'
+    schema:
+      $ref: '#/definitions/Errors'
+parameters:
+  publishingStatusTypes:
+    name: publishingStatusTypes
+    in: query
+    required: false
+    description: List of infoschedule publishing status types (i.e. InfoschedulePublishingStatusEnum)
+    type: array
+    items:
+      type: "string"
+      enum:
+        - CREATED
+        - PUBLISHED
+        - DISABLED
+    collectionFormat: csv
+  stopPointIds:
+    name: stopPointIds
+    in: query
+    required: false
+    description: "list of stop point id which the Infoschedule applies"
+    type: array
+    items:
+      type: string
+    collectionFormat: csv
+  transportSituationValidity:
+    name: transportSituationValidity
+    in: query
+    required: false
+    description: List of infoschedule transport situation validity types (i.e. TransportSituationValidityEnum)
+    type: array
+    items:
+      type: "string"
+      enum: 
+        - REGULAR_TRAFFIC
+        - DISRUPTED_TRAFFIC
+  onGroundInfoscheduleId:
+    name: onGroundInfoscheduleId
+    in: path
+    required: true
+    description: Infoschedule unique identifier
+    type: string
+  infoscheduleId:
+    name: infoscheduleId
+    in: path
+    required: true
+    description: Infoschedule unique identifier
+    type: string
+definitions:
+  Postazione:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Id della postazione"
+        example: 1
+      codice:
+        type: string
+        description: "Codice 118 della postazione"
+        example: "BIA"
+      descrizione:
+        type: string
+        description: "Nome esteso della Postazione"
+        example: "Croce Bianca Genovese"
+      citta:
+        type: string
+        description: "Città di appartenenza"
+        example: "Genova"
+      centrale:
+        type: string
+        description: "Centrale di appartenenza"
+        example: "Genova"
+  Mission:
+    type: object
+    properties:
+      postazione:
+        $ref: '#/definitions/Postazione'
+      missione:
+        type: string
+        description: Numero della missione
+        example: "GE2018000000038914"
+      mezzo:
+        type: string
+        description: "Selettiva dell'ambulanza"
+        example: "3652"
+      codice:
+        type: string
+        description: "Codice urgenza"
+        example: "rosso"
+      localita:
+        type: string
+        description: "Località dell'emergenza"
+        example: "San Fruttuoso"
+      sintesi:
+        type: string
+        description: "Luogo, Charlie e codice uscita"
+        example: "PC02G"
+      destinazione:
+        type: string
+        description: "Ospedale di destinazione"
+        example: "1 H SAN MARTINO"
+      asl:
+        type: string
+        description: "ASL"
+        example: "ASL3"
+      centrale:
+        type: string
+        description: "Nome della centrale"
+        example: "Genova"
+    required:
+      - code
+      - message
+  Missions:
+    type: array
+    items:
+      $ref: '#/definitions/Mission'
+  Errors:
+    type: array
+    items:
+      $ref: '#/definitions/Error'
+  InfoscheduleClassEnum: 
+    description: "Enum of Class to be used within deserialization"
+    type: "string"
+    enum: 
+      - Infoschedule
+      - OnGroundInfoschedule
+  Infoschedule:
+    type: object
+    discriminator: infoscheduleClass
+    required:
+      - infoscheduleClass
+    properties:
+      infoscheduleClass:
+        $ref: "#/definitions/InfoscheduleClassEnum"
+      infoscheduleId: 
+        type: "string"
+        description: >
+          String that uniquely identifies the INFOSCHEDULE. The string is formed, for example, by different components (type of schedule, category of Stop Point, Stop Point, Course service/commercial, Identifier of Line/Course/Operator)
+      description:
+        type: "string"
+        description: "Description of INFOSCHEDULE"
+      creatorUserId:
+        type: "string"
+        description: "identifier of author"
+      publishingStatus:
+        type: array
+        items:
+          $ref: "#/definitions/InfoschedulePublishingStatus"
+      creationDateTime:
+        type: "string"
+        format: "date-time"
+        description: "datetime in UTC ISO8601 - infoschedule creation date time"
+      startValidity:
+        type: "string"
+        format: "date-time"
+        description: "datetime in UTC ISO8601 - infoschedule validity start date time"
+      endValidity:
+        type: "string"
+        format: "date-time"
+        description: "datetime in UTC ISO8601 - Date and time of expiration of INFOSCHEDULE"
+      deploymentStatusId:
+        type: "string"
+        description: "Status of broadcasting to the channel management services on board and on ground"
+      infoscheduleType:
+        $ref: "#/definitions/InfoscheduleTypeEnum"
+      version:
+        type: "string"
+        description: "Entity version"
+      name:
+        type: "string"
+        description: "Name of INFOSCHEDULE"
+      transportSituationValidityEvents:
+        type: array
+        items:
+          $ref: "#/definitions/TransportSituationValidityEvents"
+  OnGroundInfoscheduleList:
+    type: array
+    items:
+      $ref: '#/definitions/OnGroundInfoschedule'
+  OnGroundInfoschedule:
+    description: "INFOSCHEDULE with a context applied to one or more STOP POINTs"
+    type: object
+    allOf:
+      - $ref: "#/definitions/Infoschedule"
+      - type: "object"
+        properties:
+          stopPointIdList:
+            description: "list of stop point ID which OnGroundInfoschedule applies"
+            type: array
+            items:
+              type: "string"
+  InfoschedulePublishingStatus:
+    description: "List of INFOSCHEDULE publishing status"
+    type: "object"
+    properties:
+      dateTime:
+        type: "string"
+        format: "date-time"
+        description: "Date and hour when the status is applied"
+      status:
+        $ref: "#/definitions/InfoschedulePublishingStatusEnum"
+  InfoschedulePublishingStatusEnum: 
+    description: "status of the infoschedule (Inserted, Modified, Approved, Disabled)"
+    type: "string"
+    enum: 
+      - CREATED
+      - PUBLISHED
+      - DISABLED
+  TransportSituationValidityEvents:
+    type: object
+    required:
+      - transportSituationValidity
+      - eventList
+    description: >
+      Tuple associating TransportSituationValidity with its event list <K,V> 
+        (i.e. <TransportSituationValidityEnum,[InfoscheduleEvent]>)
+    properties:
+      transportSituationValidity:
+        $ref: "#/definitions/TransportSituationValidityEnum"
+      eventList:
+        type: "array"
+        items:
+          $ref: "#/definitions/InfoscheduleEvent"
+  TransportSituationValidityEnum: 
+    type: "string"
+    description: >
+      Circulation scenario to which the INFOSCHEDULE is associated (eg Disrupted Circulation). 
+        It is the operating room to determine the current scenario, which, once made active, determines the partitions that are part of it
+    enum: 
+      - REGULAR_TRAFFIC
+      - DISRUPTED_TRAFFIC
+  InfoscheduleTypeEnum: 
+    description: "Type of schedule on ground or on board"
+    type: "string"
+    enum: 
+      - ONGROUND
+      - ONBOARD
+  InfoscheduleEventClassEnum: 
+    description: "Enum of Class to be used within deserialization"
+    type: "string"
+    enum: 
+      - InfoscheduleEvent
+      - InfomobilityEvent
+      - ServiceEvent
+  InfoscheduleEvent:
+    description: >
+        Entity describing eventsthat can be associated with delivery actions within a schedule. events are generated by applying rules on the state of the traffic (eg a vehicle's position), or generated by messages sent from the operating room . Events have priority for which their Playlist can be suspended to play another one associated with an event with greater priority. Higher priority events are not interrupted
+    type: object
+    discriminator: infoscheduleEventClass
+    required:
+      - infoscheduleEventClass
+    properties:
+      eventId: 
+        type: "string"
+        description: "Identifier of EVENT"
+      infoscheduleEventClass:
+        $ref: "#/definitions/InfoscheduleEventClassEnum"
+      description: 
+        type: "string"
+        description: "Description of EVENT"
+      name:
+        type: "string"
+        description: "Name of EVENT"
+      priority:
+        type: "string"
+        description: "Prioriry of an event. An event cannot be interrupted by events with lower priority"
+      playlists:
+        description: "array of PLAYLIST associated to the event"
+        type: array
+        items:
+          $ref: "#/definitions/Playlist"
+      eventCategory:
+        $ref: "#/definitions/EventCategory"
+  EventCategory:
+    description: "Enum for specialized type of InfoscheduleEvent"
+    type: "string"
+    enum:
+      - INFOMOBILITY
+      - ONGROUND
+      - ONBOARD
+  InfomobilityEvent:
+    description: > 
+      EVENT generated due to backoffice activity
+    type: "object"
+    allOf:
+      - $ref: "#/definitions/InfoscheduleEvent"
+      - type: "object"
+        properties:
+          eventType:
+            $ref: "#/definitions/InfomobilityEventType"
+  InfomobilityEventType:
+    description: "Enumerator for all Infomobility event types"
+    type: "string"
+    enum: 
+      - CR_UNPLANNED_MESSAGE
+      - INFOSCHEDULE_STARTUP
+  ServiceEvent:
+    description: > 
+      EVENT generated during the running (eg change of track, composition, suppression). Whenan OnGround schedule is applied to a STOP POINT then EVENT is associated with all courses; When an onBoard schedule is applied, the EVENT is associated with the single course.
+    type: "object"
+    allOf:
+      - $ref: "#/definitions/InfoscheduleEvent"
+      - type: "object"
+        properties:
+          eventType:
+            $ref: "#/definitions/ServiceEventType"
+  ServiceEventType:
+    description: "Enumerator for all Infoschedule Service Event types"
+    type: "string"
+    enum:
+      - ARRIVING
+      - ARRIVED
+      - ARRIVING_LATE
+      - DEPARTING
+      - DEPARTED
+      - DEPARTING_LATE
+      - DEPARTING_PLATFORM_CONFIRMED
+      - ARRIVING_PLATFORM_CONFIRMED
+      - SUPPRESSED
+      - JOURNEY_MODIFIED
+      - STOPPED_ONROUTE
+  Playlist:
+    description: >
+      A PLAYLIST is a sequence of audio or video actions executed orderly on a TOUCHPOINT when an event is triggerd. There is a PLAYLIST library that can be used when defining a INFOSCHEDULE.
+    properties:
+      actions:
+        description: "Assigned Actions to PLAYLIST"
+        type: array
+        items:
+          $ref: "#/definitions/Action"
+      alwaysOn:
+        type: "boolean"
+        description: "If true then it is repeated infinite times. If false then it is executed a number of times equal to NumberOfTimes"
+      description:
+        type: "string"
+        description: "Description of PLAYLIST"
+      endValidity:
+        type: "string"
+        format: "date-time"
+        description: "datetime in UTC ISO8601 - Ending of the validity, date and time  "
+      eventId:
+        type: "string"
+        description: "Event associated to PLAYLIST"
+      infoscheduleId:
+        type: "string"
+        description: "Schedule where the PLAYLIST is used. If it is not valorized then it is part of a library"
+      numberOfTimes:
+        type: "integer"
+        description: "Number of times that the list of actions must be repeated"
+      playlistId:
+        type: "string"
+        description: "Identifier of PLAYLIST"
+      playlistName:
+        type: "string"
+        description: "Name of the PLAYLIST"
+      startValidity:
+        type: "string"
+        format: "date-time"
+        description: "datetime in UTC ISO8601 - Beginning of the validity, date and time"  
+      touchpointId:
+        type: "string"
+        description: "Identifier of the TOUCHPOINT associated to a PLAYLIST"
+  Action:
+    description: >
+      Through an ACTION, we define the sequence of audio and video contents to be delivered (ACTIVITY). Each content is delivered only if at the time of its delivery the condition (PLAYBACK CONDITION) is still true (for example for an incoming train, through an action you define the sequence of messages to say in different languages)
+    type: "object"
+    properties:
+      playlistId:
+        type: "string"
+        description: "Playlist of INFORMATION ACTION"
+      actionId:
+        type: "string"
+        description: "Identifier of INFORMATION ACTION"
+      description:
+        type: "string"
+        description: "Description of INFORMATION ACTION"
+      name:
+        type: "string"
+        description: "name of INFORMATION ACTION"
+      catalogId:
+        type: "string"
+        description: "id of action catalog"
+      type:
+        $ref: "#/definitions/ActionTypeEnum"
+      activities:
+        type: array
+        items:
+          $ref: "#/definitions/Activity"
+  ActionTypeEnum:
+    description: "Content Type to be Delivered (Audio Text, Digital Audio, Video Movie, Video Image)"
+    type: "string"
+    enum:
+      - AUDIO_TEXT
+      - DIGITAL_AUDIO
+      - VIDEO_MOVIE
+      - VIDEO_IMAGE
+  ActivityClassEnum: 
+    description: "Enum of Class to be used within deserialization"
+    type: "string"
+    enum: 
+      - Activity
+      - AudioActivity
+      - VisualActivity
+  Activity:
+    description: >
+        An ACTIVITY is a triad of the content type, PLAYBACK CONDITION, PLAYBACK RULE. An ACTION is made from a set of ACTIVITY. The playback condition associated with the Action is evaluated when the content is to be delivered
+    type: "object"
+    discriminator: activityClass
+    required:
+      - activityClass
+    properties:
+      activityClass:
+        $ref: "#/definitions/ActivityClassEnum"
+      activityId:
+        type: "string"
+        description: "Identifier of the activity"
+      name:
+        type: "string"
+        description: "name"
+      description:
+        type: "string"
+        description: "description of ACTIVITY"
+      playbackCondition: 
+        $ref: "#/definitions/PlaybackCondition"
+      activityType:
+        $ref: "#/definitions/ActivityTypeEnum"
+  ActivityTypeEnum:
+    description: "Enum for specialized type of Activity"
+    type: "string"
+    enum:
+      - AUDIO_ACTIVITY
+      - VISUAL_ACTIVITY
+  AudioActivity:
+    description: "An AUDIO ACTIVITY is identified by a content audio and a diffusion rule that will be part of an ACTION"
+    type: "object"
+    allOf: 
+      - $ref: "#/definitions/Activity"
+      - type: "object"
+        properties:
+          audioContents:
+            type: array
+            items:
+              $ref: "#/definitions/AudioContent"
+  ContentClassEnum: 
+    description: "Enum of Class to be used within deserialization"
+    type: "string"
+    enum: 
+      - Content
+      - AudioContent
+      - VisualContent
+  Content:
+    description: >
+      Audio content (digital or textual) and video (image, video, external web page, internet information pages) reproducible on different types of devices
+    type: "object"
+    discriminator: contentClass
+    required:
+      - contentClass
+    properties:
+      contentClass:
+        $ref: "#/definitions/ContentClassEnum"
+      contentId:
+        type: "string"
+        description: "unique identifier of CONTENT"
+      name:
+        type: "string"
+        description: "name of CONTENT"
+      description:
+        type: "string"
+        description: "description of CONTENT"
+      contentType:
+        $ref: "#/definitions/ContentTypeEnum"
+      playbackRule:
+        $ref: "#/definitions/PlaybackRule"
+  ContentTypeEnum:
+    description: "Enum for specialized type of Content"
+    type: "string"
+    enum:
+      - AUDIO
+      - VIDEO
+  AudioContent:
+    description: >
+      An audio content is a group of contents in different languages.Each content is an ordered sequence of audio token that compose the message, both digital audio or text. 
+    type: "object"
+    allOf: 
+      - $ref: "#/definitions/Content"
+      - type: "object"
+        properties:
+          language:
+            $ref: "#/definitions/ContentLanguageEnum"
+          tokenSequenceNumberID:
+            type: "string"
+            description: "identifier of the token sequence"
+          playbackRule:
+            $ref: "#/definitions/AudioPlaybackRule"
+  ContentLanguageEnum:
+    description: "Enum for ContentLanguage"
+    type: "string"
+    enum:
+      - ITA
+      - ENG
+      - DEU
+      - ESP
+  VisualActivity:
+    description: "A VIDEO ACTIVITY is identified by a video and a diffusion rule that will be part of an ACTION"
+    type: "object"
+    allOf: 
+      - $ref: "#/definitions/Activity"
+      - type: "object"
+        properties:
+          visualizationContentSequence:
+            type: "string"
+            description: "Sequenza ordinata delle visualizzazioni"
+          visualContents:
+            type: array
+            items:
+              $ref: "#/definitions/VisualContent"
+  VisualContent:
+    description: >
+      A visual content can be an image, a video, an internet web source or an internal page implemented in MOP. that can be displayed in a template
+    type: "object"
+    allOf: 
+      - $ref: "#/definitions/Content"
+      - type: "object"
+        properties:
+          imageDescription:
+            type: "string"
+            description: "Image that describes the type of content"
+          playbackRule:
+              $ref: "#/definitions/VisualPlaybackRule"
+  PlaybackCondition:
+    description: "A playback condition determines whether or not to deliver a single content (action)."
+    type: "object"
+    properties:
+      playbackConditionId:
+        type: "string"
+        description: "Identifier of the enitity"
+      description:
+        type: "string"
+        description: "Description of PlaybackCondition"
+      longTimeStop:
+        type: "boolean"
+        description: "Performs action if stop time is long (duration configured by configuration)"
+      shortTimeStop:
+        type: "boolean"
+        description: "Performs action if the stop time is short (durationdefined by configuration)"
+      depLateForecastTime:
+        type: "string"
+        description: "Period of time between when forecast information was received and departure from timetable"
+      arrLateForecastTime:
+        type: "string"
+        description: "Distance between when forecast information was received and arrival from timetable"
+      precArrivalAnn:
+        type: "boolean"
+        description: "An announcement played only if it has not been announced before an arrival announcement for the same journey"
+      precDelayedDepAnn :
+        type: "boolean"
+        description: "Announcement delivered only if the same journey has not been previously issued with a late departure"
+      precDepartureAnn:
+        type: "boolean"
+        description: "An announcement played only if it has not been announced before in the stoppoint a departure announcement for the same journey"
+      precPlatformModAnn:
+        type: "boolean"
+        description: "Announcement executed if the previously modified stop point (eg track) has not been announced yet"
+      poiId:
+        type: "string"
+        description: "Message is only performed if the vehicle is within a specific POI"
+      stopPointId:
+        type: "string"
+        description: "Condition linked to STOP POINT CATEGORY"
+      serviceCategoryId:
+        type: "string"
+        description: "Condition linked to a transport service category"
+      name:
+        type: "string"
+        description: "Name"
+      greaterEqualLateLimit :
+        type: "integer"
+        description: "The late limit over wich the message is delivered"
+  PlaybackRuleClassEnum: 
+    description: "Enum of Class to be used within deserialization"
+    type: "string"
+    enum: 
+      - PlaybackRule
+      - AudioPlaybackRule
+      - VisualPlaybackRule
+  PlaybackRule:
+    description: "Rule of diffusion of a content"
+    type: "object"
+    discriminator: playbackRuleClass
+    required:
+      - playbackRuleClass
+    properties:
+      playbackRuleClass:
+        $ref: "#/definitions/PlaybackRuleClassEnum"
+      dat: 
+        type: "integer"
+        description: "Delayed arrival time. Delivery time in seconds compared to the arrival delay. It can be negative or positive"
+      ddt:
+        type: "integer"
+        description: "Delayed Departure Time. Displacement time in seconds with respect to the starting delay. It can be negative or positive"  
+      description:
+        type: "string"
+        description: "Description of PLAYBACK RULE"
+      endDateTime:
+        type: "string"
+        format: "date-time"
+        description: > 
+          datetime in UTC ISO8601 - Time of delivery of the message. You can use it only combined with StartDateTime and NumOfTimes yes to establish a period within which to deliver the ad a specific number of times  
+      frequencyTime:
+        type: "integer"
+        description: "Frequency in seconds of the ripetitions between StartDateTime e EndDateTime"  
+      numberOfTime:
+        type: "integer"
+        description: "Number of repetitions"
+      playbackRuleId: 
+        type: "string"
+        description: "Identifier of PLAYBACK RULE"  
+      sat:
+        type: "integer"
+        description: "Scheduled Arrival Time. Delivery time in seconds compared to the scheduled time of arrival. It can be negative or positive"
+      sdt: 
+        type: "integer"
+        description: "Scheduled Departure Time. Displacement time in seconds with respect to the scheduled time of departure. It can be negative or positive"  
+      startDateTime:
+        type: "string"
+        format: "date-time"
+        description: > 
+          datetime in UTC ISO8601 - Time of delivery of the message. Combined with EnddateTime and NumOfTimes you can set a period within which to deliver the ad a specific number of times. Alone can be used to indicate a specific delivery time.  
+      waitingTime:
+        type: "integer"
+        description: "Delay delivery in seconds from the end of previous message"
+      playbackRuleType:
+        $ref: "#/definitions/PlaybackRuleTypeEnum"
+  AudioPlaybackRule:
+    description: "Specific broadcast rules for audio messages" 
+    type: "object"
+    allOf:
+      - $ref: "#/definitions/PlaybackRule"
+  VisualPlaybackRule:
+    description: "Regole di diffusione specifiche per i messaggi visivi" 
+    type: "object"
+    allOf:
+      - $ref: "#/definitions/PlaybackRule"
+  PlaybackRuleTypeEnum:
+    description: "Enum for specialized type of PlaybackRule"
+    type: "string"
+    enum:
+      - AUDIO_PLAYBACK_RULE
+      - VISUAL_PLAYBACK_RULE
+      	
