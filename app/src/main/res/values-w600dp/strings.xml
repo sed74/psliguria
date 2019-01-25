@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="no_of_ambulances" translatable="false">%1$d</string>
+    <string name="tot_missions" translatable="false">%1$d (%2$.2f)</string>
+    <string name="mission_no">Missione:</string>
+    <string name="pickup_location">Luogo:</string>
+    <string name="charlie_code">Charlie:</string>
+    <string name="india_code">Codice uscita:</string>
+    <string name="destination_hospital">Ospedale:</string>
+
+</resources>
