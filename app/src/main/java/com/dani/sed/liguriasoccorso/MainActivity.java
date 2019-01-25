@@ -207,8 +207,20 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        setVersionNo(navigationView);
         showWhatsNew();
     }
+
+    /**
+     * Writes the app version No on the App Drawer
+     * @param navigationView
+     */
+    private void setVersionNo(NavigationView navigationView) {
+        View header = navigationView.getHeaderView(0);
+        TextView mNameTextView = (TextView) header.findViewById(R.id.version_no);
+        mNameTextView.setText("ver. " + BuildConfig.VERSION_NAME);
+    }
+
 
     private void showWhatsNew() {
         final SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
