@@ -209,12 +209,10 @@
     <string name="di_cui">di cui (media)</string>
     <string name="missions_stats">Totale ospedalizzazioni (media giornaliera)</string>
     <string name="whats_new_title">Novità</string>
-    <string name="whats_new">PUBBLICHE ASSISTENZE\n
-        "* Aggiunta la possibilità di ordinare per numero di interventi per ogni codice.\n"
-        "* Cliccando su una Pubblica Assistenza si apre il dettaglio di tutti i suoi mezzi che hanno"
-        " lavorato con i numeri di ospedalizzazioni suddivise per codice di urgenza.\n\n"
-        "AMBULANZE\n"
-        "* Aggiunti i dettagli per ogni mezzo che abbia fatto almeno un'urgenza."
+    <string name="whats_new">NUOVA VITA\n
+        "* L'app è tornata con nuovo nome ma stesse funzionalità.\n"
+        "* Supporto per Android 9.\n"
+        "* Modificate alcune etichette per la versione Tablet."
         </string>
     <string name="dont_show">Non mostrare più</string>
     <string name="close">Chiudi</string>

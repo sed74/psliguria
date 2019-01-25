@@ -7,8 +7,8 @@ android {
         applicationId "com.dani.sed.liguriasoccorso"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 4
-        versionName "1.01.02"
+        versionCode 6
+        versionName "1.01.04"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -24,6 +24,7 @@ allprojects {
 dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.google.firebase:firebase-firestore:17.1.5'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -44,7 +45,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-appinvite:16.0.7'
     implementation 'com.google.firebase:firebase-database:16.0.5'
     implementation 'com.google.firebase:firebase-core:16.0.6'
-    implementation 'com.google.firebase:firebase-perf:16.2.2'
+    implementation 'com.google.firebase:firebase-perf:16.2.3'
     implementation 'com.google.firebase:firebase-crash:16.2.1'
     testImplementation 'junit:junit:4.12'
 }

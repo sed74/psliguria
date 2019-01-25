@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "667627282809-tre98leanoev7tblq2lkj670g322ud4l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dani.sed.liguriasoccorso",
+            "certificate_hash": "17a11bcd1ef0da3bb1cc7a02099a3039b2df3dfc"
+          }
+        },
+        {
+          "client_id": "667627282809-2vrk6bggnqjj29q4asb7br29gfd33534.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dani.sed.liguriasoccorso",
+            "certificate_hash": "e843193a7584ad6ebaf53b6c713062458e516963"
+          }
+        },
+        {
           "client_id": "667627282809-doi22l5cis5eq220pnjma9i54t5q3f5g.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +45,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "667627282809-doi22l5cis5eq220pnjma9i54t5q3f5g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

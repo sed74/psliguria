@@ -12,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,6 +22,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,10 +31,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.dani.sed.liguriasoccorso.FragmentMission.MissionFragment;
 import com.dani.sed.liguriasoccorso.FragmentMission.dummy.DummyContent;
 import com.dani.sed.liguriasoccorso.Mission.MissionActivity;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, LoaderCallbacks<HospitalListCustom>,
@@ -54,9 +62,6 @@ public class MainActivity extends AppCompatActivity
     private static final int HOSPITAL_LOADER_ID = 1;
     private static final String TAG = MainActivity.class.getClass().getName();
     SwipeRefreshLayout mSwipeRefreshLayout;
-    /**
-     * Adapter for the list of earthquakes
-     */
 
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -65,6 +70,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -111,6 +118,22 @@ public class MainActivity extends AppCompatActivity
 //        };
 //
 //        handler.postDelayed(r, 10);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("postazioni")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
 
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
@@ -207,7 +230,18 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        setVersionNo(navigationView);
         showWhatsNew();
+    }
+
+    /**
+     * Writes the app version No on the App Drawer
+     * @param navigationView
+     */
+    private void setVersionNo(NavigationView navigationView) {
+        View header = navigationView.getHeaderView(0);
+        TextView mNameTextView = (TextView) header.findViewById(R.id.version_no);
+        mNameTextView.setText("ver. " + BuildConfig.VERSION_NAME);
     }
 
     private void showWhatsNew() {
