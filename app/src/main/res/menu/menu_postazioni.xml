@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.sed.federico.prontosoccorsoligura.PubblicheAssistenze.PostazioniActivity">
+    tools:context="com.dani.sed.liguriasoccorso.PubblicheAssistenze.PostazioniActivity">
     <item
         android:id="@+id/action_sort"
         android:checkable="false"

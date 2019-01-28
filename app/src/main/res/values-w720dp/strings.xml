@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<resources>
-    <string name="no_of_ambulances" translatable="false">%1$d</string>
-    <string name="tot_missions" translatable="false">%1$d (%2$.2f)</string>
-
-</resources>
