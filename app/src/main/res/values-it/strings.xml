@@ -240,4 +240,6 @@
     <string name="sort_by_name">Ordina per nome</string>
     <string name="no_of_ambulances">Totale mezzi censiti: <b>%1$d</b></string>
     <string name="please_wait">Attendere prego...</string>
+    <string name="info">Informazioni:</string>
+    <string name="version_no">Ver:</string>
 </resources>

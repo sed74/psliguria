@@ -29,6 +29,9 @@ app/.idea
 .idea/
 *.iml
 
+
+app/ProntoSoccorsoLiguria_release/*
+
 # OS-specific files
 .DS_Store
 .DS_Store?

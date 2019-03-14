@@ -49,6 +49,12 @@
                 android:title="@string/charlie_code_legend" />
         </menu>
     </item>
+    <group >
+            <item
+                android:id="@+id/version_info"
+                android:icon="@drawable/ic_information_black_24dp"
+                android:title="@string/emergency_code_legend" />
+    </group>
     <group
         android:id="@+id/menu_about"
         android:checkableBehavior="none">

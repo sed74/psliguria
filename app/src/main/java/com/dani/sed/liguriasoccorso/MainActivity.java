@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        setVersionNo(navigationView.getMenu());
 
         TextView text = (TextView) findViewById(R.id.textView);
 
@@ -247,6 +248,17 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+    private void setVersionNo(Menu menu ) {
+
+        // find MenuItem you want to change
+        MenuItem versionItem = menu.findItem(R.id.version_info);
+
+        // set new title to the MenuItem
+        StringBuilder sb = new StringBuilder();
+        sb.append(getString(R.string.version_no)).append(" ").append(BuildConfig.VERSION_NAME);
+        versionItem.setTitle(sb.toString());
+    }
+
 
     @Override
     public void onBackPressed() {
