@@ -29,7 +29,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.dani.sed.liguriasoccorso.FragmentMission.MissionFragment;
 import com.dani.sed.liguriasoccorso.FragmentMission.dummy.DummyContent;
 import com.dani.sed.liguriasoccorso.Mission.MissionActivity;
@@ -57,8 +56,6 @@ public class MainActivity extends AppCompatActivity
     /**
      * Adapter for the list of earthquakes
      */
-
-    private FirebaseAnalytics mFirebaseAnalytics;
 
     private HospitalAdapter mAdapter;
 
@@ -111,10 +108,6 @@ public class MainActivity extends AppCompatActivity
 //        };
 //
 //        handler.postDelayed(r, 10);
-
-        // Obtain the FirebaseAnalytics instance.
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-
 
         // Find a reference to the {@link ListView} in the layout
         ListView hospitalListView = (ListView) findViewById(R.id.list);
@@ -189,12 +182,6 @@ public class MainActivity extends AppCompatActivity
 
                 Hospital localHospital = mAdapter.getItem(position);
                 hospitalIntent.putExtra(EXTRA_HOSPITAL_POSITION, position);
-
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "PS Details");
-                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, localHospital.getName());
-
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                 startActivity(hospitalIntent);
             }
@@ -316,28 +303,22 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "ActivityOpenedFromDrawer");
         item.setChecked(true);
         if (id == R.id.ps_activity) {
             // Handle the camera action
         } else if (id == R.id.nav_invite) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Invite");
             Intent settingsActivity = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(settingsActivity);
         } else if (id == R.id.nav_settings) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Settings");
             Intent settingsActivity = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(settingsActivity);
         } else if (id == R.id.nav_charlie_code_legend) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Charlie");
             Intent settingsActivity = new Intent(MainActivity.this, CharlieCodeActivity.class);
             startActivity(settingsActivity);
         } else if (id == R.id.nav_emergency_code_legend) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "CodeLegend");
             Intent settingsActivity = new Intent(MainActivity.this, LegendActivity.class);
             startActivity(settingsActivity);
         } else if (id == R.id.nav_centrali) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "PubblicheAssistenze");
             new AsyncString(MainActivity.this).execute(URL_CENTRALI);
         } else if (id == R.id.nav_about) {
 
@@ -379,11 +360,8 @@ public class MainActivity extends AppCompatActivity
             ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
                     0, view.getWidth(), view.getHeight());
             startActivity(missionIntent, options.toBundle());
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID,
-                    "Mission:" + missionIntent.getStringExtra(EXTRA_CENTRALE_NAME));
         }
 //                bundle.putString(FirebaseAnalytics.Param.ORIGIN, "MainActivity");
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

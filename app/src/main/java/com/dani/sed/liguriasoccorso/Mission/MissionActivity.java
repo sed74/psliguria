@@ -18,7 +18,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.dani.sed.liguriasoccorso.AsyncDownloader;
 import com.dani.sed.liguriasoccorso.MainActivity;
 import com.dani.sed.liguriasoccorso.QueryUtils;
@@ -52,8 +51,6 @@ public class MissionActivity extends AppCompatActivity
     private String mActualURL;
     private String mCentraleName;
 
-    private FirebaseAnalytics mFirebaseAnalytics;
-
     public static MissionListCustom getHospitals() {
         return mMissions;
     }
@@ -65,8 +62,6 @@ public class MissionActivity extends AppCompatActivity
 
         // Find a reference to the {@link ListView} in the layout
         final ListView missionListView = (ListView) findViewById(R.id.list);
-
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         Bundle bundle = savedInstanceState != null ? savedInstanceState : getIntent().getExtras();
         mCentraleName = bundle.getString(MainActivity.EXTRA_CENTRALE_NAME);
@@ -132,16 +127,6 @@ public class MissionActivity extends AppCompatActivity
                     }
                     setVisibility(view, !isSelected);
                 }
-                Bundle bundle = new Bundle();
-//                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
-                bundle.putString(FirebaseAnalytics.Param.ITEM_ID,
-                        mMissions.get(position).getPubblicaAssistenza());
-                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "MissionDetail:" +
-                        mMissions.get(position).getCentrale());
-                bundle.putString(QueryUtils.FBASE_AMBULANCE_NO,
-                        mMissions.get(position).getAmbulanceNo());
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
             }
         });
 
@@ -280,11 +265,6 @@ public class MissionActivity extends AppCompatActivity
         mProgressDialog.setMessage(getString(R.string.looking_for_drago));
         mProgressDialog.setCancelable(false);
         mProgressDialog.show();
-
-        Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, MissionActivity.class.getName());
-        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Look 4 Drago");
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
         new AsyncDownloader(getBaseContext(), this).execute(MISSION_REQUEST_BASE_URL + "Genova",
                 MISSION_REQUEST_BASE_URL + "Savona", MISSION_REQUEST_BASE_URL + "LaSpezia",

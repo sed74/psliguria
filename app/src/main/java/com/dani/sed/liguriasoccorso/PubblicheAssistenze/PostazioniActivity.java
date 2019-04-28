@@ -26,7 +26,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.dani.sed.liguriasoccorso.AmbulanceDetails.AmbulanceDetailsActivity;
 import com.dani.sed.liguriasoccorso.PostazioneListCustom;
 import com.dani.sed.liguriasoccorso.QueryUtils;
@@ -63,16 +62,12 @@ public class PostazioniActivity extends AppCompatActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private FirebaseAnalytics mFirebaseAnalytics;
     private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_centrali);
-
-        // Obtain the FirebaseAnalytics instance.
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         mCachePostazioni = new SparseArray<>();
 
@@ -98,27 +93,6 @@ public class PostazioniActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
-
-            }
-
-            @Override
-            public void onPageSelected(int i) {
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "PostazioneActivity");
-                bundle.putString(FirebaseAnalytics.Param.ITEM_ID,
-                        mSectionsPagerAdapter.getPageTitle(i).toString());
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
-        });
 
     }
 
