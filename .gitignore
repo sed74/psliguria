@@ -50,5 +50,6 @@ Thumbs.db
 /build
 /captures
 .externalNativeBuild
-/app/src/main/java/com/sed/federico/prontosoccorsoligura/SecurityToken.java
+SecurityToken.java
+google-services.json
 
