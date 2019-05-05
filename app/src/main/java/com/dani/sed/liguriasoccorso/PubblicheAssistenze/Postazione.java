@@ -518,6 +518,18 @@ public class Postazione {
                 if (mName.isEmpty()) mName = "P.A. Croce Bianca San Desiderio";
                 mCrossImage = new CrossImage(Color.WHITE);
                 break;
+            case "CRISOL":
+                if (mName.isEmpty()) mName = "Croce Rossa Isola del Cantone";
+                mCrossImage = new CrossImage(Color.RED);
+                break;
+            case "TRAPIA":
+                if (mName.isEmpty()) mName = "Trapianti";
+                mCrossImage = new CrossImage(getDefaultCrossColor(mCode));
+                break;
+            case "CRSAVI":
+                if (mName.isEmpty()) mName = "Croce Rossa Savignone";
+                mCrossImage = new CrossImage(Color.RED);
+                break;
             default:
                 if (mName.isEmpty()) mName = mCode;
                 mCrossImage = new CrossImage(getDefaultCrossColor(mCode));
