@@ -49,6 +49,15 @@
                 android:title="@string/charlie_code_legend" />
         </menu>
     </item>
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings_white_24dp"
+            android:title="@string/settings"
+            android:visible="true" />
+    </group>
     <group >
             <item
                 android:id="@+id/version_info"
@@ -62,15 +71,6 @@
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_information_black_24dp"
             android:title="@string/about"
-            android:visible="false" />
-    </group>
-    <group
-        android:id="@+id/menu_bottom"
-        android:checkableBehavior="none">
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_settings_white_24dp"
-            android:title="@string/settings"
             android:visible="false" />
     </group>
     <group

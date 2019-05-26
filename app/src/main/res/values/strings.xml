@@ -335,4 +335,27 @@
     <string name="please_wait">Attendere prego...</string>
     <string name="info">Informazioni:</string>
     <string name="version_no">Ver:</string>
+    <string name="pref_custom_startup_summary">Permette che l\'app si apra su una pagina personalizzata, invece che su quella di default.</string>
+    <string name="pref_custom_startup_title">Avvio personalizzato</string>
+    <string name="activity_list_pref_title">Pagina di avvio</string>
+
+    <string-array name="activity_list">
+        <item>Accessi PS</item>
+        <item>Ospedalizzazioni Genova</item>
+        <item>Ospedalizzazioni Imperia</item>
+        <item>Ospedalizzazioni La Spezia</item>
+        <item>Ospedalizzazioni Lavagna</item>
+        <item>Ospedalizzazioni Savona</item>
+        <item>Statistiche Postazioni</item>
+    </string-array>
+
+    <string-array name="activity_list_values">
+        <item>ps</item>
+        <item>genova</item>
+        <item>imperia</item>
+        <item>spezia</item>
+        <item>lavagna</item>
+        <item>savona</item>
+        <item>postazioni</item>
+    </string-array>
 </resources>

@@ -8,5 +8,7 @@
     <string name="charlie_code">Charlie:</string>
     <string name="india_code">Codice uscita:</string>
     <string name="destination_hospital">Ospedale:</string>
+    <string name="pref_custom_startup_summary">Permette che l\'app si apra su una pagina personalizzata, invece che su quella di default.</string>
+    <string name="pref_custom_startup_title">Avvio personalizzato</string>
 
 </resources>
