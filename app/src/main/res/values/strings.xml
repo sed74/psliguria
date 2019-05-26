@@ -335,4 +335,6 @@
     <string name="please_wait">Attendere prego...</string>
     <string name="info">Informazioni:</string>
     <string name="version_no">Ver:</string>
+    <string name="channel_name">Liguria Soccorso</string>
+    <string name="channel_description">Liguria Soccorso</string>
 </resources>
