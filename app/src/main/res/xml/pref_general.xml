@@ -11,8 +11,7 @@
         android:entries="@array/activity_list"
         android:entryValues="@array/activity_list_values"
         android:key="list_preference_1"
-        android:summary="%s"
-        android:title="@string/activity_list_pref_title" />
+        android:summary="%s" />
 
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity mCode. -->

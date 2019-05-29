@@ -7,8 +7,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.activity.OnBackPressedCallback;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +22,6 @@ import android.widget.Toast;
 
 import com.dani.sed.liguriasoccorso.AsyncDownloader;
 import com.dani.sed.liguriasoccorso.MainActivity;
-import com.dani.sed.liguriasoccorso.QueryUtils;
 import com.dani.sed.liguriasoccorso.R;
 
 import java.util.Collections;
@@ -93,7 +94,6 @@ public class MissionActivity extends AppCompatActivity
         if (networkInfo != null && networkInfo.isConnected()) {
             // Get a reference to the LoaderManager, in order to interact with loaders.
             android.app.LoaderManager loaderManager = getLoaderManager();
-
 
             // Initialize the loader. Pass in the int ID constant defined above and pass in null for
             // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid

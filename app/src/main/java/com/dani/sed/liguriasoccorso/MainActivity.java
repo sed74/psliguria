@@ -12,15 +12,18 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.preference.PreferenceManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity
      */
 
     private HospitalAdapter mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,6 +200,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         showWhatsNew();
+        customStartup();
     }
 
     private void showWhatsNew() {
@@ -296,6 +301,46 @@ public class MainActivity extends AppCompatActivity
         getLoaderManager().restartLoader(HOSPITAL_LOADER_ID, null, MainActivity.this);
 
     }
+    private void customStartup() {
+        if (!((StartUp) this.getApplication()).getFirstRun())
+            return;
+        ((StartUp) this.getApplication()).setFirstRun(false);
+
+            SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(this /* Activity context */);
+        Boolean isCustom = sharedPreferences.getBoolean("custom_startup", false);
+
+        if(isCustom) {
+            String startupActivity = sharedPreferences.getString("startup_list", null);
+            if (startupActivity != null) {
+                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                Menu menu = navigationView.getMenu();
+                switch (startupActivity) {
+                    case "ps":
+                        menu.performIdentifierAction(R.id.ps_activity, 0);
+                        break;
+                    case "genova":
+                        menu.performIdentifierAction(R.id.nav_genova, 0);
+                        break;
+                    case "imperia":
+                        menu.performIdentifierAction(R.id.nav_imperia, 0);
+                        break;
+                    case "spezia":
+                        menu.performIdentifierAction(R.id.nav_la_spezia, 0);
+                        break;
+                    case "lavagna":
+                        menu.performIdentifierAction(R.id.nav_lavagna, 0);
+                        break;
+                    case "savona":
+                        menu.performIdentifierAction(R.id.nav_savona, 0);
+                        break;
+                    case "postazioni":
+                        menu.performIdentifierAction(R.id.nav_centrali, 0);
+                        break;
+                }
+            }
+        }
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -310,7 +355,7 @@ public class MainActivity extends AppCompatActivity
             Intent settingsActivity = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(settingsActivity);
         } else if (id == R.id.nav_settings) {
-            Intent settingsActivity = new Intent(MainActivity.this, SettingsActivity.class);
+            Intent settingsActivity = new Intent(MainActivity.this, AppSettings.class);
             startActivity(settingsActivity);
         } else if (id == R.id.nav_charlie_code_legend) {
             Intent settingsActivity = new Intent(MainActivity.this, CharlieCodeActivity.class);

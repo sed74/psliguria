@@ -1,6 +1,6 @@
 package com.dani.sed.liguriasoccorso;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class LegendActivity extends AppCompatActivity {

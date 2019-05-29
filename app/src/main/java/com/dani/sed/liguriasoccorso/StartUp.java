@@ -1,9 +1,10 @@
 package com.dani.sed.liguriasoccorso;
 
 import android.content.Context;
-import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
 import android.util.SparseArray;
+import android.widget.Toast;
 
 import com.dani.sed.liguriasoccorso.PubblicheAssistenze.Postazione;
 
@@ -11,14 +12,13 @@ import com.dani.sed.liguriasoccorso.PubblicheAssistenze.Postazione;
  * Created by federico.marchesi on 05/05/2017.
  */
 
-public class MyApplication extends MultiDexApplication {
+public class StartUp extends MultiDexApplication {
 
-    private SparseArray<Postazione> globalPostazioni;
+    private Boolean isFirstRun = true;
 
     @Override
     public void onCreate() {
         super.onCreate();
-//        loadPostazione();
     }
 
     @Override
@@ -27,6 +27,13 @@ public class MyApplication extends MultiDexApplication {
         MultiDex.install(this);
     }
 
+    public Boolean getFirstRun() {
+        return isFirstRun;
+    }
+
+    public void setFirstRun(Boolean firstRun) {
+        isFirstRun = firstRun;
+    }
 
 //    private void loadPostazione() {
 //        FirebaseDatabase mPostazioniDB = FirebaseDatabase.getInstance();
@@ -49,7 +56,7 @@ public class MyApplication extends MultiDexApplication {
 //                }
 //
 ////                myRef.setValue(postazioni);
-//                Log.d("MyApplication", "Value is: " + globalPostazioni.size());
+//                Log.d("StartUp", "Value is: " + globalPostazioni.size());
 ////                Toast.makeText(MainActivity.this, "Record scaricati: " + postazioni.size(),
 ////                        Toast.LENGTH_SHORT).show();
 //            }
@@ -62,10 +69,6 @@ public class MyApplication extends MultiDexApplication {
 //        });
 //
 //    }
-
-    public String getPostazioneName(int id) {
-        return globalPostazioni.get(id).getName();
-    }
 
 
 }

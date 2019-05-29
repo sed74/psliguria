@@ -215,8 +215,11 @@
     <string name="di_cui">di cui (media)</string>
     <string name="missions_stats">Totale ospedalizzazioni (media giornaliera)</string>
     <string name="whats_new_title">Novità</string>
-    <string name="whats_new">PUBBLICHE ASSISTENZE\n
-        "* Aggiunti all'anagrafica alcuni nomi mancanti.\n"
+    <string name="whats_new">AVVIO PERSONALIZZATO\n
+        "* È ora possibile impostare quale pagina si vuole che venga visualizzata all\'apertura.\n"
+        "Tramite il nuovo menù Impostazioni, è possibile abilitare l\'avvio personalizzato, e scegliere quale "
+        "finestra venga vistualizzata per prima all'apertura.\n\n"
+        "La funzionalità è ancora in fase di test, segnalate, per favore, gli eventuali malfunzionamenti"
         </string>
     <string name="dont_show">Non mostrare più</string>
     <string name="close">Chiudi</string>
@@ -337,7 +340,6 @@
     <string name="version_no">Ver:</string>
     <string name="pref_custom_startup_summary">Permette che l\'app si apra su una pagina personalizzata, invece che su quella di default.</string>
     <string name="pref_custom_startup_title">Avvio personalizzato</string>
-    <string name="activity_list_pref_title">Pagina di avvio</string>
 
     <string-array name="activity_list">
         <item>Accessi PS</item>
@@ -358,4 +360,20 @@
         <item>savona</item>
         <item>postazioni</item>
     </string-array>
+    <string name="title_activity_app_settings">Impostazioni</string>
+
+    <!-- Preference Titles -->
+
+    <!-- Messages Preferences -->
+
+    <!-- Sync Preferences -->
+
+    <string name="pref_custom_activity_off">All\'apertura verranno mostrati gli accessi agli ospedali</string>
+    <string name="pref_custom_activity_on">All\'apertura verrà mostrata la pagina scelta qui sotto</string>
+
+    <string name="custom_startup_header">Impostazioni all\'apertura</string>
+    <string name="pref_custom_activity_title">Avvio personalizzato</string>
+    <string name="activity_list_title">Pagina d\'apertura</string>
+
+
 </resources>
